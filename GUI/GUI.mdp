@@ -1,15 +1,15 @@
-<Project name="GUI" fileversion="2.0" Description="Interfaz gráfica en Gtk# para Zaspe#" language="C#" clr-version="Net_1_1" ctype="DotNetProject">
+<Project name="GUI" fileversion="2.0" Description="Interfaz gráfica en Gtk# para Zaspe#" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="./bin/Debug" assembly="GUI" />
       <Build debugmode="True" target="Exe" />
-      <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_1_1" />
+      <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="ZaspeSharp.GUI.MainWindow" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
       <Output directory="./bin/Release" assembly="GUI" />
       <Build debugmode="False" target="Exe" />
-      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_1_1" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
@@ -17,8 +17,11 @@
   <Contents>
     <File name="./MainWindow.cs" subtype="Code" buildaction="Compile" />
     <File name="./glade/main_window.glade" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="./glade/add.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="./glade/time_add.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./AcercaDe.cs" subtype="Code" buildaction="Compile" />
+    <File name="./AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="./resources/blue_fea.gif" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./resources/add.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./resources/time_add.png" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
