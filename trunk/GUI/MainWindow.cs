@@ -1,4 +1,5 @@
-/* Zaspe# - Attendance management
+/* 
+   Zaspe# - Attendance management
    Copyright (C) 2006, 2007 Milton Pividori
 
    Zaspe# is free software; you can redistribute it and/or
@@ -26,7 +27,7 @@ namespace ZaspeSharp.GUI
 	public class MainWindow
 	{
 		[Widget]
-		Window mainWindow;
+		Gtk.Window mainWindow;
 		
 		[Widget]
 		ToolButton tbAgregarPersona;
@@ -42,13 +43,33 @@ namespace ZaspeSharp.GUI
 			Glade.XML gxml = new Glade.XML (null, "main_window.glade", "mainWindow", null);
 			gxml.Autoconnect(this);
 			
-			// Cargo los íconos en la barra de menúes
-			Gdk.Pixbuf pf = Gdk.Pixbuf.LoadFromResource("add.png");
+//			Gdk.Pixbuf pf = new Gdk.Pixbuf(System.Reflection.Assembly.GetExecutingAssembly(), "add.png");
+//			Image im = new Image();
+//			im.Pixbuf = pf;
+//			
+//			this.tbAgregarPersona.IconName = null;
+//			this.tbAgregarPersona.IconWidget = im;
 			
 			this.mainWindow.Show();
 		}
 		
 		public void OnWindowDeleteEvent(object o, DeleteEventArgs args)
+		{
+			this.Salir();
+			args.RetVal = true;
+		}
+		
+		public void OnToolButtonSalirClicked(object o, EventArgs args)
+		{
+			this.Salir();
+		}
+		
+		public void OnImageMenuItemAcercaDeActivate(object o, EventArgs args)
+		{
+			AcercaDe ad = new AcercaDe(this.mainWindow);
+		}
+		
+		private void Salir()
 		{
 			Application.Quit();
 		}
