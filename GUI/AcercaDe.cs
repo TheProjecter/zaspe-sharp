@@ -38,6 +38,8 @@ namespace ZaspeSharp.GUI
 			
 			this.adAcercaDe.TransientFor = parent;
 			
+			// FIXME: El botón "Cerrar" no hace nada.
+			
 			this.adAcercaDe.Show();
 		}
 		

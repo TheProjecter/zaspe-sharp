@@ -64,6 +64,18 @@ namespace ZaspeSharp.GUI
 			this.Salir();
 		}
 		
+		public void OnMenuItemSalirActivate(object o, EventArgs args)
+		{
+			System.Console.WriteLine("aja");
+			this.Salir();
+		}
+		
+		public void OnMenuItemSalirActivate(object o, ButtonPressEventArgs args)
+		{
+			System.Console.WriteLine("aja2");
+			this.Salir();
+		}
+		
 		public void OnImageMenuItemAcercaDeActivate(object o, EventArgs args)
 		{
 			AcercaDe ad = new AcercaDe(this.mainWindow);
