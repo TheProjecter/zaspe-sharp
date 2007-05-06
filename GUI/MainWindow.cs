@@ -27,20 +27,21 @@ namespace ZaspeSharp.GUI
 	public class MainWindow
 	{
 		[Widget]
-		Gtk.Window mainWindow;
+		private Gtk.Window mainWindow;
 		
 		[Widget]
-		ToolButton tbAgregarPersona;
+		private ToolButton tbAgregarPersona;
 		
 		[Widget]
-		ToolButton tbAgregarEvento;
+		private ToolButton tbAgregarEvento;
 		
 		[Widget]
-		ToolButton tbSalir;
+		private ToolButton tbSalir;
 		
 		public MainWindow()
 		{
-			Glade.XML gxml = new Glade.XML (null, "main_window.glade", "mainWindow", null);
+			Gtk.AboutDialog ad;
+			Glade.XML gxml = new Glade.XML ("main_window.glade", "mainWindow", null);
 			gxml.Autoconnect(this);
 			
 //			Gdk.Pixbuf pf = new Gdk.Pixbuf(System.Reflection.Assembly.GetExecutingAssembly(), "add.png");
