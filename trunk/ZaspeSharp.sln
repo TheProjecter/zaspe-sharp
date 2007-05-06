@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+# SharpDevelop 2.1.0.2429
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{3AACC8E7-C8DC-4FC0-89B2-8FAAACFC3E8D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE10A753-FE00-4B28-AC6E-60CB617A0402}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE10A753-FE00-4B28-AC6E-60CB617A0402}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE10A753-FE00-4B28-AC6E-60CB617A0402}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE10A753-FE00-4B28-AC6E-60CB617A0402}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AACC8E7-C8DC-4FC0-89B2-8FAAACFC3E8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AACC8E7-C8DC-4FC0-89B2-8FAAACFC3E8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AACC8E7-C8DC-4FC0-89B2-8FAAACFC3E8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AACC8E7-C8DC-4FC0-89B2-8FAAACFC3E8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B024B88-2272-4B30-82F9-3D14BD0F137B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B024B88-2272-4B30-82F9-3D14BD0F137B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B024B88-2272-4B30-82F9-3D14BD0F137B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B024B88-2272-4B30-82F9-3D14BD0F137B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA1DDBC4-06EA-463C-A71D-4745E915825A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA1DDBC4-06EA-463C-A71D-4745E915825A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA1DDBC4-06EA-463C-A71D-4745E915825A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA1DDBC4-06EA-463C-A71D-4745E915825A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+EndGlobal

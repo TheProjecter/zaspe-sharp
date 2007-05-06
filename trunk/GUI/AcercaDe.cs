@@ -1,4 +1,4 @@
-/* 
+﻿/* 
    Zaspe# - Attendance management
    Copyright (C) 2006, 2007 Milton Pividori
 
@@ -26,19 +26,17 @@ namespace ZaspeSharp.GUI
 	public class AcercaDe
 	{
 		[Widget]
-		AboutDialog adAcercaDe;
+		private Gtk.AboutDialog adAcercaDe;
 		
 		public AcercaDe(Window parent)
 		{
-			Glade.XML gxml = new Glade.XML (null, "main_window.glade", "adAcercaDe", null);
+			Glade.XML gxml = new Glade.XML ("main_window.glade", "adAcercaDe", null);
 			gxml.Autoconnect(this);
 			
-			Gdk.Pixbuf pf = new Gdk.Pixbuf(System.Reflection.Assembly.GetExecutingAssembly(), "blue_fea.gif");
+			Gdk.Pixbuf pf = new Gdk.Pixbuf("blue_fea.gif");
 			this.adAcercaDe.Logo = pf;
 			
 			this.adAcercaDe.TransientFor = parent;
-			
-			// FIXME: El botón "Cerrar" no hace nada.
 			
 			this.adAcercaDe.Show();
 		}
