@@ -4,6 +4,18 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 # SharpDevelop 2.1.0.2429
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{3AACC8E7-C8DC-4FC0-89B2-8FAAACFC3E8D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttendanceManager", "AttendanceManager\AttendanceManager.csproj", "{4824128B-60CA-4E82-A346-5E35D784FC08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventsManager", "EventsManager\EventsManager.csproj", "{69EF5369-21FF-4AC1-A21B-6C854BC3BDE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstrumentManager", "InstrumentManager\InstrumentManager.csproj", "{E0A3916C-C529-43F3-9071-0B00A858F84B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonsManager", "PersonsManager\PersonsManager.csproj", "{8A69F4E0-B669-42FA-BDCA-54D2D77F28E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventTypeManager", "EventTypeManager\EventTypeManager.csproj", "{DEFD153B-0D15-4FF2-8EC7-6AE2C4012688}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{AA379F2D-5E6B-440C-9369-C9A602870A70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,5 +38,33 @@ Global
 		{AA1DDBC4-06EA-463C-A71D-4745E915825A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AA1DDBC4-06EA-463C-A71D-4745E915825A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AA1DDBC4-06EA-463C-A71D-4745E915825A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4824128B-60CA-4E82-A346-5E35D784FC08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4824128B-60CA-4E82-A346-5E35D784FC08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4824128B-60CA-4E82-A346-5E35D784FC08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4824128B-60CA-4E82-A346-5E35D784FC08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69EF5369-21FF-4AC1-A21B-6C854BC3BDE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69EF5369-21FF-4AC1-A21B-6C854BC3BDE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69EF5369-21FF-4AC1-A21B-6C854BC3BDE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69EF5369-21FF-4AC1-A21B-6C854BC3BDE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0A3916C-C529-43F3-9071-0B00A858F84B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0A3916C-C529-43F3-9071-0B00A858F84B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0A3916C-C529-43F3-9071-0B00A858F84B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0A3916C-C529-43F3-9071-0B00A858F84B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A69F4E0-B669-42FA-BDCA-54D2D77F28E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A69F4E0-B669-42FA-BDCA-54D2D77F28E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A69F4E0-B669-42FA-BDCA-54D2D77F28E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A69F4E0-B669-42FA-BDCA-54D2D77F28E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{348943A7-4704-41E7-B0C8-B39893DB504C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{348943A7-4704-41E7-B0C8-B39893DB504C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{348943A7-4704-41E7-B0C8-B39893DB504C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{348943A7-4704-41E7-B0C8-B39893DB504C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEFD153B-0D15-4FF2-8EC7-6AE2C4012688}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEFD153B-0D15-4FF2-8EC7-6AE2C4012688}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEFD153B-0D15-4FF2-8EC7-6AE2C4012688}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEFD153B-0D15-4FF2-8EC7-6AE2C4012688}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA379F2D-5E6B-440C-9369-C9A602870A70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA379F2D-5E6B-440C-9369-C9A602870A70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA379F2D-5E6B-440C-9369-C9A602870A70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA379F2D-5E6B-440C-9369-C9A602870A70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 EndGlobal

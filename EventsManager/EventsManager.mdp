@@ -1,0 +1,36 @@
+<Project name="EventsManager" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="./bin/Debug" assembly="EventsManager" />
+      <Build debugmode="True" target="Library" />
+      <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="DotNetProjectConfiguration">
+      <Output directory="./bin/Release" assembly="EventsManager" />
+      <Build debugmode="False" target="Library" />
+      <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <DeployTargets />
+  <Contents>
+    <File name="./AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Event.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Event.Methods.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Event.Properties.cs" subtype="Code" buildaction="Compile" />
+    <File name="./EventsExceptions.cs" subtype="Code" buildaction="Compile" />
+    <File name="./EventsManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="./EventsManager.Methods.cs" subtype="Code" buildaction="Compile" />
+    <File name="./EventsManager.Properties.cs" subtype="Code" buildaction="Compile" />
+  </Contents>
+  <References>
+    <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../Gentle.NET/Gentle.Common.dll" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../Gentle.NET/Gentle.Framework.dll" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../Gentle.NET/Gentle.Provider.SQLite.dll" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../Gentle.NET/log4net.dll" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../Gentle.NET/QuickGraph.Algorithms.dll" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../Gentle.NET/QuickGraph.dll" />
+  </References>
+</Project>

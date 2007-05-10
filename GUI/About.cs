@@ -23,27 +23,22 @@ using Gtk;
 
 namespace ZaspeSharp.GUI
 {
-	public class AcercaDe
+	public class About
 	{
 		[Widget]
-		private Gtk.AboutDialog adAcercaDe;
+		private Gtk.AboutDialog adAbout;
 		
-		public AcercaDe(Window parent)
+		public About(Window parent)
 		{
-			Glade.XML gxml = new Glade.XML ("main_window.glade", "adAcercaDe", null);
+			Glade.XML gxml = new Glade.XML ("main_window.glade", "adAbout", null);
 			gxml.Autoconnect(this);
 			
-			Gdk.Pixbuf pf = new Gdk.Pixbuf("blue_fea.gif");
-			this.adAcercaDe.Logo = pf;
+			Gdk.Pixbuf pf = new Gdk.Pixbuf(null, "blue_fea.gif");
+			this.adAbout.Logo = pf;
 			
-			this.adAcercaDe.TransientFor = parent;
+			this.adAbout.TransientFor = parent;
 			
-			this.adAcercaDe.Show();
-		}
-		
-		public void OnClose (object o, EventArgs args)
-		{
-			System.Console.WriteLine("aver av er");
+			this.adAbout.Show();
 		}
 	}
 }

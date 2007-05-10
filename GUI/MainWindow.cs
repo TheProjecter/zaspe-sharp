@@ -30,17 +30,16 @@ namespace ZaspeSharp.GUI
 		private Gtk.Window mainWindow;
 		
 		[Widget]
-		private ToolButton tbAgregarPersona;
+		private ToolButton tbAddPerson;
 		
 		[Widget]
-		private ToolButton tbAgregarEvento;
+		private ToolButton tbAddEvent;
 		
 		[Widget]
-		private ToolButton tbSalir;
+		private ToolButton tbQuit;
 		
 		public MainWindow()
 		{
-			Gtk.AboutDialog ad;
 			Glade.XML gxml = new Glade.XML ("main_window.glade", "mainWindow", null);
 			gxml.Autoconnect(this);
 			
@@ -56,33 +55,26 @@ namespace ZaspeSharp.GUI
 		
 		public void OnWindowDeleteEvent(object o, DeleteEventArgs args)
 		{
-			this.Salir();
+			this.Quit();
 			args.RetVal = true;
 		}
 		
-		public void OnToolButtonSalirClicked(object o, EventArgs args)
+		public void OnToolButtonQuitClicked(object o, EventArgs args)
 		{
-			this.Salir();
+			this.Quit();
 		}
 		
-		public void OnMenuItemSalirActivate(object o, EventArgs args)
+		public void OnMenuItemQuitActivate(object o, EventArgs args)
 		{
-			System.Console.WriteLine("aja");
-			this.Salir();
+			this.Quit();
 		}
 		
-		public void OnMenuItemSalirActivate(object o, ButtonPressEventArgs args)
+		public void OnImageMenuItemAboutActivate(object o, EventArgs args)
 		{
-			System.Console.WriteLine("aja2");
-			this.Salir();
+			About ad = new About(this.mainWindow);
 		}
 		
-		public void OnImageMenuItemAcercaDeActivate(object o, EventArgs args)
-		{
-			AcercaDe ad = new AcercaDe(this.mainWindow);
-		}
-		
-		private void Salir()
+		private void Quit()
 		{
 			Application.Quit();
 		}
