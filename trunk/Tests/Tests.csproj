@@ -1,0 +1,84 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{AA379F2D-5E6B-440C-9369-C9A602870A70}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ZaspeSharp.Tests</RootNamespace>
+    <AssemblyName>Tests</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <ItemGroup>
+    <Reference Include="Gentle.Common">
+      <HintPath>..\Gentle.NET\Gentle.Common.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Gentle.Framework">
+      <HintPath>..\Gentle.NET\Gentle.Framework.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Gentle.Provider.SQLite">
+      <HintPath>..\Gentle.NET\Gentle.Provider.SQLite.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\Gentle.NET\log4net.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="nunit.framework" />
+    <Reference Include="QuickGraph">
+      <HintPath>..\Gentle.NET\QuickGraph.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="QuickGraph.Algorithms">
+      <HintPath>..\Gentle.NET\QuickGraph.Algorithms.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="ControladorAsistenciasTest.cs" />
+    <Compile Include="ControladorEventosTest.cs" />
+    <Compile Include="ControladorInstrumentosTest.cs" />
+    <Compile Include="ControladorPersonasTest.cs" />
+    <Compile Include="ControladorTiposEventoTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AttendanceManager\AttendanceManager.csproj">
+      <Project>{4824128B-60CA-4E82-A346-5E35D784FC08}</Project>
+      <Name>AttendanceManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventsManager\EventsManager.csproj">
+      <Project>{69EF5369-21FF-4AC1-A21B-6C854BC3BDE1}</Project>
+      <Name>EventsManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventTypeManager\EventTypeManager.csproj">
+      <Project>{DEFD153B-0D15-4FF2-8EC7-6AE2C4012688}</Project>
+      <Name>EventTypeManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InstrumentManager\InstrumentManager.csproj">
+      <Project>{E0A3916C-C529-43F3-9071-0B00A858F84B}</Project>
+      <Name>InstrumentManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PersonsManager\PersonsManager.csproj">
+      <Project>{8A69F4E0-B669-42FA-BDCA-54D2D77F28E8}</Project>
+      <Name>PersonsManager</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
