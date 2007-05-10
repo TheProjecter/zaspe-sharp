@@ -49,7 +49,8 @@ namespace ZaspeSharp.GUI
 //			
 //			this.tbAgregarPersona.IconName = null;
 //			this.tbAgregarPersona.IconWidget = im;
-			
+
+			this.mainWindow.Icon = new Gdk.Pixbuf(null, "blue_fea.gif");
 			this.mainWindow.Show();
 		}
 		
