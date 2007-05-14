@@ -54,6 +54,16 @@ namespace ZaspeSharp.GUI
 			this.mainWindow.Show();
 		}
 		
+		public void OnAddPersonClicked(object o, EventArgs args)
+		{
+			new AddPerson(this.mainWindow);
+		}
+		
+		public void OnAddEventClicked(object o, EventArgs args)
+		{
+			new AddEvent(this.mainWindow);
+		}
+		
 		public void OnWindowDeleteEvent(object o, DeleteEventArgs args)
 		{
 			this.Quit();
