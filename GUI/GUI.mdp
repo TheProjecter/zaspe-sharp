@@ -21,7 +21,6 @@
     <File name="./resources/blue_fea.gif" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./resources/add.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./resources/time_add.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="./glade" subtype="Directory" buildaction="Compile" />
     <File name="./AddPerson.cs" subtype="Code" buildaction="Compile" />
     <File name="./AddEvent.cs" subtype="Code" buildaction="Compile" />
   </Contents>
