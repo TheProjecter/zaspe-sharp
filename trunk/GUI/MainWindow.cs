@@ -1,4 +1,4 @@
-/* 
+﻿/* 
    Zaspe# - Attendance management
    Copyright (C) 2006, 2007 Milton Pividori
 
@@ -41,6 +41,7 @@ namespace ZaspeSharp.GUI
 		[Widget]
 		private TreeView tvAttendances;
 		
+		[Widget]
 		private ListStore attendances;
 		
 		public MainWindow()
@@ -49,7 +50,7 @@ namespace ZaspeSharp.GUI
 			gxml.Autoconnect(this);
 			
 			// Icon for the main window
-			this.mainWindow.Icon = new Gdk.Pixbuf(null, "blue_fea.gif");
+			this.mainWindow.Icon = new Gdk.Pixbuf("blue_fea.gif");
 			
 			// TreeView example
 			TreeViewColumn persons = new TreeViewColumn();
