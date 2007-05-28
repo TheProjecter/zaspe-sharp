@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>GUI</RootNamespace>
+    <RootNamespace>ZaspeSharp.GUI</RootNamespace>
     <AssemblyName>GUI</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
@@ -36,32 +36,19 @@
   </PropertyGroup>
   <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />
   <ItemGroup>
-    <Reference Include="atk-sharp">
-      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.2.3.1\lib\mono\gac\atk-sharp\2.8.0.0__35e10195dab3c99f\atk-sharp.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="gdk-sharp">
-      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.2.3.1\lib\mono\gac\gdk-sharp\2.8.0.0__35e10195dab3c99f\gdk-sharp.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="glade-sharp">
-      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.2.3.1\lib\mono\gac\glade-sharp\2.8.0.0__35e10195dab3c99f\glade-sharp.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="glib-sharp">
-      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.2.3.1\lib\mono\gac\glib-sharp\2.8.0.0__35e10195dab3c99f\glib-sharp.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="gtk-sharp">
-      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.2.3.1\lib\mono\gac\gtk-sharp\2.8.0.0__35e10195dab3c99f\gtk-sharp.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AcercaDe.cs" />
+    <Compile Include="About.cs" />
+    <Compile Include="AddEvent.cs" />
+    <Compile Include="AddPerson.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="MainWindow.cs" />
+    <None Include="glade\add_event.glade">
+      <Link>add_event.glade</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="glade\add_person.glade">
+      <Link>add_person.glade</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="glade\main_window.glade">
       <Link>main_window.glade</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -78,5 +65,36 @@
       <Link>time_add.png</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AttendanceManager\AttendanceManager.csproj">
+      <Project>{4824128B-60CA-4E82-A346-5E35D784FC08}</Project>
+      <Name>AttendanceManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventsManager\EventsManager.csproj">
+      <Project>{69EF5369-21FF-4AC1-A21B-6C854BC3BDE1}</Project>
+      <Name>EventsManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EventTypesManager\EventTypesManager.csproj">
+      <Project>{DEFD153B-0D15-4FF2-8EC7-6AE2C4012688}</Project>
+      <Name>EventTypesManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InstrumentsManager\InstrumentsManager.csproj">
+      <Project>{E0A3916C-C529-43F3-9071-0B00A858F84B}</Project>
+      <Name>InstrumentsManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PersonsManager\PersonsManager.csproj">
+      <Project>{8A69F4E0-B669-42FA-BDCA-54D2D77F28E8}</Project>
+      <Name>PersonsManager</Name>
+    </ProjectReference>
+    <Reference Include="atk-sharp" />
+    <Reference Include="gdk-sharp" />
+    <Reference Include="glade-sharp" />
+    <Reference Include="glib-sharp" />
+    <Reference Include="gtk-sharp" />
+    <Reference Include="System">
+      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.2.3.1\lib\mono\gac\System\2.0.0.0__b77a5c561934e089\System.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
   </ItemGroup>
 </Project>

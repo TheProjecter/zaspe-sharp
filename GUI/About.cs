@@ -26,14 +26,14 @@ namespace ZaspeSharp.GUI
 	public class About
 	{
 		[Widget]
-		private Gtk.AboutDialog adAbout;
+		private AboutDialog adAbout;
 		
 		public About(Window parent)
 		{
 			Glade.XML gxml = new Glade.XML ("main_window.glade", "adAbout", null);
 			gxml.Autoconnect(this);
 			
-			Gdk.Pixbuf pf = new Gdk.Pixbuf(null, "blue_fea.gif");
+			Gdk.Pixbuf pf = new Gdk.Pixbuf("blue_fea.gif");
 			this.adAbout.Logo = pf;
 			
 			this.adAbout.TransientFor = parent;

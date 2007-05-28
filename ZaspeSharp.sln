@@ -8,11 +8,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttendanceManager", "Attend
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventsManager", "EventsManager\EventsManager.csproj", "{69EF5369-21FF-4AC1-A21B-6C854BC3BDE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstrumentManager", "InstrumentManager\InstrumentManager.csproj", "{E0A3916C-C529-43F3-9071-0B00A858F84B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstrumentsManager", "InstrumentsManager\InstrumentsManager.csproj", "{E0A3916C-C529-43F3-9071-0B00A858F84B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonsManager", "PersonsManager\PersonsManager.csproj", "{8A69F4E0-B669-42FA-BDCA-54D2D77F28E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventTypeManager", "EventTypeManager\EventTypeManager.csproj", "{DEFD153B-0D15-4FF2-8EC7-6AE2C4012688}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventTypesManager", "EventTypesManager\EventTypesManager.csproj", "{DEFD153B-0D15-4FF2-8EC7-6AE2C4012688}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{AA379F2D-5E6B-440C-9369-C9A602870A70}"
 EndProject

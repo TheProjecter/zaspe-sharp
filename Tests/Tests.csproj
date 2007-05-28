@@ -6,13 +6,19 @@
     <OutputType>Library</OutputType>
     <RootNamespace>ZaspeSharp.Tests</RootNamespace>
     <AssemblyName>Tests</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
-    <DebugSymbols>True</DebugSymbols>
+    <DebugSymbols>true</DebugSymbols>
     <DebugType>Full</DebugType>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>False</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -21,36 +27,14 @@
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
-  <ItemGroup>
-    <Reference Include="Gentle.Common">
-      <HintPath>..\Gentle.NET\Gentle.Common.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="Gentle.Framework">
-      <HintPath>..\Gentle.NET\Gentle.Framework.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="Gentle.Provider.SQLite">
-      <HintPath>..\Gentle.NET\Gentle.Provider.SQLite.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\Gentle.NET\log4net.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="nunit.framework" />
-    <Reference Include="QuickGraph">
-      <HintPath>..\Gentle.NET\QuickGraph.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="QuickGraph.Algorithms">
-      <HintPath>..\Gentle.NET\QuickGraph.Algorithms.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="ControladorAsistenciasTest.cs" />
@@ -68,17 +52,49 @@
       <Project>{69EF5369-21FF-4AC1-A21B-6C854BC3BDE1}</Project>
       <Name>EventsManager</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EventTypeManager\EventTypeManager.csproj">
+    <ProjectReference Include="..\EventTypesManager\EventTypesManager.csproj">
       <Project>{DEFD153B-0D15-4FF2-8EC7-6AE2C4012688}</Project>
-      <Name>EventTypeManager</Name>
+      <Name>EventTypesManager</Name>
     </ProjectReference>
-    <ProjectReference Include="..\InstrumentManager\InstrumentManager.csproj">
+    <ProjectReference Include="..\InstrumentsManager\InstrumentsManager.csproj">
       <Project>{E0A3916C-C529-43F3-9071-0B00A858F84B}</Project>
-      <Name>InstrumentManager</Name>
+      <Name>InstrumentsManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\PersonsManager\PersonsManager.csproj">
       <Project>{8A69F4E0-B669-42FA-BDCA-54D2D77F28E8}</Project>
       <Name>PersonsManager</Name>
     </ProjectReference>
+    <Reference Include="Gentle.Common">
+      <HintPath>..\Gentle.NET\Gentle.Common.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Gentle.Framework">
+      <HintPath>..\Gentle.NET\Gentle.Framework.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Gentle.Provider.SQLite">
+      <HintPath>..\Gentle.NET\Gentle.Provider.SQLite.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\Gentle.NET\log4net.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.2.3.1\lib\mono\gac\nunit.framework\2.2.8.0__96d09a1eb7f44a77\nunit.framework.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="QuickGraph">
+      <HintPath>..\Gentle.NET\QuickGraph.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="QuickGraph.Algorithms">
+      <HintPath>..\Gentle.NET\QuickGraph.Algorithms.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.2.3.1\lib\mono\gac\System\2.0.0.0__b77a5c561934e089\System.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
   </ItemGroup>
 </Project>
