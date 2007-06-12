@@ -28,12 +28,13 @@ namespace ZaspeSharp.GUI
 		[Widget]
 		Dialog dlgAddPerson;
 		
-		public AddPerson(Window parent)
+		public AddPerson(Gtk.Window parent)
 		{
 			Glade.XML gxml = new Glade.XML ("add_person.glade", "dlgAddPerson", null);
 			gxml.Autoconnect(this);
 			
 			this.dlgAddPerson.TransientFor = parent;
+			
 			this.dlgAddPerson.Show();
 		}
 		
