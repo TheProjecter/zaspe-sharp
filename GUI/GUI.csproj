@@ -67,34 +67,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AttendanceManager\AttendanceManager.csproj">
-      <Project>{4824128B-60CA-4E82-A346-5E35D784FC08}</Project>
-      <Name>AttendanceManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EventsManager\EventsManager.csproj">
-      <Project>{69EF5369-21FF-4AC1-A21B-6C854BC3BDE1}</Project>
-      <Name>EventsManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EventTypesManager\EventTypesManager.csproj">
-      <Project>{DEFD153B-0D15-4FF2-8EC7-6AE2C4012688}</Project>
-      <Name>EventTypesManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\InstrumentsManager\InstrumentsManager.csproj">
-      <Project>{E0A3916C-C529-43F3-9071-0B00A858F84B}</Project>
-      <Name>InstrumentsManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PersonsManager\PersonsManager.csproj">
-      <Project>{8A69F4E0-B669-42FA-BDCA-54D2D77F28E8}</Project>
-      <Name>PersonsManager</Name>
-    </ProjectReference>
     <Reference Include="atk-sharp" />
     <Reference Include="gdk-sharp" />
     <Reference Include="glade-sharp" />
     <Reference Include="glib-sharp" />
     <Reference Include="gtk-sharp" />
-    <Reference Include="System">
-      <HintPath>..\..\..\..\..\Archivos de programa\Mono-1.2.3.1\lib\mono\gac\System\2.0.0.0__b77a5c561934e089\System.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
 </Project>
