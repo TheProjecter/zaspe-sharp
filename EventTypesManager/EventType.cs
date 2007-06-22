@@ -22,7 +22,7 @@ using Gentle.Framework;
 
 namespace ZaspeSharp.Events
 {
-	[TableName("eventTypes")]
+	[TableName("event_types")]
 	public partial class EventType : Persistent
 	{
 		#region User variables

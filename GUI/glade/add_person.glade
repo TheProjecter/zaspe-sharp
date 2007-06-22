@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.2.0 on Sun May 27 19:48:46 2007 by miltondp@wasabi-->
+<!--Generated with glade3 3.2.0 on Thu Jun 21 11:52:36 2007 by miltondp@wasabi-->
 <glade-interface>
-  <requires lib="gnome"/>
   <widget class="GtkDialog" id="dlgAddPerson">
     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
     <property name="border_width">5</property>
@@ -296,7 +295,7 @@ Mujer</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkEntry" id="entry4">
+                              <widget class="GtkEntry" id="entryLandPhone">
                                 <property name="width_request">170</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -332,7 +331,7 @@ Mujer</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkEntry" id="entryMobile">
+                              <widget class="GtkEntry" id="entryMobilePhone">
                                 <property name="width_request">170</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -367,7 +366,7 @@ Mujer</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkEntry" id="entry5">
+                              <widget class="GtkEntry" id="entryEMail">
                                 <property name="width_request">170</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -441,63 +440,6 @@ Mujer</property>
                             <property name="visible">True</property>
                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                             <child>
-                              <widget class="GtkLabel" id="lblBirthday">
-                                <property name="visible">True</property>
-                                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                                <property name="xalign">0</property>
-                                <property name="label" translatable="yes">Cumple:</property>
-                                <property name="width_chars">10</property>
-                              </widget>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">False</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <widget class="GnomeDateEdit" id="gdeBirthday">
-                                <property name="width_request">170</property>
-                                <property name="visible">True</property>
-                                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                                <property name="dateedit_flags"></property>
-                              </widget>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">False</property>
-                                <property name="position">1</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <widget class="GtkLabel" id="label7">
-                                <property name="visible">True</property>
-                                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                              </widget>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">False</property>
-                                <property name="position">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <widget class="GtkCheckButton" id="chkIsActive">
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                                <property name="label" translatable="yes">Es activo</property>
-                                <property name="draw_indicator">True</property>
-                              </widget>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">False</property>
-                                <property name="position">3</property>
-                              </packing>
-                            </child>
-                          </widget>
-                        </child>
-                        <child>
-                          <widget class="GtkHBox" id="hbox7">
-                            <property name="visible">True</property>
-                            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                            <child>
                               <widget class="GtkLabel" id="lblComunity">
                                 <property name="visible">True</property>
                                 <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -524,9 +466,12 @@ Mujer</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkLabel" id="label8">
+                              <widget class="GtkCheckButton" id="chkIsActive">
                                 <property name="visible">True</property>
+                                <property name="can_focus">True</property>
                                 <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                                <property name="label" translatable="yes">Es activo</property>
+                                <property name="draw_indicator">True</property>
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
@@ -541,6 +486,76 @@ Mujer</property>
                                 <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                                 <property name="label" translatable="yes">Datos completos</property>
                                 <property name="draw_indicator">True</property>
+                              </widget>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">3</property>
+                              </packing>
+                            </child>
+                          </widget>
+                        </child>
+                        <child>
+                          <widget class="GtkHBox" id="hbox7">
+                            <property name="visible">True</property>
+                            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                            <child>
+                              <widget class="GtkLabel" id="lblBirthday">
+                                <property name="visible">True</property>
+                                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                                <property name="xalign">0</property>
+                                <property name="label" translatable="yes">Cumple:</property>
+                                <property name="width_chars">10</property>
+                              </widget>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkSpinButton" id="spbtnDay">
+                                <property name="width_request">50</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                                <property name="adjustment">1 1 31 1 10 10</property>
+                              </widget>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkLabel" id="label7">
+                                <property name="visible">True</property>
+                                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                                <property name="label" translatable="yes">  de  </property>
+                              </widget>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkComboBox" id="cmbMonth">
+                                <property name="width_request">170</property>
+                                <property name="visible">True</property>
+                                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                                <property name="active">0</property>
+                                <property name="items" translatable="yes">Enero
+Febrero
+Marzo
+Abril
+Mayo
+Junio
+Julio
+Agosto
+Septiembre
+Octubre
+Noviembre
+Diciembre</property>
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
