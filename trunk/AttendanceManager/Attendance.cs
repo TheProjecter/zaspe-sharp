@@ -33,7 +33,7 @@ namespace ZaspeSharp.Attendances
 	public partial class Attendance : Persistent
 	{
 		#region User Variables
-		private int idPerson;
+		private int person_id;
 		private Person aPerson;
 		
 		private DateTime eventDate;
@@ -43,10 +43,10 @@ namespace ZaspeSharp.Attendances
 		#region Constructors
 		public Attendance(int idPerson, DateTime eventDate)
 		{
-			this.idPerson = idPerson;
+			this.person_id = person_id;
 			this.eventDate = eventDate;
 			
-			this.aPerson = PersonsManager.Instance.Retrieve(this.idPerson);
+			this.aPerson = PersonsManager.Instance.Retrieve(this.person_id);
 			this.anEvent = EventsManager.Instance.Retrieve(this.eventDate);
 		}
 		#endregion
