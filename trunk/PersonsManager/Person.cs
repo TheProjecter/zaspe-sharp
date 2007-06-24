@@ -73,7 +73,7 @@ namespace ZaspeSharp.Persons
 		public Person(int dni, string surname, string name, bool is_man,
 		               DateTime birthday_date, string address, string city,
 		               string land_phone_number, string mobile_number, string email,
-		               string comunity, bool activo, bool datos_completos)
+		               string comunity, bool is_active, bool is_data_complete)
 		{
 			this.instruments = new ArrayList();
 			
@@ -88,8 +88,8 @@ namespace ZaspeSharp.Persons
 			this.mobile_number = mobile_number;
 			this.email = email;
 			this.comunity = comunity;
-			this.is_active = activo;
-			this.is_data_complete = datos_completos;
+			this.is_active = is_active;
+			this.is_data_complete = is_data_complete;
 		}
 		#endregion
 	}
