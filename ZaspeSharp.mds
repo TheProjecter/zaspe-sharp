@@ -23,7 +23,6 @@
       <Entry build="True" name="Tests" configuration="Release" />
     </Configuration>
   </Configurations>
-  <DeployTargets />
   <StartMode startupentry="GUI" single="True">
     <Execute type="None" entry="GUI" />
     <Execute type="None" entry="AttendanceManager" />
@@ -35,6 +34,7 @@
     <Execute type="None" entry="EventTypesManager" />
     <Execute type="None" entry="Tests" />
   </StartMode>
+  <DeployTargets />
   <Entries>
     <Entry filename="./GUI/GUI.mdp" />
     <Entry filename="./AttendanceManager/AttendanceManager.mdp" />
