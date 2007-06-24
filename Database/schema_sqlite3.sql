@@ -12,7 +12,7 @@ CREATE TABLE persons (
 	surname varchar(25) not null,
 	name varchar(25) not null,
 	is_man integer not null,
-	birthday_date varchar(30),
+	birthday_date date,
 
 	/* Domicilio */
 	address varchar(40),
@@ -35,7 +35,7 @@ CREATE TABLE persons (
 );
 
 CREATE TABLE events (
-	date varchar(30) primary key,
+	date date primary key,
 	name varchar(30) not null,
 	id_event_type integer not null,
 	goals varchar(50),
@@ -52,7 +52,7 @@ CREATE TABLE event_types (
 
 CREATE TABLE attendances (
 	id_person integer,
-	event_date varchar(30),
+	event_date date,
 	primary key(id_person, event_date)
 );
 
