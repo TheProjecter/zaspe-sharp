@@ -31,7 +31,7 @@ namespace ZaspeSharp.Tests
 	/// Description of ControladorAsistenciasTest.
 	/// </summary>
 	[TestFixture]
-	public class ControladorAsistenciasTest
+	public class AttendaceManagerTest
 	{
 		private Person person1, person2;
 		private Event event1, event2, event3, event4;

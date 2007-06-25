@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.2.0 on Mon Jun 25 14:48:11 2007 by miltondp@wasabi-->
+<!--Generated with glade3 3.2.0 on Mon Jun 25 18:54:55 2007 by miltondp@wasabi-->
 <glade-interface>
   <widget class="GtkWindow" id="mainWindow">
     <property name="width_request">600</property>
@@ -244,7 +244,7 @@
     <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
     <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
     <property name="name">Zaspe#</property>
-    <property name="version">0.0.1-svn</property>
+    <property name="version">0.0.1</property>
     <property name="copyright" translatable="yes">Copyright © 2006-2007 Milton Pividori</property>
     <property name="comments" translatable="yes">Gestión de asistencias</property>
     <property name="website">http://code.google.com/p/zaspe-sharp/</property>

@@ -27,7 +27,7 @@ namespace ZaspeSharp.Tests
 	/// Description of ControladorPersonasTest.
 	/// </summary>
 	[TestFixture]
-	public class ControladorPersonasTest
+	public class PersonsManagerTest
 	{
 		PersonsManager personsManager = PersonsManager.Instance;
 		

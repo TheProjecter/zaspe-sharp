@@ -20,13 +20,14 @@
 using System;
 using System.Diagnostics;
 using System.Collections;
+using System.Collections.Generic;
 using Gentle.Framework;
 
 namespace ZaspeSharp.Persons
 {
 	public partial class PersonsManager
 	{
-		#region Retrieve methods
+#region Retrieve methods
 		/// <summary>
 		/// Recupera una persona por su id o DNI
 		/// </summary>
@@ -45,13 +46,13 @@ namespace ZaspeSharp.Persons
 				return aPerson;
 
 			// Now i look for by id
-			key = new Key(typeof(Person), true);
-			key.Add("id", dni_id);
+			//key = new Key(typeof(Person), true);
+			//key.Add("id", dni_id);
 			
-			aPerson = Broker.SessionBroker.TryRetrieveInstance(typeof(Person), key) as Person;
+			//aPerson = Broker.SessionBroker.TryRetrieveInstance(typeof(Person), key) as Person;
 			
-			if (aPerson != null)
-				return aPerson;
+			//if (aPerson != null)
+			//	return aPerson;
 			
 			// the person who is looked for does not exist
 			throw new PersonDoesNotExistException("No existe una persona con ese DNI");
@@ -63,12 +64,17 @@ namespace ZaspeSharp.Persons
 			SqlBuilder sb = new SqlBuilder(StatementType.Select, typeof(Person));
 			SqlStatement stmt = sb.GetStatement(true);
 
-			Person[] persons = (Person[])ObjectFactory.GetCollection(typeof(Person), stmt.Execute());
-			return persons;
+			IList persons = ObjectFactory.GetCollection(typeof(Person), stmt.Execute());
+			
+			List<Person> persons_result = new List<Person>();
+			foreach (Person p in persons)
+				persons_result.Add(p);
+			
+			return persons_result.ToArray();
 		}
-		#endregion
+#endregion
 		
-		#region Entry methods
+#region Entry methods
 		public Person AddPerson(int dni, string surname, string name, bool is_man,
 		                               bool data_is_complete)
 		{
@@ -83,12 +89,13 @@ namespace ZaspeSharp.Persons
 				return newPerson;
 			}
 			
-			throw new PersonExistsException("Se está intentando ingresar una persona que" +
-					" ya existe en la base de datos.");
+			throw new PersonExistsException("Se está intentando ingresar una persona que " +
+			                                "ya existe en la base de datos: El DNI ingresado " +
+			                                "pertenece a una persona previamente ingresada.");
 		}
-		#endregion
+#endregion
 		
-		#region Deletion methods
+#region Deletion methods
 		public void DeletePerson(int dni)
 		{
 			Person aPerson;
@@ -103,14 +110,14 @@ namespace ZaspeSharp.Persons
 			
 			aPerson.Remove();
 		}
-		#endregion
+#endregion
 				
-		#region Other methods
+#region Other methods
 		[Conditional("DEBUG")]
 		public void CleanCache()
 		{
 			Gentle.Common.CacheManager.Clear();
 		}
-		#endregion
+#endregion
 	}
 }
