@@ -39,10 +39,25 @@ namespace ZaspeSharp.GUI
 		private ToolButton tbQuit;
 		
 		[Widget]
+		private VBox vbox1;
+		
+		[Widget]
 		private TreeView tvAttendances;
 		
 		[Widget]
+		private TreeView tvPersons;
+		
+		[Widget]
+		private TreeView tvEvents;
+		
+		[Widget]
 		private ListStore attendances;
+		
+		[Widget]
+		private ListStore persons;
+		
+		[Widget]
+		private ListStore events;
 		
 		public MainWindow()
 		{
@@ -51,6 +66,62 @@ namespace ZaspeSharp.GUI
 			
 			// Icon for the main window
 			this.mainWindow.Icon = new Gdk.Pixbuf("blue_fea.gif");
+			
+			// tvPersons
+			this.tvPersons = new TreeView();
+			this.tvPersons.HeadersVisible = true;
+			
+			TreeViewColumn surname = new TreeViewColumn();
+			surname.Title = "Apellido";
+			CellRendererText surnameText = new CellRendererText();
+			surname.PackStart(surnameText, true);
+			
+			TreeViewColumn name = new TreeViewColumn();
+			name.Title = "Nombre";
+			CellRendererText nameText = new CellRendererText();
+			name.PackStart(nameText, true);
+			
+			TreeViewColumn email = new TreeViewColumn();
+			email.Title = "E-Mail";
+			CellRendererText emailText = new CellRendererText();
+			email.PackStart(emailText, true);
+			
+			this.tvPersons.AppendColumn(surname);
+			this.tvPersons.AppendColumn(name);
+			this.tvPersons.AppendColumn(email);
+			
+			surname.AddAttribute(surnameText, "text", 0);
+			name.AddAttribute(nameText, "text", 1);
+			email.AddAttribute(emailText, "text", 2);
+			
+			this.persons = new ListStore(typeof(string), typeof(string), typeof(string));
+			this.persons.AppendValues("Prueba", "DesdeCodigo", "A ver que pasa");
+			
+			this.tvPersons.Model = this.persons;
+			
+			// tvEvents
+			this.tvEvents = new TreeView();
+			
+			TreeViewColumn eventName = new TreeViewColumn();
+			eventName.Title = "Nombre";
+			CellRendererText eventNameText = new CellRendererText();
+			eventName.PackStart(eventNameText, true);
+			
+			TreeViewColumn eventDate = new TreeViewColumn();
+			eventDate.Title = "Fecha";
+			CellRendererText eventDateText = new CellRendererText();
+			eventDate.PackStart(eventDateText, true);
+			
+			this.tvEvents.AppendColumn(eventName);
+			this.tvEvents.AppendColumn(eventDate);
+			
+			eventName.AddAttribute(eventNameText, "text", 0);
+			eventDate.AddAttribute(eventDateText, "text", 1);
+			
+			this.events = new ListStore(typeof(string), typeof(string));
+			this.events.AppendValues("Evento de", "Prueba");
+			
+			this.tvEvents.Model = this.events;
 			
 			// TreeView example
 			TreeViewColumn persons = new TreeViewColumn();
@@ -97,17 +168,32 @@ namespace ZaspeSharp.GUI
 			this.attendances = new ListStore(typeof(string), typeof(bool),
 				typeof(bool), typeof(bool));
 			
-			attendances.AppendValues("Arnoldo Braida", false, false, false);
-			attendances.AppendValues("Pepe Biondi", true, false, true);
-			attendances.AppendValues("Damián Paduán", false, true, false);
-			attendances.AppendValues("Fito Páez", false, false, false);
+			this.attendances.AppendValues("Arnoldo Braida", false, false, false);
+			this.attendances.AppendValues("Pepe Biondi", true, false, true);
+			this.attendances.AppendValues("Damián Paduán", false, true, false);
+			this.attendances.AppendValues("Fito Páez", false, false, false);
 			
 			this.tvAttendances.Model = attendances;
 			
 			this.mainWindow.ShowAll();
 		}
 		
-		#region Event handlers
+#region Event handlers
+		public void OnPersonsListToggle(object o, EventArgs args)
+		{
+			this.AddTreeViewInVBox(this.tvPersons);
+		}
+		
+		public void OnEventsListToggle(object o, EventArgs args)
+		{
+			this.AddTreeViewInVBox(this.tvEvents);
+		}
+		
+		public void OnAttendancesListToggle(object o, EventArgs args)
+		{
+			this.AddTreeViewInVBox(this.tvAttendances);
+		}
+		
 		public void OnCellRendererToggleEvent1Toggled(object o, ToggledArgs args)
 		{
 			TreeIter iter;
@@ -168,7 +254,29 @@ namespace ZaspeSharp.GUI
 		{
 			About ad = new About(this.mainWindow);
 		}
-		#endregion
+#endregion
+		
+#region Other methods
+		private void AddTreeViewInVBox(TreeView tv)
+		{
+			// I remove the actual treeview
+			Widget widgetToRemove = null;
+			
+			foreach (Widget w in this.vbox1.AllChildren) {
+				if (w is TreeView) {
+					widgetToRemove = w;
+					break;
+				}
+			}
+			
+			this.vbox1.Remove(widgetToRemove);
+			
+			// Add and reorder the treeview
+			this.vbox1.PackStart(tv, true, true, 0);
+			this.vbox1.ReorderChild(tv, 2);
+			
+			tv.Show();
+		}
 		
 		private void Quit()
 		{
@@ -181,5 +289,6 @@ namespace ZaspeSharp.GUI
 			new MainWindow();
 			Application.Run();
 		}
+#endregion
 	}
 }

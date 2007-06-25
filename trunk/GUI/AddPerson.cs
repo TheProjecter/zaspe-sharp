@@ -112,13 +112,35 @@ namespace ZaspeSharp.GUI
 			PersonsManager pm = PersonsManager.Instance;
 			Person aPerson = null;
 			
-			aPerson = pm.AddPerson(Convert.ToInt32(this.entryDNI.Text),
-				this.entrySurname.Text, this.entryName.Text,
-				this.cmbSex.ActiveText.Equals("Hombre") ? true : false,
-				this.chkIsDataComplete.Active);
+			try {
+				aPerson = pm.AddPerson(Convert.ToInt32(this.entryDNI.Text),
+					this.entrySurname.Text, this.entryName.Text,
+					this.cmbSex.ActiveText.Equals("Hombre") ? true : false,
+					this.chkIsDataComplete.Active);
+			}
+			catch (PersonExistsException) {
+				MessageDialog md = new MessageDialog(this.dlgAddPerson, DialogFlags.Modal,
+				                                     MessageType.Error, ButtonsType.Ok,
+				                                     "La persona ya existe en la base de datos");
+				md.Run();
+				md.Destroy();
+			}
 			
-			// TODO: Add other person data to aPerson
+			// Add more data to aPerson
+			aPerson.Address = this.entryAddress.Text;
+			aPerson.City = this.entryCity.Text;
+			aPerson.LandPhoneNumber = this.entryLandPhone.Text;
+			aPerson.MobileNumber = this.entryMobilePhone.Text;
+			aPerson.EMail = this.entryEMail.Text;
+			aPerson.Community = this.entryComunity.Text;
+			aPerson.IsActive = this.chkIsActive.Active;
 			
+			// Birthday date
+			int day = Convert.ToInt32(this.spbtnDay.Text);
+			int month = this.cmbMonth.Active + 1;
+			aPerson.BirthdayDate = new DateTime(2000, month, day);
+			
+			// Persist the new data added above
 			aPerson.Persist();
 			
 			// TODO: Update persons list in the main windows (Model of the treeview)
