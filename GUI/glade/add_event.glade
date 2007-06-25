@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.2.0 on Thu Jun 21 11:49:50 2007 by miltondp@wasabi-->
+<!--Generated with glade3 3.2.0 on Mon Jun 25 11:51:38 2007 by miltondp@wasabi-->
 <glade-interface>
   <widget class="GtkDialog" id="dlgAddEvent">
     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -225,13 +225,11 @@ Diciembre</property>
                             <property name="left_padding">10</property>
                             <property name="right_padding">10</property>
                             <child>
-                              <widget class="GtkEntry" id="entry1">
+                              <widget class="GtkTextView" id="textview1">
+                                <property name="height_request">100</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                                <property name="text" translatable="yes">Esto es 
-una muy simple prueba de concepto (nada
-que ver).</property>
                               </widget>
                             </child>
                           </widget>
