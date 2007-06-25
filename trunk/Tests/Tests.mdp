@@ -15,11 +15,15 @@
   </Configurations>
   <Contents>
     <File name="./AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="./ControladorAsistenciasTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./AttendanceManagerTest.cs" subtype="Code" buildaction="Compile" />
     <File name="./ControladorEventosTest.cs" subtype="Code" buildaction="Compile" />
     <File name="./ControladorInstrumentosTest.cs" subtype="Code" buildaction="Compile" />
-    <File name="./ControladorPersonasTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./PersonsManagerTest.cs" subtype="Code" buildaction="Compile" />
     <File name="./ControladorTiposEventoTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="../Gentle.NET/Gentle.config" subtype="Code" buildaction="FileCopy" />
+    <File name="../Database/data.db" subtype="Code" buildaction="FileCopy" />
+    <File name="../Gentle.NET/Mono.Data.SqliteClient.dll" subtype="Code" buildaction="FileCopy" />
+    <File name="../Gentle.NET/libsqlite3.so.0" subtype="Code" buildaction="FileCopy" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="AttendanceManager" />

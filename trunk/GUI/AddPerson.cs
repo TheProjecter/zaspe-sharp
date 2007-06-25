@@ -102,7 +102,31 @@ namespace ZaspeSharp.GUI
 		
 		public void OnOkCloseClicked(object o, EventArgs args)
 		{
-			this.Add();
+			try {
+				this.Add();
+			}
+			
+			catch (PersonExistsException ex)
+			{
+				MessageDialog md = new MessageDialog(this.dlgAddPerson, DialogFlags.Modal,
+					                                     MessageType.Error, ButtonsType.Ok,
+					                                     ex.Message);
+				md.Run();
+				md.Destroy();
+				
+				return;
+			}
+			
+			catch (Exception)
+			{
+				MessageDialog md = new MessageDialog(this.dlgAddPerson, DialogFlags.Modal,
+					                                     MessageType.Error, ButtonsType.Ok,
+					                                     "Hubo un error desconocido al ingresar la persona");
+				md.Run();
+				md.Destroy();
+				
+				return;
+			}
 			
 			this.dlgAddPerson.Destroy();
 		}
@@ -112,19 +136,10 @@ namespace ZaspeSharp.GUI
 			PersonsManager pm = PersonsManager.Instance;
 			Person aPerson = null;
 			
-			try {
-				aPerson = pm.AddPerson(Convert.ToInt32(this.entryDNI.Text),
-					this.entrySurname.Text, this.entryName.Text,
-					this.cmbSex.ActiveText.Equals("Hombre") ? true : false,
-					this.chkIsDataComplete.Active);
-			}
-			catch (PersonExistsException) {
-				MessageDialog md = new MessageDialog(this.dlgAddPerson, DialogFlags.Modal,
-				                                     MessageType.Error, ButtonsType.Ok,
-				                                     "La persona ya existe en la base de datos");
-				md.Run();
-				md.Destroy();
-			}
+			aPerson = pm.AddPerson(Convert.ToInt32(this.entryDNI.Text),
+				this.entrySurname.Text, this.entryName.Text,
+				this.cmbSex.ActiveText.Equals("Hombre") ? true : false,
+				this.chkIsDataComplete.Active);
 			
 			// Add more data to aPerson
 			aPerson.Address = this.entryAddress.Text;
@@ -143,7 +158,8 @@ namespace ZaspeSharp.GUI
 			// Persist the new data added above
 			aPerson.Persist();
 			
-			// TODO: Update persons list in the main windows (Model of the treeview)
+			// Update persons list in the main window
+			MainWindow.mainWindowInstance.AddPersonToList(aPerson);
 		}
 	}
 }

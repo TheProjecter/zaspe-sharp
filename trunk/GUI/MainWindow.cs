@@ -22,10 +22,14 @@ using System;
 using Glade;
 using Gtk;
 
+using ZaspeSharp.Persons;
+
 namespace ZaspeSharp.GUI
 {
 	public class MainWindow
 	{
+		public static MainWindow mainWindowInstance;
+		
 		[Widget]
 		private Gtk.Window mainWindow;
 		
@@ -95,7 +99,9 @@ namespace ZaspeSharp.GUI
 			email.AddAttribute(emailText, "text", 2);
 			
 			this.persons = new ListStore(typeof(string), typeof(string), typeof(string));
-			this.persons.AppendValues("Prueba", "DesdeCodigo", "A ver que pasa");
+			
+			// Example item
+			//this.persons.AppendValues("Prueba", "DesdeCodigo", "A ver que pasa");
 			
 			this.tvPersons.Model = this.persons;
 			
@@ -119,7 +125,9 @@ namespace ZaspeSharp.GUI
 			eventDate.AddAttribute(eventDateText, "text", 1);
 			
 			this.events = new ListStore(typeof(string), typeof(string));
-			this.events.AppendValues("Evento de", "Prueba");
+			
+			// Example item
+			//this.events.AppendValues("Evento de", "Prueba");
 			
 			this.tvEvents.Model = this.events;
 			
@@ -174,6 +182,11 @@ namespace ZaspeSharp.GUI
 			this.attendances.AppendValues("Fito Páez", false, false, false);
 			
 			this.tvAttendances.Model = attendances;
+			
+			// Read from persons database
+			PersonsManager pm = PersonsManager.Instance;
+			foreach (Person p in pm.RetrieveAll())
+				this.AddPersonToList(p);
 			
 			this.mainWindow.ShowAll();
 		}
@@ -257,6 +270,11 @@ namespace ZaspeSharp.GUI
 #endregion
 		
 #region Other methods
+		public void AddPersonToList(Person p)
+		{
+			this.persons.AppendValues(p.Surname, p.Name, p.EMail);
+		}
+		
 		private void AddTreeViewInVBox(TreeView tv)
 		{
 			// I remove the actual treeview
@@ -286,7 +304,7 @@ namespace ZaspeSharp.GUI
 		public static void Main(String[] args)
 		{
 			Application.Init();
-			new MainWindow();
+			mainWindowInstance = new MainWindow();
 			Application.Run();
 		}
 #endregion

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.2.0 on Mon Jun 25 11:51:38 2007 by miltondp@wasabi-->
+<!--Generated with glade3 3.2.0 on Mon Jun 25 18:50:25 2007 by miltondp@wasabi-->
 <glade-interface>
   <widget class="GtkDialog" id="dlgAddEvent">
     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -25,11 +25,15 @@
               <widget class="GtkAlignment" id="alignment1">
                 <property name="visible">True</property>
                 <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                <property name="left_padding">12</property>
+                <property name="top_padding">5</property>
+                <property name="bottom_padding">5</property>
+                <property name="left_padding">5</property>
+                <property name="right_padding">5</property>
                 <child>
                   <widget class="GtkVBox" id="vbox1">
                     <property name="visible">True</property>
                     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                    <property name="spacing">5</property>
                     <child>
                       <widget class="GtkHBox" id="hbox1">
                         <property name="visible">True</property>
@@ -49,7 +53,7 @@
                         </child>
                         <child>
                           <widget class="GtkSpinButton" id="spinbutton1">
-                            <property name="width_request">50</property>
+                            <property name="width_request">45</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -63,9 +67,10 @@
                         </child>
                         <child>
                           <widget class="GtkLabel" id="label7">
+                            <property name="width_request">25</property>
                             <property name="visible">True</property>
                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                            <property name="label" translatable="yes">  de  </property>
+                            <property name="label" translatable="yes">de</property>
                           </widget>
                           <packing>
                             <property name="expand">False</property>
@@ -75,6 +80,7 @@
                         </child>
                         <child>
                           <widget class="GtkComboBox" id="cmbMonth">
+                            <property name="width_request">100</property>
                             <property name="visible">True</property>
                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                             <property name="active">0</property>
@@ -92,14 +98,17 @@ Noviembre
 Diciembre</property>
                           </widget>
                           <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">False</property>
                             <property name="position">3</property>
                           </packing>
                         </child>
                         <child>
                           <widget class="GtkLabel" id="label8">
+                            <property name="width_request">40</property>
                             <property name="visible">True</property>
                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                            <property name="label" translatable="yes">  a las  </property>
+                            <property name="label" translatable="yes">a las</property>
                           </widget>
                           <packing>
                             <property name="expand">False</property>
@@ -109,7 +118,7 @@ Diciembre</property>
                         </child>
                         <child>
                           <widget class="GtkSpinButton" id="spinbutton2">
-                            <property name="width_request">50</property>
+                            <property name="width_request">45</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -123,9 +132,10 @@ Diciembre</property>
                         </child>
                         <child>
                           <widget class="GtkLabel" id="label9">
+                            <property name="width_request">10</property>
                             <property name="visible">True</property>
                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                            <property name="label" translatable="yes"> : </property>
+                            <property name="label" translatable="yes">:</property>
                           </widget>
                           <packing>
                             <property name="expand">False</property>
@@ -135,7 +145,7 @@ Diciembre</property>
                         </child>
                         <child>
                           <widget class="GtkSpinButton" id="spinbutton3">
-                            <property name="width_request">50</property>
+                            <property name="width_request">45</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -222,10 +232,12 @@ Diciembre</property>
                           <widget class="GtkAlignment" id="alignment2">
                             <property name="visible">True</property>
                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                            <property name="left_padding">10</property>
-                            <property name="right_padding">10</property>
+                            <property name="top_padding">5</property>
+                            <property name="bottom_padding">5</property>
+                            <property name="left_padding">5</property>
+                            <property name="right_padding">5</property>
                             <child>
-                              <widget class="GtkTextView" id="textview1">
+                              <widget class="GtkTextView" id="textviewGoals">
                                 <property name="height_request">100</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -238,7 +250,7 @@ Diciembre</property>
                           <widget class="GtkLabel" id="label5">
                             <property name="visible">True</property>
                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                            <property name="label" translatable="yes">&lt;b&gt;Objetivos&lt;/b&gt;</property>
+                            <property name="label" translatable="yes">&lt;b&gt;Objetivos:&lt;/b&gt;</property>
                             <property name="use_markup">True</property>
                           </widget>
                           <packing>
@@ -260,10 +272,12 @@ Diciembre</property>
                           <widget class="GtkAlignment" id="alignment3">
                             <property name="visible">True</property>
                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                            <property name="left_padding">10</property>
-                            <property name="right_padding">10</property>
+                            <property name="top_padding">5</property>
+                            <property name="bottom_padding">5</property>
+                            <property name="left_padding">5</property>
+                            <property name="right_padding">5</property>
                             <child>
-                              <widget class="GtkTextView" id="textview2">
+                              <widget class="GtkTextView" id="textviewObservations">
                                 <property name="height_request">100</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -277,7 +291,7 @@ Diciembre</property>
                           <widget class="GtkLabel" id="label6">
                             <property name="visible">True</property>
                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                            <property name="label" translatable="yes">&lt;b&gt;Observaciones&lt;/b&gt;</property>
+                            <property name="label" translatable="yes">&lt;b&gt;Observaciones:&lt;/b&gt;</property>
                             <property name="use_markup">True</property>
                           </widget>
                           <packing>
