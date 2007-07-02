@@ -17,6 +17,7 @@
 */
 
 using System;
+using System.Text.RegularExpressions;
 using System.Collections;
 using Gentle.Framework;
 
@@ -49,26 +50,23 @@ namespace ZaspeSharp.Persons
 		private string email;
 		
 		// Chorus related
-		string comunity;
+		string community;
 		ArrayList instruments;
 		bool is_active;
 		
 		// If person's data is complete
 		bool is_data_complete;
+		
+		// To check email syntax. See static constructor.
+		private static Regex email_regex;
 		#endregion
 		
 		#region Constructores
-		/// <summary>
-		/// This constructor should be used commonly.
-		/// </summary>
-		public Person (int dni, string surname, string name, bool is_man,
-		                bool data_is_complete) : this(dni, surname, name, is_man,
-		                DateTime.MinValue, null, null, null, null, null, null, false,
-		                data_is_complete) {}
+//		public Person (int dni, string surname, string name, bool is_man,
+//		                bool data_is_complete) : this(dni, surname, name, is_man,
+//		                DateTime.MinValue, null, null, null, null, null, null, false,
+//		                data_is_complete) {}
 
-		/// <summary>
-		/// This constructor should be used by Gentle.NET
-		/// </summary>
 		public Person(int dni, string surname, string name, bool is_man,
 		               DateTime birthday_date, string address, string city,
 		               string land_phone_number, string mobile_number, string email,
@@ -76,19 +74,23 @@ namespace ZaspeSharp.Persons
 		{
 			this.instruments = new ArrayList();
 			
-			this.dni = dni;
-			this.surname = surname;
+			this.Dni = dni;
+			this.Surname = surname;
 			this.Name = name;
-			this.is_man = is_man;
-			this.birthday_date = birthday_date;
-			this.address = address;
-			this.city = city;
-			this.land_phone_number = land_phone_number;
-			this.mobile_number = mobile_number;
-			this.email = email;
-			this.comunity = comunity;
-			this.is_active = is_active;
-			this.is_data_complete = is_data_complete;
+			this.IsMan = is_man;
+			this.BirthdayDate = birthday_date;
+			this.Address = address;
+			this.City = city;
+			this.LandPhoneNumber = land_phone_number;
+			this.MobileNumber = mobile_number;
+			this.EMail = email;
+			this.Community = community;
+			this.IsActive = is_active;
+			this.IsDataComplete = is_data_complete;
+		}
+		
+		static Person() {
+			email_regex = new Regex(@"\w+\@\w+\.\w+");
 		}
 		#endregion
 	}

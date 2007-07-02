@@ -39,9 +39,9 @@ namespace ZaspeSharp.Tests
 		public void Init()
 		{
 			// Ingresamos algunos datos genéricos para uso global
-			this.milton = personsManager.AddPerson(31486846, "Pividori", "Milton", true, false);
-			this.gisela = personsManager.AddPerson(32222222, "Pividori", "Gisela", false, false);
-			this.daiana = personsManager.AddPerson(33333333, "Pividori", "Daiana", false, false);
+//			this.milton = personsManager.AddPerson(31486846, "Pividori", "Milton", true, false);
+//			this.gisela = personsManager.AddPerson(32222222, "Pividori", "Gisela", false, false);
+//			this.daiana = personsManager.AddPerson(33333333, "Pividori", "Daiana", false, false);
 		}
 		
 		/// <summary>
@@ -223,7 +223,7 @@ namespace ZaspeSharp.Tests
 		[Test]
 		public void IngresarPersona()
 		{
-			Person doli = personsManager.AddPerson(11111111, "Paduán", "Doli", false, false);
+			Person doli = null;// = personsManager.AddPerson(11111111, "Paduán", "Doli", false, false);
 			
 			// Seteamos el cumpleaños
 			DateTime cumple = new DateTime(DateTime.Now.Year, 8, 11);
@@ -270,8 +270,8 @@ namespace ZaspeSharp.Tests
 		[ExpectedException(typeof(PersonExistsException))]
 		public void IngresarPersonaDuplicada()
 		{
-			Person miltonOtraVez = personsManager.AddPerson(31486846, "Pividori",
-				"Milton", true, false);
+//			Person miltonOtraVez = personsManager.AddPerson(31486846, "Pividori",
+//				"Milton", true, false);
 		}
 		
 		/// <summary>
@@ -281,7 +281,7 @@ namespace ZaspeSharp.Tests
 		[Test]
 		public void ModificarPersona()
 		{
-			Person doli = personsManager.AddPerson(11111111, "Paduán", "Doli", false, false);
+			Person doli = null;// = personsManager.AddPerson(11111111, "Paduán", "Doli", false, false);
 			
 			// Seteamos el cumpleaños
 			DateTime cumple = new DateTime(DateTime.Now.Year, 8, 11);

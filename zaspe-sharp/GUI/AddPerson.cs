@@ -62,7 +62,7 @@ namespace ZaspeSharp.GUI
 		
 		#region Other data
 		[Widget]
-		Entry entryComunity;
+		Entry entryCommunity;
 		
 		[Widget]
 		CheckButton chkIsActive;
@@ -84,7 +84,7 @@ namespace ZaspeSharp.GUI
 			
 			this.dlgAddPerson.TransientFor = parent;
 			this.cmbSex.Active = 0;
-			this.cmbMonth.Active = 0;
+			//this.cmbMonth.Active = 0;
 			
 			this.dlgAddPerson.Show();
 		}
@@ -101,31 +101,21 @@ namespace ZaspeSharp.GUI
 		
 		public void OnOkCloseClicked(object o, EventArgs args)
 		{
-			try {
+//			try {
 				this.Add();
-			}
-			
-			catch (PersonExistsException ex)
-			{
-				MessageDialog md = new MessageDialog(this.dlgAddPerson, DialogFlags.Modal,
-					                                     MessageType.Error, ButtonsType.Ok,
-					                                     ex.Message);
-				md.Run();
-				md.Destroy();
-				
-				return;
-			}
-			
-			catch (Exception)
-			{
-				MessageDialog md = new MessageDialog(this.dlgAddPerson, DialogFlags.Modal,
-					                                     MessageType.Error, ButtonsType.Ok,
-					                                     "Hubo un error desconocido al ingresar la persona");
-				md.Run();
-				md.Destroy();
-				
-				return;
-			}
+//			}
+//			catch (Exception ex)
+//			{
+//				MessageDialog md = new MessageDialog(this.dlgAddPerson, DialogFlags.Modal,
+//				                                     MessageType.Error, ButtonsType.Ok,
+//				                                     ex.Message);
+//				md.Title = "Error al ingresar la persona";
+//				
+//				md.Run();
+//				md.Destroy();
+//				
+//				return;
+//			}
 			
 			this.dlgAddPerson.Destroy();
 		}
@@ -135,27 +125,32 @@ namespace ZaspeSharp.GUI
 			PersonsManager pm = PersonsManager.Instance;
 			Person aPerson = null;
 			
-			aPerson = pm.AddPerson(Convert.ToInt32(this.entryDNI.Text),
-				this.entrySurname.Text, this.entryName.Text,
-				this.cmbSex.ActiveText.Equals("Hombre") ? true : false,
-				this.chkIsDataComplete.Active);
+			int dni;
+			try {
+				dni = Convert.ToInt32(this.entryDNI.Text);
+			}
+			catch (Exception) {
+				throw new Exception("El DNI no está en un formato correcto. El mismo debe formarse " +
+				                    "únicamente con números, y no otros caracteres como los puntos.");
+			}
 			
-			// Add more data to aPerson
-			aPerson.Address = this.entryAddress.Text;
-			aPerson.City = this.entryCity.Text;
-			aPerson.LandPhoneNumber = this.entryLandPhone.Text;
-			aPerson.MobileNumber = this.entryMobilePhone.Text;
-			aPerson.EMail = this.entryEMail.Text;
-			aPerson.Community = this.entryComunity.Text;
-			aPerson.IsActive = this.chkIsActive.Active;
-			
-			// Birthday date
 			int day = Convert.ToInt32(this.spbtnDay.Text);
 			int month = this.cmbMonth.Active + 1;
-			aPerson.BirthdayDate = new DateTime(2000, month, day);
+			DateTime birthday = DateTime.MinValue;
 			
-			// Persist the new data added above
-			aPerson.Persist();
+			try {
+				birthday = new DateTime(2000, month, day);
+			}
+			catch (Exception) {
+			}
+			
+			aPerson = pm.AddPerson(dni, this.entrySurname.Text, this.entryName.Text,
+			                       this.cmbSex.ActiveText.Equals("Hombre") ? true : false,
+			                       birthday, this.entryAddress.Text,
+			                       this.entryCity.Text, this.entryLandPhone.Text,
+			                       this.entryMobilePhone.Text, this.entryEMail.Text,
+			                       this.entryCommunity.Text, this.chkIsActive.Active,
+			                       this.chkIsDataComplete.Active);
 			
 			// Update persons list in the main window
 			MainWindow.mainWindowInstance.AddPersonToList(aPerson);
