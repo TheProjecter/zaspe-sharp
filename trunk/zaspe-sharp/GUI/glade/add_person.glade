@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.2.0 on Mon Jun 25 19:37:36 2007 by miltondp@wasabi-->
+<!--Generated with glade3 3.2.0 on Mon Jul  2 20:08:11 2007 by miltondp@wasabi-->
 <glade-interface>
   <widget class="GtkDialog" id="dlgAddPerson">
     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -434,7 +434,7 @@ Mujer</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkEntry" id="entryComunity">
+                              <widget class="GtkEntry" id="entryCommunity">
                                 <property name="width_request">170</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>

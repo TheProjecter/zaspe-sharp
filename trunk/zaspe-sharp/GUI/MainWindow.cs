@@ -88,15 +88,23 @@ namespace ZaspeSharp.GUI
 			CellRendererText emailText = new CellRendererText();
 			email.PackStart(emailText, true);
 			
+			TreeViewColumn birthday = new TreeViewColumn();
+			email.Title = "Cumpleaños";
+			CellRendererText birthdayText = new CellRendererText();
+			birthday.PackStart(birthdayText, true);
+			
 			this.tvPersons.AppendColumn(surname);
 			this.tvPersons.AppendColumn(name);
 			this.tvPersons.AppendColumn(email);
+			this.tvPersons.AppendColumn(birthday);
 			
 			surname.AddAttribute(surnameText, "text", 0);
 			name.AddAttribute(nameText, "text", 1);
 			email.AddAttribute(emailText, "text", 2);
+			birthday.AddAttribute(birthdayText, "text", 3);
 			
-			this.persons = new ListStore(typeof(string), typeof(string), typeof(string));
+			this.persons = new ListStore(typeof(string), typeof(string),
+			                             typeof(string), typeof(string));
 			
 			// Example item
 			//this.persons.AppendValues("Prueba", "DesdeCodigo", "A ver que pasa");
@@ -270,7 +278,7 @@ namespace ZaspeSharp.GUI
 #region Other methods
 		public void AddPersonToList(Person p)
 		{
-			this.persons.AppendValues(p.Surname, p.Name, p.EMail);
+			this.persons.AppendValues(p.Surname, p.Name, p.EMail, p.BirthdayDate.ToString("dd/MMMM"));
 		}
 		
 		private void AddTreeViewInVBox(TreeView tv)

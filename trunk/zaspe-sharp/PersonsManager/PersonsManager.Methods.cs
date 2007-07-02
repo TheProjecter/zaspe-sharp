@@ -74,23 +74,52 @@ namespace ZaspeSharp.Persons
 #endregion
 		
 #region Entry methods
+		// Add person with basic data
+//		public Person AddPerson(int dni, string surname, string name, bool is_man,
+//		                               bool data_is_complete)
+//		{
+//			
+//			return this.AddPerson(dni, surname, name, is_man
+//			
+//			// Check if exists another person with the same dni.
+//			try {
+//				Retrieve(dni);
+//			}
+//			catch (PersonDoesNotExistException) {
+//				Person newPerson = new Person(dni, surname, name, is_man, data_is_complete);
+//				newPerson.Persist();
+//				
+//				return newPerson;
+//			}
+//			
+//			throw new Exception("Se está intentando ingresar una persona que " +
+//			                                "ya existe en la base de datos: El DNI ingresado " +
+//			                                "pertenece a una persona previamente agregada.");
+//		}
+		
+		// Add person with complete data
 		public Person AddPerson(int dni, string surname, string name, bool is_man,
-		                               bool data_is_complete)
+		                        DateTime birthday_date, string address, string city,
+		                        string land_phone_number, string mobile_number, string email,
+		                        string comunity, bool is_active, bool is_data_complete)
 		{
-			// Chequemos que no exista una persona con el mismo DNI
+			// Check if exists another person with the same dni.
 			try {
 				Retrieve(dni);
 			}
 			catch (PersonDoesNotExistException) {
-				Person newPerson = new Person(dni, surname, name, is_man, data_is_complete);
+				Person newPerson = new Person(dni, surname, name, is_man,
+				                              birthday_date, address, city,
+				                              land_phone_number, mobile_number, email,
+				                              comunity, is_active, is_data_complete);
 				newPerson.Persist();
 				
 				return newPerson;
 			}
 			
-			throw new PersonExistsException("Se está intentando ingresar una persona que " +
-			                                "ya existe en la base de datos: El DNI ingresado " +
-			                                "pertenece a una persona previamente ingresada.");
+			throw new Exception("Se está intentando ingresar una persona que " +
+			                    "ya existe en la base de datos: El DNI ingresado " +
+			                    "pertenece a una persona previamente agregada.");
 		}
 #endregion
 		

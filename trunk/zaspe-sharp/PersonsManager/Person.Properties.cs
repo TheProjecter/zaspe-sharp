@@ -34,21 +34,42 @@ namespace ZaspeSharp.Persons
 		public int Dni
 		{
 			get { return this.dni; }
-			set { this.dni = value; }
+			
+			set {
+				// DNI must be positive bigger than zero
+				if (value <= 0)
+					throw new Exception("El DNI debe ser mayor a cero.");
+				
+				this.dni = value;
+			}
 		}
 		
 		[TableColumn("surname", NotNull=true)]
 		public string Surname
 		{
 			get { return this.surname; }
-			set { this.surname = value; }
+			
+			set {
+				// Surname must not be blank
+				if (value.Trim().Equals(""))
+					throw new Exception("El apellido no puede estar en blanco");
+				
+				this.surname = value;
+			}
 		}
 		
 		[TableColumn("name", NotNull=true)]
 		public string Name
 		{
 			get { return this.name; }
-			set { this.name = value; }
+			
+			set {
+				// Name must not be blank
+				if (value.Trim().Equals(""))
+					throw new Exception("El nombre no puede estar en blanco");
+				
+				this.name = value;
+			}
 		}
 		
 		[TableColumn("is_man", NotNull=true)]
@@ -107,7 +128,13 @@ namespace ZaspeSharp.Persons
 		public string EMail
 		{
 			get {return this.email;}
-			set {this.email = value;}
+			
+			set {
+				if (value == null || value.Equals("") || email_regex.IsMatch(value))
+				    this.email = value;
+				else
+					throw new Exception("El email es inválido.");
+			}
 		}
 		#endregion
 		
@@ -115,8 +142,8 @@ namespace ZaspeSharp.Persons
 		[TableColumn("comunity", NotNull=false)]
 		public string Community
 		{
-			get {return this.comunity;}
-			set {this.comunity = value;}
+			get {return this.community;}
+			set {this.community = value;}
 		}
 		
 		public ArrayList Instruments

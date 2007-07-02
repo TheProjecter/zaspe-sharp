@@ -37,8 +37,8 @@ namespace ZaspeSharp.Tests
 		
 		[TestFixtureSetUp]
 		public void Init() {
-			this.person1 = PersonsManager.Instance.AddPerson(1, "Pividori", "Milton", true, false);
-			this.person2 = PersonsManager.Instance.AddPerson(2, "Paduán", "Doli", false, false);
+//			this.person1 = PersonsManager.Instance.AddPerson(1, "Pividori", "Milton", true, false);
+//			this.person2 = PersonsManager.Instance.AddPerson(2, "Paduán", "Doli", false, false);
 			
 			this.event1 = EventsManager.Instance.IngresarEvento(new DateTime(DateTime.Now.Year, 1, 1), "Evento1", Types.ENSAYO);
 			this.event2 = EventsManager.Instance.IngresarEvento(new DateTime(DateTime.Now.Year, 1, 2), "Evento2", Types.MISA);
