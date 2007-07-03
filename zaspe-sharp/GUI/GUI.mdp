@@ -28,6 +28,7 @@
     <File name="../Gentle.NET/Mono.Data.SqliteClient.dll" subtype="Code" buildaction="FileCopy" />
     <File name="../Gentle.NET/Gentle.config" subtype="Code" buildaction="FileCopy" />
     <File name="../Database/data.db" subtype="Code" buildaction="FileCopy" />
+    <File name="./ModifyPerson.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
