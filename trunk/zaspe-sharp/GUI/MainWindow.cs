@@ -32,10 +32,10 @@ namespace ZaspeSharp.GUI
 		private Gtk.Window mainWindow;
 		
 		[Widget]
-		private ToolButton tbAddPerson;
+		private MenuToolButton mtbAddPerson;
 		
 		[Widget]
-		private ToolButton tbAddEvent;
+		private MenuToolButton mtbAddEvent;
 		
 		[Widget]
 		private ToolButton tbQuit;
@@ -61,13 +61,27 @@ namespace ZaspeSharp.GUI
 		[Widget]
 		private ListStore events;
 		
+		private Menu menuPersonActions;
+		private Menu menuEventActions;
+		
 		public MainWindow()
 		{
+			Glade.XML gxml_person = new Glade.XML("main_window.glade", "menuPersonActions", null);
+			gxml_person.Autoconnect(this);
+			
+			Glade.XML gxml_event = new Glade.XML("main_window.glade", "menuEventActions", null);
+			
 			Glade.XML gxml = new Glade.XML ("main_window.glade", "mainWindow", null);
 			gxml.Autoconnect(this);
 			
+			this.menuPersonActions = (Menu)gxml_person.GetWidget("menuPersonActions");
+			this.menuEventActions = (Menu)gxml_event.GetWidget("menuEventActions");
+			
 			// Icon for the main window
 			this.mainWindow.Icon = new Gdk.Pixbuf("blue_fea.gif");
+			
+			this.mtbAddPerson.Menu = this.menuPersonActions;
+			this.mtbAddEvent.Menu = this.menuEventActions;
 			
 			// tvPersons
 			this.tvPersons = new TreeView();
@@ -89,7 +103,7 @@ namespace ZaspeSharp.GUI
 			email.PackStart(emailText, true);
 			
 			TreeViewColumn birthday = new TreeViewColumn();
-			email.Title = "Cumpleaños";
+			birthday.Title = "Cumpleaños";
 			CellRendererText birthdayText = new CellRendererText();
 			birthday.PackStart(birthdayText, true);
 			
@@ -198,6 +212,27 @@ namespace ZaspeSharp.GUI
 		}
 		
 #region Event handlers
+		public void OnMenuItemModifyPersonActivate(object o, EventArgs args)
+		{
+			new ModifyPerson(this.mainWindow);
+		}
+		
+		public void OnMenuItemRemovePersonActivate(object o, EventArgs args)
+		{
+			
+		}
+		
+		public void OnMenuItemModifyEventActivate(object o, EventArgs args)
+		{
+			
+		}
+		
+		public void OnMenuItemRemoveEventActivate(object o, EventArgs args)
+		{
+			
+		}
+		
+		
 		public void OnPersonsListToggle(object o, EventArgs args)
 		{
 			this.AddTreeViewInVBox(this.tvPersons);
@@ -278,7 +313,12 @@ namespace ZaspeSharp.GUI
 #region Other methods
 		public void AddPersonToList(Person p)
 		{
-			this.persons.AppendValues(p.Surname, p.Name, p.EMail, p.BirthdayDate.ToString("dd/MMMM"));
+			string birthday = p.BirthdayDate.ToString("dd") + " de " + p.BirthdayDate.ToString("MMMM");
+			
+			if (p.BirthdayDate.Equals(DateTime.MinValue))
+			    birthday = "";
+			
+			this.persons.AppendValues(p.Surname, p.Name, p.EMail, birthday);
 		}
 		
 		private void AddTreeViewInVBox(TreeView tv)
