@@ -91,7 +91,7 @@ namespace ZaspeSharp.GUI
 		[Widget]
 		Gtk.HButtonBox dialogButtons;
 		
-		public ModifyPerson(Gtk.Window parent)
+		public ModifyPerson(Gtk.Window parent, Person aPerson)
 		{
 			Glade.XML gxml = new Glade.XML ("add_person.glade", "dlgAddPerson", null);
 			gxml.Autoconnect(this);
@@ -102,6 +102,28 @@ namespace ZaspeSharp.GUI
 			
 			this.dialogButtons.Remove(this.btnOkClose);
 			this.btnOkAdd.Label = "Guardar";
+			
+			// Person data
+			this.entryName.Text = aPerson.Name;
+			this.entrySurname.Text = aPerson.Surname;
+			this.entryDNI.Text = aPerson.Dni.ToString();
+			
+			if (aPerson.IsMan)
+				this.cmbSex.Active = 0;
+			else
+				this.cmbSex.Active = 1;
+			
+			this.entryAddress.Text = aPerson.Address;
+			this.entryCity.Text = aPerson.City;
+			this.entryLandPhone.Text = aPerson.LandPhoneNumber;
+			this.entryMobilePhone.Text = aPerson.MobileNumber;
+			this.entryEMail.Text = aPerson.EMail;
+			
+			this.entryCommunity.Text = aPerson.Community;
+			this.chkIsActive.Active = aPerson.IsActive;
+			this.spbtnDay.Value = aPerson.BirthdayDate.Day;
+			this.cmbMonth.Active = aPerson.BirthdayDate.Month - 1;
+			this.chkIsDataComplete.Active = aPerson.IsDataComplete;
 			
 			this.dlgAddPerson.Show();
 		}
