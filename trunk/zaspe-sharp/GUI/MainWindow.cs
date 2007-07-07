@@ -64,12 +64,24 @@ namespace ZaspeSharp.GUI
 		private Menu menuPersonActions;
 		private Menu menuEventActions;
 		
+		private ImageMenuItem imiModifyPerson;
+		private ImageMenuItem imiRemovePerson;
+		private ImageMenuItem imiModifyEvent;
+		private ImageMenuItem imiRemoveEvent;
+		
+		private Person selectedPerson;
+		
 		public MainWindow()
 		{
 			Glade.XML gxml_person = new Glade.XML("main_window.glade", "menuPersonActions", null);
 			gxml_person.Autoconnect(this);
 			
+			this.imiModifyPerson = (ImageMenuItem)gxml_person.GetWidget("imiModifyPerson");
+			this.imiRemovePerson = (ImageMenuItem)gxml_person.GetWidget("imiRemovePerson");
+			
 			Glade.XML gxml_event = new Glade.XML("main_window.glade", "menuEventActions", null);
+			this.imiModifyEvent = (ImageMenuItem)gxml_event.GetWidget("imiModifyEvent");
+			this.imiRemoveEvent = (ImageMenuItem)gxml_event.GetWidget("imiRemoveEvent");
 			
 			Glade.XML gxml = new Glade.XML ("main_window.glade", "mainWindow", null);
 			gxml.Autoconnect(this);
@@ -118,12 +130,16 @@ namespace ZaspeSharp.GUI
 			birthday.AddAttribute(birthdayText, "text", 3);
 			
 			this.persons = new ListStore(typeof(string), typeof(string),
-			                             typeof(string), typeof(string));
-			
-			// Example item
-			//this.persons.AppendValues("Prueba", "DesdeCodigo", "A ver que pasa");
+			                             typeof(string), typeof(string),
+			                             typeof(Person));
 			
 			this.tvPersons.Model = this.persons;
+			
+			// Handler when a row is selected, to enable person modify button
+			this.tvPersons.CursorChanged += new EventHandler(this.OnPersonsListCursorChanged);
+			
+			// Handler when a row is double clicked
+			this.tvPersons.RowActivated += new RowActivatedHandler(this.OnPersonsListRowActivated);
 			
 			// tvEvents
 			this.tvEvents = new TreeView();
@@ -201,7 +217,7 @@ namespace ZaspeSharp.GUI
 			this.attendances.AppendValues("Damián Paduán", false, true, false);
 			this.attendances.AppendValues("Fito Páez", false, false, false);
 			
-			this.tvAttendances.Model = attendances;
+			this.tvAttendances.Model = this.attendances;
 			
 			// Read from persons database
 			PersonsManager pm = PersonsManager.Instance;
@@ -212,9 +228,25 @@ namespace ZaspeSharp.GUI
 		}
 		
 #region Event handlers
+		public void OnPersonsListRowActivated(object o, EventArgs args)
+		{
+			new ModifyPerson(this.mainWindow, this.selectedPerson);
+		}
+		
+		public void OnPersonsListCursorChanged(object o, EventArgs args)
+		{
+			this.imiModifyPerson.Sensitive = true;
+			this.imiRemovePerson.Sensitive = true;
+			
+			TreeIter iter;
+			this.tvPersons.Selection.GetSelected(out iter);
+			
+			this.selectedPerson = (Person)this.persons.GetValue(iter, 4);
+		}
+		
 		public void OnMenuItemModifyPersonActivate(object o, EventArgs args)
 		{
-			new ModifyPerson(this.mainWindow);
+			new ModifyPerson(this.mainWindow, this.selectedPerson);
 		}
 		
 		public void OnMenuItemRemovePersonActivate(object o, EventArgs args)
@@ -318,7 +350,7 @@ namespace ZaspeSharp.GUI
 			if (p.BirthdayDate.Equals(DateTime.MinValue))
 			    birthday = "";
 			
-			this.persons.AppendValues(p.Surname, p.Name, p.EMail, birthday);
+			this.persons.AppendValues(p.Surname, p.Name, p.EMail, birthday, p);
 		}
 		
 		private void AddTreeViewInVBox(TreeView tv)

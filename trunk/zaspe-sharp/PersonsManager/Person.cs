@@ -70,7 +70,7 @@ namespace ZaspeSharp.Persons
 		public Person(int dni, string surname, string name, bool is_man,
 		               DateTime birthday_date, string address, string city,
 		               string land_phone_number, string mobile_number, string email,
-		               string comunity, bool is_active, bool is_data_complete)
+		               string community, bool is_active, bool is_data_complete)
 		{
 			this.instruments = new ArrayList();
 			

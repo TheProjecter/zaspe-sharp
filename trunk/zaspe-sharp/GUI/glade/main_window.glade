@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.2.0 on Tue Jul  3 16:04:14 2007 by miltondp@wasabi-->
+<!--Generated with glade3 3.2.0 on Fri Jul  6 21:13:11 2007 by miltondp@miltondp-desktop-->
 <glade-interface>
   <widget class="GtkWindow" id="mainWindow">
     <property name="width_request">600</property>
@@ -112,6 +112,7 @@
                 <property name="label">Agregar persona</property>
                 <property name="stock_id">gtk-add</property>
                 <property name="menu">menuPersonActions</property>
+                <signal name="clicked" handler="OnAddPersonClicked"/>
               </widget>
               <packing>
                 <property name="expand">False</property>
@@ -125,6 +126,7 @@
                 <property name="label">Agregar evento</property>
                 <property name="stock_id">gtk-yes</property>
                 <property name="menu">menuEventActions</property>
+                <signal name="clicked" handler="OnAddEventClicked"/>
               </widget>
               <packing>
                 <property name="expand">False</property>
@@ -240,8 +242,9 @@
     <property name="visible">True</property>
     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
     <child>
-      <widget class="GtkImageMenuItem" id="miModifyPerson">
+      <widget class="GtkImageMenuItem" id="imiModifyPerson">
         <property name="visible">True</property>
+        <property name="sensitive">False</property>
         <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
         <property name="label" translatable="yes">Modificar persona</property>
         <property name="use_underline">True</property>
@@ -256,8 +259,9 @@
       </widget>
     </child>
     <child>
-      <widget class="GtkImageMenuItem" id="miRemovePerson">
+      <widget class="GtkImageMenuItem" id="imiRemovePerson">
         <property name="visible">True</property>
+        <property name="sensitive">False</property>
         <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
         <property name="label" translatable="yes">Eliminar persona</property>
         <property name="use_underline">True</property>
@@ -276,8 +280,9 @@
     <property name="visible">True</property>
     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
     <child>
-      <widget class="GtkImageMenuItem" id="miModifyEvent">
+      <widget class="GtkImageMenuItem" id="imiModifyEvent">
         <property name="visible">True</property>
+        <property name="sensitive">False</property>
         <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
         <property name="label" translatable="yes">Modificar evento</property>
         <property name="use_underline">True</property>
@@ -292,8 +297,9 @@
       </widget>
     </child>
     <child>
-      <widget class="GtkImageMenuItem" id="miRemoveEvent">
+      <widget class="GtkImageMenuItem" id="imiRemoveEvent">
         <property name="visible">True</property>
+        <property name="sensitive">False</property>
         <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
         <property name="label" translatable="yes">Eliminar evento</property>
         <property name="use_underline">True</property>
