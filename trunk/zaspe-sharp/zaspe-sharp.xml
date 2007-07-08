@@ -182,12 +182,13 @@
 			<Reference path="..\Gentle.NET" name="Gentle.Provider.SQLite" localCopy="true"/>
 			<Reference path="..\Gentle.NET" name="log4net" localCopy="true"/>
 			<Files>
-				<File buildAction="None" copyToOutput="Always" link="true">..\Database\data.db</File>
-				<File buildAction="None" copyToOutput="Always" link="true">..\Gentle.NET\Gentle.config</File>
-				<File buildAction="None" copyToOutput="Always" link="true">..\Gentle.NET\sqlite3.dll</File>
-				<File buildAction="None" copyToOutput="Always" link="true">..\Gentle.NET\libsqlite3.so.0</File>
-				<File buildAction="None" copyToOutput="Always" link="true">..\Gentle.NET\Mono.Data.SqliteClient.dll</File>
-				<File buildAction="None" copyToOutput="Always" link="true">resources\blue_fea.gif</File>
+				<!-- Using Match instead of File solves problems with paths between GNU/Linux and Windows -->
+				<Match path="..\Database" pattern="data.db" recurse="false" buildAction="None" copyToOutput="Always" link="true" />
+				<Match path="..\Gentle.NET" pattern="Gentle.config" recurse="false" buildAction="None" copyToOutput="Always" link="true" />
+				<Match path="..\Gentle.NET" pattern="sqlite3.dll" recurse="false" buildAction="None" copyToOutput="Always" link="true" />
+				<Match path="..\Gentle.NET" pattern="libsqlite3.so.0" recurse="false" buildAction="None" copyToOutput="Always" link="true" />
+				<Match path="..\Gentle.NET" pattern="Mono.Data.SqliteClient.dll" recurse="false" buildAction="None" copyToOutput="Always" link="true" />
+				<Match path=".\resources" pattern="blue_fea.gif" recurse="false" buildAction="None" copyToOutput="Always" link="true" />
 				<Match path=".\glade" pattern="*.glade" recurse="false" buildAction="None" copyToOutput="Always" link="true" />
 				<Match pattern="*.cs" recurse="false" buildAction="Compile"/>
 			</Files>

@@ -1,3 +1,4 @@
 * Internationalization support: Maybe with Mono.Unix, but I don't know if it
 can be easily used with the MS .NET Framework.
 
+* Revision of README file.
