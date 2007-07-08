@@ -157,7 +157,7 @@
 			</Files>
 		</Project>
 		
-		<Project name="GUI" path="GUI" type="WinExe" assemblyName="GUI" rootNamespace="ZaspeSharp.GUI">
+		<Project name="GUI" path="GUI" type="WinExe" assemblyName="GUI" rootNamespace="ZaspeSharp.GUI" icon="resources/blue_fea.ico">
 			<Configuration name="Debug">
 				<Options>
 					<OutputPath>.\bin\Debug</OutputPath>
