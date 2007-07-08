@@ -1,0 +1,13 @@
+Windows
+-------
+
+You need .NET Framework 2.0 and Gtk# 2.10.1 (this one can be downloaded
+from the web site of ZaspeSharp).
+
+
+GNU/Linux
+---------
+
+You need Mono 1.2.x (I don't know if it works with other version, maybe
+with 1.1.x) and gtk-sharp 2.10.
+
