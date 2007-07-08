@@ -1,0 +1,21 @@
+#! /bin/sh
+
+PACKAGE=prebuild
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+
+# %%$@%$# why oh why isn't it $sharedir/prebuild
+# Day changed to 30 Mar 2007
+# ...
+# 07:50 &lt; cj&gt; why are we installing .exe assemblies to $prefix/lib/$package/ and 
+#             not $prefix/share/$package ?
+# 07:50 &lt; jonp&gt; momentum.
+# 07:50 &lt; jonp&gt; and it's hard to say that a .exe isn't platform specific
+# 07:50 &lt; jonp&gt; as it can still contain DllImport's which make platform 
+#               assumptions
+
+packagedir=$prefix/lib/prebuild
+export MONO_PATH=$MONO_PATH 
+
+exec @RUNTIME@ $packagedir/$PACKAGE.exe "$@"
+
