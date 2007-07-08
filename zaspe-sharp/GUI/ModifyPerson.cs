@@ -121,8 +121,12 @@ namespace ZaspeSharp.GUI
 			
 			this.entryCommunity.Text = aPerson.Community;
 			this.chkIsActive.Active = aPerson.IsActive;
-			this.spbtnDay.Value = aPerson.BirthdayDate.Day;
-			this.cmbMonth.Active = aPerson.BirthdayDate.Month - 1;
+			
+			if (!aPerson.BirthdayDate.Equals(DateTime.MinValue)) {
+				this.spbtnDay.Value = aPerson.BirthdayDate.Day;
+				this.cmbMonth.Active = aPerson.BirthdayDate.Month - 1;
+			}
+			
 			this.chkIsDataComplete.Active = aPerson.IsDataComplete;
 			
 			this.dlgAddPerson.Show();
