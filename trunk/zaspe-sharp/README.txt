@@ -1,10 +1,9 @@
-ZaspeSharp is developed in C#. You need the .NET Runtime 2.0 on Windows,
-and Mono 1.2 (I don't know if it works with older versions) on GNU/Linux.
+ZaspeSharp is developed in C#. You need the .NET Runtime 2.0 on Windows, and
+Mono 1.2 (I don't know if it works with older versions) on GNU/Linux.
 
-Graphical user interface is made with Gtk# 2.10.1, so you need to download
-the runtime from the web site and install it if you plan to run ZaspeSharp
-on Windows. If you use GNU/Linux, download and install the appropriate
-package.
+Graphical user interface is made with Gtk# 2.10.1, so you need to download the
+runtime from the web site and install it if you plan to run ZaspeSharp on
+Windows. If you use GNU/Linux, download and install the appropriate package.
 
 Compilation
 -----------
@@ -91,3 +90,4 @@ So, steps to compile with NAnt under Mono are:
 
 NOTE: Prebuild version included here is not the original. It's a modified
 version, based in release 2.0.1.
+
