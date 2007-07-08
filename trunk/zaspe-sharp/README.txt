@@ -11,8 +11,10 @@ Compilation
 We use Prebuild to make the solution and projects files for MonoDevelop,
 SharpDevelop, Visual Studio and NAnt, according to your needs.
 
+You have to run the GUI project after compilation has finished.
 
-1. MonoDevelop
+
+1. MonoDevelop (tested with version 0.14)
 
 So, if you work on GNU/Linux and MonoDevelop, you can generate mds and mdp
 files running prebuild.exe:
@@ -22,7 +24,7 @@ files running prebuild.exe:
 Now you can open the solution file ZaspeSharp.mds with MonoDevelop.
 
 
-2. SharpDevelop
+2. SharpDevelop (tested with version 2.2)
 
 With SharpDevelop on Windows, steps are similar like MonoDevelop:
 
@@ -37,9 +39,9 @@ Now you can open the solution file ZaspeSharp.sln. If you are using version
 // TODO
 
 
-4. NAnt
+4. NAnt (tested with version 0.85-ubuntu)
 
-4.1 NAnt under GNU/Linux
+4.1 NAnt under GNU/Linux (Ubuntu Feisty Fawn)
 
 To compile ZaspeSharp under Mono, we need to specify "-pkg:" option to gmcs
 compiler, not "-r". This is not handled very well by Prebuild. Also, after
@@ -83,7 +85,7 @@ So, steps to compile with NAnt under Mono are:
 		$ mono GUI.exe
 
 
-4.2 NAnt under Windows
+4.2 NAnt under Windows XP
 
 // TODO
 
