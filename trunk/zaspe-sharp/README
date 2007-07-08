@@ -1,0 +1,16 @@
+We use prebuild to make the solution and projects files for MonoDevelop,
+SharpDevelop, NAnt or Visual Studio, according to your needs.
+
+So, if you work on GNU/Linux and MonoDevelop, you can generate mds and mdp
+files running prebuild.exe:
+
+	$ mono prebuild.exe /target monodev /file zaspe-sharp.xml
+
+Now you can open the solution file ZaspeSharp.mds with MonoDevelop.
+
+// TODO: Explanation for SharpDevelop
+// TODO: Explanation for NAnt
+
+NOTE: Prebuild version included here is not the original. It's a modified
+version, based in release 2.0.1.
+
