@@ -322,8 +322,8 @@ namespace Prebuild.Core
 
 		private void LogBanner()
 		{
-			m_Log.Write("Prebuild v" + this.Version);
-			m_Log.Write("Copyright (c) Matthew Holmes, Dan Moorehead and David Hudson");
+			m_Log.Write("Prebuild v" + this.Version + "-patched");
+			m_Log.Write("Copyright (c) Matthew Holmes, Dan Moorehead, David Hudson and Milton Pividori");
 			m_Log.Write("See 'prebuild /usage' for help");
 			m_Log.Write();
 		}
