@@ -1,5 +1,16 @@
-We use prebuild to make the solution and projects files for MonoDevelop,
-SharpDevelop, NAnt or Visual Studio, according to your needs.
+ZaspeSharp is developed in C#. You need the .NET Runtime 2.0 on Windows,
+and Mono 1.2 (I don't know if it works with older versions) on GNU/Linux.
+
+Graphical user interface is made with Gtk# 2.10.1, so you need to download
+the runtime from the web site and install it if you plan to run ZaspeSharp
+on Windows. If you use GNU/Linux, download and install the appropriate
+package.
+
+Compilation
+-----------
+
+We use Prebuild to make the solution and projects files for MonoDevelop,
+SharpDevelop, Visual Studio and NAnt, according to your needs.
 
 
 1. MonoDevelop
@@ -12,16 +23,71 @@ files running prebuild.exe:
 Now you can open the solution file ZaspeSharp.mds with MonoDevelop.
 
 
-2. NAnt
+2. SharpDevelop
 
-It does not work very well. It does not manage correcly gtk-sharp references.
-It's necesary to use -pkg:gtk-sharp to compile with Mono, but I think NAnt
-does't manage this correctly.
+With SharpDevelop on Windows, steps are similar like MonoDevelop:
 
-// TODO: Test NAnt on Windows.
+	> prebuild.exe /target sharpdev2 /file zaspe-sharp.xml
 
-// TODO: Explanation for SharpDevelop
+Now you can open the solution file ZaspeSharp.sln. If you are using version
+1.x, you have to replace sharpdev2 by sharpdev.
+
+
+3. Visual Studio
+
+// TODO
+
+
+4. NAnt
+
+4.1 NAnt under GNU/Linux
+
+To compile ZaspeSharp under Mono, we need to specify "-pkg:" option to gmcs
+compiler, not "-r". This is not handled very well by Prebuild. Also, after
+compilation with NAnt, it's necesary to copy some files to output directory.
+
+So, steps to compile with NAnt under Mono are:
+
+	* Run:
+		$ mono prebuild.exe /target nant /file zaspe-sharp.xml
+	
+	* Edit GUI/GUI.exe.build. Remove these lines in target "winexe":
+
+                <include name="atk-sharp.dll" />
+                <include name="gdk-sharp.dll" />
+                <include name="glade-sharp.dll" />
+                <include name="glib-sharp.dll" />
+                <include name="gtk-sharp.dll" />
+
+	  and add these ones after resources structure:
+
+		<pkg-references>
+			<package name="glib-sharp-2.0" />
+			<package name="gtk-sharp-2.0" />
+			<package name="glade-sharp-2.0" />
+		</pkg-references>
+
+	* Run:
+		$ nant
+
+	* Copy these files to output directory (GUI/bin/Debug or GUI/bin/Release):
+
+		Database/data.db
+		Gentle.NET/Gentle.config
+		Gentle.NET/libsqlite3.so.0 (on GNU/Linux)
+		Gentle.NET/sqlite3.dll (on Windows)
+		Gentle.NET/Mono.Data.SqliteClient.dll
+		GUI/glade/*.glade
+		GUI/resources/blue_fea.gif
+
+	* Run GUI.exe:
+		$ mono GUI.exe
+
+
+4.2 NAnt under Windows
+
+// TODO
+
 
 NOTE: Prebuild version included here is not the original. It's a modified
 version, based in release 2.0.1.
-
