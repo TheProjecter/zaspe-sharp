@@ -141,6 +141,9 @@ namespace ZaspeSharp.GUI
 			// Handler when a row is double clicked
 			this.tvPersons.RowActivated += new RowActivatedHandler(this.OnPersonsListRowActivated);
 			
+			// Handler to disable modify and remove person buttons
+			this.tvPersons.Hidden += new EventHandler(this.OnPersonsListHidden);
+			
 			// tvEvents
 			this.tvEvents = new TreeView();
 			
@@ -228,6 +231,12 @@ namespace ZaspeSharp.GUI
 		}
 		
 #region Event handlers
+		public void OnPersonsListHidden(object o, EventArgs args)
+		{
+			this.imiModifyPerson.Sensitive = false;
+			this.imiRemovePerson.Sensitive = false;
+		}
+		
 		public void OnPersonsListRowActivated(object o, EventArgs args)
 		{
 			new ModifyPerson(this.mainWindow, this.selectedPerson);
@@ -331,11 +340,6 @@ namespace ZaspeSharp.GUI
 			this.Quit();
 		}
 		
-		public void OnMenuItemQuitActivate(object o, EventArgs args)
-		{
-			this.Quit();
-		}
-		
 		public void OnImageMenuItemAboutActivate(object o, EventArgs args)
 		{
 			About ad = new About(this.mainWindow);
@@ -365,6 +369,7 @@ namespace ZaspeSharp.GUI
 				}
 			}
 			
+			widgetToRemove.Hide();
 			this.vbox1.Remove(widgetToRemove);
 			
 			// Add and reorder the treeview
