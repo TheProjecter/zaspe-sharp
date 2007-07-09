@@ -142,6 +142,9 @@ namespace ZaspeSharp.GUI
 			// Handler to disable modify and remove person buttons
 			this.tvPersons.Hidden += new EventHandler(this.OnPersonsListHidden);
 			
+			this.tvPersons.ButtonPressEvent += new ButtonPressEventHandler(this.OnPersonsListButtonPress);
+			this.tvPersons.PopupMenu += new PopupMenuHandler(this.OnPersonsListPopupMenu);
+			
 			// tvEvents
 			this.tvEvents = new TreeView();
 			
@@ -229,6 +232,20 @@ namespace ZaspeSharp.GUI
 		}
 		
 #region Event handlers
+		[GLib.ConnectBefore]
+		public void OnPersonsListButtonPress(object o, ButtonPressEventArgs args)
+		{
+			// Check if pressed button is the the right one
+			if (args.Event.Button == 3)
+				this.menuPersonActions.Popup();
+		}
+		
+		public void OnPersonsListPopupMenu(object o, PopupMenuArgs args)
+		{
+			this.menuPersonActions.ShowAll();
+			this.menuPersonActions.Popup(null, null, null, 0, 0);
+		}
+		
 		public void OnPersonsListHidden(object o, EventArgs args)
 		{
 			this.imiModifyPerson.Sensitive = false;
@@ -256,7 +273,21 @@ namespace ZaspeSharp.GUI
 		
 		public void OnMenuItemRemovePersonActivate(object o, EventArgs args)
 		{
+			MessageDialog md = new MessageDialog(this.mainWindow, DialogFlags.Modal,
+			                                     MessageType.Question, ButtonsType.YesNo,
+			                                     "¿Seguro que desea eliminar la persona?");
+			md.Title = "Confirmación de eliminación";
 			
+			ResponseType response = (ResponseType)md.Run();
+			
+			if (response == ResponseType.Yes) {
+				this.selectedPerson.Remove();
+				this.persons.Remove(ref this.selectedTreeIter);
+			}
+			
+			md.Destroy();
+
+			return;
 		}
 		
 		public void OnMenuItemModifyEventActivate(object o, EventArgs args)
