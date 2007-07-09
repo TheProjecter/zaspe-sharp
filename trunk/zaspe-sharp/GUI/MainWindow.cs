@@ -38,9 +38,6 @@ namespace ZaspeSharp.GUI
 		private MenuToolButton mtbAddEvent;
 		
 		[Widget]
-		private ToolButton tbQuit;
-		
-		[Widget]
 		private VBox vbox1;
 		
 		[Widget]
@@ -70,6 +67,7 @@ namespace ZaspeSharp.GUI
 		private ImageMenuItem imiRemoveEvent;
 		
 		private Person selectedPerson;
+		private TreeIter selectedTreeIter;
 		
 		public MainWindow()
 		{
@@ -247,10 +245,8 @@ namespace ZaspeSharp.GUI
 			this.imiModifyPerson.Sensitive = true;
 			this.imiRemovePerson.Sensitive = true;
 			
-			TreeIter iter;
-			this.tvPersons.Selection.GetSelected(out iter);
-			
-			this.selectedPerson = (Person)this.persons.GetValue(iter, 4);
+			this.tvPersons.Selection.GetSelected(out this.selectedTreeIter);
+			this.selectedPerson = (Person)this.persons.GetValue(this.selectedTreeIter, 4);
 		}
 		
 		public void OnMenuItemModifyPersonActivate(object o, EventArgs args)
@@ -342,14 +338,29 @@ namespace ZaspeSharp.GUI
 		
 		public void OnImageMenuItemAboutActivate(object o, EventArgs args)
 		{
-			About ad = new About(this.mainWindow);
+			new About(this.mainWindow);
 		}
 #endregion
 		
 #region Other methods
+		public void PersonChanged()
+		{
+			this.persons.SetValue(this.selectedTreeIter, 0, this.selectedPerson.Name);
+			this.persons.SetValue(this.selectedTreeIter, 1, this.selectedPerson.Surname);
+			this.persons.SetValue(this.selectedTreeIter, 2, this.selectedPerson.EMail);
+			
+			if (!this.selectedPerson.BirthdayDate.Equals(DateTime.MinValue))
+				this.persons.SetValue(this.selectedTreeIter, 3, this.FormatDateTime(this.selectedPerson.BirthdayDate));
+		}
+		
+		private string FormatDateTime(DateTime dt)
+		{
+			return (dt.ToString("dd") + " de " + dt.ToString("MMMM"));
+		}
+		
 		public void AddPersonToList(Person p)
 		{
-			string birthday = p.BirthdayDate.ToString("dd") + " de " + p.BirthdayDate.ToString("MMMM");
+			string birthday = this.FormatDateTime(p.BirthdayDate);
 			
 			if (p.BirthdayDate.Equals(DateTime.MinValue))
 			    birthday = "";

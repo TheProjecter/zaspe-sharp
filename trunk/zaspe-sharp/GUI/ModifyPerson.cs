@@ -83,13 +83,12 @@ namespace ZaspeSharp.GUI
 		
 		[Widget]
 		Button btnOkAdd;
-		
-		[Widget]
-		Button btnCancel;
 #endregion
 		
 		[Widget]
 		Gtk.HButtonBox dialogButtons;
+		
+		private Person person;
 		
 		public ModifyPerson(Gtk.Window parent, Person aPerson)
 		{
@@ -108,10 +107,7 @@ namespace ZaspeSharp.GUI
 			this.entrySurname.Text = aPerson.Surname;
 			this.entryDNI.Text = aPerson.Dni.ToString();
 			
-			if (aPerson.IsMan)
-				this.cmbSex.Active = 0;
-			else
-				this.cmbSex.Active = 1;
+			this.cmbSex.Active = aPerson.IsMan ? 0 : 1;
 			
 			this.entryAddress.Text = aPerson.Address;
 			this.entryCity.Text = aPerson.City;
@@ -129,6 +125,8 @@ namespace ZaspeSharp.GUI
 			
 			this.chkIsDataComplete.Active = aPerson.IsDataComplete;
 			
+			this.person = aPerson;
+			
 			this.dlgAddPerson.Show();
 		}
 		
@@ -140,18 +138,6 @@ namespace ZaspeSharp.GUI
 		// This is, in fact, the Save button
 		public void OnOkAddClicked(object o, EventArgs args)
 		{
-		
-		}
-		
-		public void OnOkCloseClicked(object o, EventArgs args)
-		{
-		}
-		
-		private void Add()
-		{
-			PersonsManager pm = PersonsManager.Instance;
-			Person aPerson = null;
-			
 			int dni;
 			try {
 				dni = Convert.ToInt32(this.entryDNI.Text);
@@ -171,16 +157,35 @@ namespace ZaspeSharp.GUI
 			catch (Exception) {
 			}
 			
-			aPerson = pm.AddPerson(dni, this.entrySurname.Text, this.entryName.Text,
-			                       this.cmbSex.ActiveText.Equals("Hombre") ? true : false,
-			                       birthday, this.entryAddress.Text,
-			                       this.entryCity.Text, this.entryLandPhone.Text,
-			                       this.entryMobilePhone.Text, this.entryEMail.Text,
-			                       this.entryCommunity.Text, this.chkIsActive.Active,
-			                       this.chkIsDataComplete.Active);
+			// Basic data
+			this.person.Name = this.entryName.Text;
+			this.person.Surname = this.entrySurname.Text;
+			this.person.Dni = dni;
+			this.person.IsMan = this.cmbSex.Active == 0 ? true : false;
 			
-			// Update persons list in the main window
-			MainWindow.mainWindowInstance.AddPersonToList(aPerson);
+			// Contact data
+			this.person.Address = this.entryAddress.Text;
+			this.person.City = this.entryCity.Text;
+			this.person.LandPhoneNumber = this.entryLandPhone.Text;
+			this.person.MobileNumber = this.entryMobilePhone.Text;
+			this.person.EMail = this.entryEMail.Text;
+			
+			// Other data
+			this.person.Community = this.entryCommunity.Text;
+			this.person.IsActive = this.chkIsActive.Active;
+			this.person.BirthdayDate = birthday;
+			this.person.IsDataComplete = this.chkIsDataComplete.Active;
+			
+			// Save data to database
+			this.person.Persist();
+			
+			MainWindow.mainWindowInstance.PersonChanged();
+			
+			this.dlgAddPerson.Destroy();
+		}
+		
+		public void OnOkCloseClicked(object o, EventArgs args)
+		{
 		}
 	}
 }
