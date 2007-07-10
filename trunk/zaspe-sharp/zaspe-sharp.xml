@@ -54,6 +54,7 @@
 				</Options>
 			</Configuration>
 			<Reference name="System"/>
+			<Reference name="EventTypesManager"/>
 			<Reference path="..\Gentle.NET" name="Gentle.Common" localCopy="true"/>
 			<Reference path="..\Gentle.NET" name="Gentle.Framework" localCopy="true"/>
 			<Reference path="..\Gentle.NET" name="Gentle.Provider.SQLite" localCopy="true"/>

@@ -19,6 +19,7 @@
 using System;
 using System.Diagnostics;
 using System.Collections;
+using System.Collections.Generic;
 using Gentle.Framework;
 
 namespace ZaspeSharp.Events
@@ -49,8 +50,13 @@ namespace ZaspeSharp.Events
 			SqlBuilder sb = new SqlBuilder(StatementType.Select, typeof(Event));
 			SqlStatement stmt = sb.GetStatement(true);
 			
-			Event[] events = (Event[])ObjectFactory.GetCollection(typeof(Event), stmt.Execute());
-			return events;
+			IList events = ObjectFactory.GetCollection(typeof(Event), stmt.Execute());
+			
+			List<Event> events_result = new List<Event>();
+			foreach (Event p in events)
+				events_result.Add(p);
+			
+			return events_result.ToArray();
 		}
 		
 		public Event[] RetrieveLast(int nroEventosRecuperar) {			
@@ -65,28 +71,28 @@ namespace ZaspeSharp.Events
 		}
 		#endregion
 		
-		#region Métodos de ingreso
-		public Event IngresarEvento(DateTime fecha, string nombre, Types tipoEvento)
-		{
-			// Quitamos los segundos de la fecha
-			DateTime fechaSinSegundos = new DateTime(fecha.Year, fecha.Month, fecha.Day,
-			                                         fecha.Hour, fecha.Minute, 0);
-			
-			return IngresarEvento(fechaSinSegundos, nombre, (int)tipoEvento, null, null);
-		}
+		#region Entry methods
+//		public Event AddEvent(DateTime fecha, string nombre, Types tipoEvento)
+//		{
+//			// Quitamos los segundos de la fecha
+//			DateTime fechaSinSegundos = new DateTime(fecha.Year, fecha.Month, fecha.Day,
+//			                                         fecha.Hour, fecha.Minute, 0);
+//			
+//			return AddEvent(fechaSinSegundos, nombre, (int)tipoEvento, null, null);
+//		}
 		
-		public Event IngresarEvento(DateTime fecha, string nombre, int tipoEvento,
-			string objetivos, string observaciones) {
+		public Event AddEvent(DateTime date, string name, EventType eventType,
+			string goals, string observations) {
 			
 			try {
-				Retrieve(fecha);
+				Retrieve(date);
 			}
 			catch (EventDoesNotExistException) {
-				Event nuevoEvento = new Event(fecha, nombre, tipoEvento,
-				                                objetivos, observaciones);
-				nuevoEvento.Persist();
+				Event newEvent = new Event(date, name, eventType,
+				                                goals, observations);
+				newEvent.Persist();
 				
-				return nuevoEvento;
+				return newEvent;
 			}
 			
 			throw new EventExistsException("Se está intentando ingresar un evento que" +
@@ -94,7 +100,7 @@ namespace ZaspeSharp.Events
 		}
 		#endregion
 		
-		#region Métodos de eliminación
+		#region Deletion methods
 		public void EliminarEvento(DateTime fecha)
 		{
 			Event unEvento;

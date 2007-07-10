@@ -21,6 +21,7 @@ using Glade;
 using Gtk;
 
 using ZaspeSharp.Persons;
+using ZaspeSharp.Events;
 
 namespace ZaspeSharp.GUI
 {
@@ -225,10 +226,15 @@ namespace ZaspeSharp.GUI
 			
 			this.tvAttendances.Model = this.attendances;
 			
-			// Read from persons database
+			// Read persons from database
 			PersonsManager pm = PersonsManager.Instance;
 			foreach (Person p in pm.RetrieveAll())
 				this.AddPersonToList(p);
+			
+			// Read events from database
+			EventsManager em = EventsManager.Instance;
+			foreach (Event e in em.RetrieveAll())
+				this.AddEventToList(e);
 			
 			this.mainWindow.ShowAll();
 		}
@@ -415,6 +421,16 @@ namespace ZaspeSharp.GUI
 			    birthday = "";
 			
 			this.persons.AppendValues(p.Surname, p.Name, p.EMail, birthday, p);
+		}
+		
+		public void AddEventToList(Event e)
+		{
+//			string date = this.FormatDateTime(p.BirthdayDate);
+//			
+//			if (p.BirthdayDate.Equals(DateTime.MinValue))
+//			    birthday = "";
+			
+			this.events.AppendValues(e.Name, e.Name);
 		}
 		
 		private void AddTreeViewInVBox(TreeView tv)

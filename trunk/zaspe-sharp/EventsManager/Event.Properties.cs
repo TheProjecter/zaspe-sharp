@@ -34,13 +34,27 @@ namespace ZaspeSharp.Events
 		public string Name
 		{
 			get { return this.name; }
-			set	{ this.name = value; }
+			set	{
+				if (value.Equals(""))
+					throw new Exception("El nombre de la propiedad no puede ser nulo.");
+				
+				this.name = value;
+			}
 		}
 		
 		[TableColumn("id_event_type", NotNull=true)]
-		public int EventType {
-			get { return eventType; }
-			set { eventType = value; }
+		public int IdEventType {
+			get { return this.eventType.Id; }
+			set {
+				EventTypesManager etm = EventTypesManager.Instance;
+				
+				this.eventType = etm.Retrieve(value);
+			}
+		}
+		
+		public EventType EventType {
+			get { return this.eventType; }
+			set { this.eventType = value; }
 		}
 		
 		[TableColumn("goals", NotNull=false)]

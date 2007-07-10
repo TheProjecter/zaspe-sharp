@@ -37,17 +37,24 @@ namespace ZaspeSharp.Events
 		#region User variables
 		DateTime date;
 		string name;
-		int eventType;
+		
+		EventType eventType;
+		
 		string goals;
 		string observations;
 		#endregion
 		
 		#region Constructors
-		public Event(DateTime date, string name, Types eventType)
-			: this(date, name, (int)eventType, null, null) {}
+		public Event(DateTime date, string name, int id_event_type,
+		             string goals, string observations)
+			: this(date, name, EventTypesManager.Instance.Retrieve(id_event_type),
+			       goals, observations) {}
 		
-		public Event(DateTime date, string name, int eventType,
-			string goals, string observations) {
+		public Event(DateTime date, string name, EventType eventType,
+		             string goals, string observations) {
+			
+			if (name.Equals(""))
+				throw new Exception("El nombre de la propiedad no puede ser nulo.");
 			
 			this.date = date;
 			this.name = name;
