@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.2.0 on Mon Jun 25 18:50:25 2007 by miltondp@wasabi-->
+<!--Generated with glade3 3.2.0 on Mon Jul  9 23:38:49 2007 by miltondp@miltondp-desktop-->
 <glade-interface>
   <widget class="GtkDialog" id="dlgAddEvent">
     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -160,6 +160,40 @@ Diciembre</property>
                       </widget>
                     </child>
                     <child>
+                      <widget class="GtkHBox" id="hbox3">
+                        <property name="visible">True</property>
+                        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                        <child>
+                          <widget class="GtkLabel" id="label4">
+                            <property name="visible">True</property>
+                            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                            <property name="xalign">0</property>
+                            <property name="label" translatable="yes">Tipo de evento:</property>
+                            <property name="width_chars">13</property>
+                          </widget>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkComboBox" id="cmbEventTypes">
+                            <property name="visible">True</property>
+                            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                            <property name="row_span_column">0</property>
+                            <property name="column_span_column">0</property>
+                            <property name="items" translatable="yes">This entry makes posible to add event types. Do not remove.</property>
+                          </widget>
+                          <packing>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
                       <widget class="GtkHBox" id="hbox2">
                         <property name="visible">True</property>
                         <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -180,37 +214,6 @@ Diciembre</property>
                           <widget class="GtkEntry" id="entryName">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                          </widget>
-                          <packing>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </widget>
-                      <packing>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="GtkHBox" id="hbox3">
-                        <property name="visible">True</property>
-                        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                        <child>
-                          <widget class="GtkLabel" id="label4">
-                            <property name="visible">True</property>
-                            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                            <property name="xalign">0</property>
-                            <property name="label" translatable="yes">Tipo de evento:</property>
-                            <property name="width_chars">13</property>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkComboBox" id="cmbEventType">
-                            <property name="visible">True</property>
                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                           </widget>
                           <packing>

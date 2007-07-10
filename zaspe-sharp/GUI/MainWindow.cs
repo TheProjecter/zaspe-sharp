@@ -242,6 +242,8 @@ namespace ZaspeSharp.GUI
 		
 		public void OnPersonsListRowDeleted(object o, EventArgs args)
 		{
+			/* TODO: I don't know if this is the best way to know if a
+			 * TreeView is empty */
 			TreeIter iter = TreeIter.Zero;
 			this.persons.GetIterFirst(out iter);
 			
