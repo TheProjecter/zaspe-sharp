@@ -96,26 +96,58 @@ namespace ZaspeSharp.GUI
 		
 		public void OnOkAddClicked(object o, EventArgs args)
 		{
-		
+			try {
+				this.Add();
+			}
+			catch(Exception ex)
+			{
+				this.ShowErrorMessage(ex);
+				
+				return;
+			}
+			
+			// Show message saying person was successfully added
+			MessageDialog md = new MessageDialog(this.dlgAddPerson, DialogFlags.Modal,
+			                                     MessageType.Info, ButtonsType.Ok,
+			                                     "La persona fue ingresada correctamente.");
+			md.Title = "Ingreso de persona correcto";
+			
+			md.Run();
+			md.Destroy();
+			
+			// Clean controls to add a new person
+			this.entryName.Text = "";
+			this.entrySurname.Text = "";
+			this.entryDNI.Text = "";
+			this.cmbSex.Active = 0;
+			
+			this.entryAddress.Text = "";
+			this.entryCity.Text = "";
+			this.entryLandPhone.Text = "";
+			this.entryMobilePhone.Text = "";
+			this.entryEMail.Text = "";
+			
+			this.entryCommunity.Text = "";
+			this.chkIsActive.Active = false;
+			this.spbtnDay.Value = 1;
+			this.cmbMonth.Active = -1;
+			this.chkIsDataComplete.Active = false;
+			
+			// entryName has focus to quick adding without the mouse
+			this.entryName.HasFocus = true;
 		}
 		
 		public void OnOkCloseClicked(object o, EventArgs args)
 		{
-//			try {
+			try {
 				this.Add();
-//			}
-//			catch (Exception ex)
-//			{
-//				MessageDialog md = new MessageDialog(this.dlgAddPerson, DialogFlags.Modal,
-//				                                     MessageType.Error, ButtonsType.Ok,
-//				                                     ex.Message);
-//				md.Title = "Error al ingresar la persona";
-//				
-//				md.Run();
-//				md.Destroy();
-//				
-//				return;
-//			}
+			}
+			catch (Exception ex)
+			{
+				this.ShowErrorMessage(ex);
+				
+				return;
+			}
 			
 			this.dlgAddPerson.Destroy();
 		}
@@ -154,6 +186,17 @@ namespace ZaspeSharp.GUI
 			
 			// Update persons list in the main window
 			MainWindow.mainWindowInstance.AddPersonToList(aPerson);
+		}
+		
+		private void ShowErrorMessage(Exception ex)
+		{
+			MessageDialog md = new MessageDialog(this.dlgAddPerson, DialogFlags.Modal,
+			                                     MessageType.Error, ButtonsType.Ok,
+			                                     ex.Message);
+			md.Title = "Error al ingresar la persona";
+			
+			md.Run();
+			md.Destroy();
 		}
 	}
 }

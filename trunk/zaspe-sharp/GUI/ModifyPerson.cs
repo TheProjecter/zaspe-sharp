@@ -149,12 +149,13 @@ namespace ZaspeSharp.GUI
 			
 			int day = Convert.ToInt32(this.spbtnDay.Text);
 			int month = this.cmbMonth.Active + 1;
-			DateTime birthday = DateTime.MinValue;
+			DateTime birthday;
 			
 			try {
 				birthday = new DateTime(2000, month, day);
 			}
 			catch (Exception) {
+				birthday = DateTime.MinValue;
 			}
 			
 			// Basic data
@@ -186,6 +187,17 @@ namespace ZaspeSharp.GUI
 		
 		public void OnOkCloseClicked(object o, EventArgs args)
 		{
+		}
+		
+		private void ShowErrorMessage(Exception ex)
+		{
+			MessageDialog md = new MessageDialog(this.dlgAddPerson, DialogFlags.Modal,
+			                                     MessageType.Error, ButtonsType.Ok,
+			                                     ex.Message);
+			md.Title = "Error al ingresar la persona";
+			
+			md.Run();
+			md.Destroy();
 		}
 	}
 }
