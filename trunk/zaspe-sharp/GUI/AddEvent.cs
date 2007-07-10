@@ -20,6 +20,8 @@ using System;
 using Glade;
 using Gtk;
 
+using ZaspeSharp.Events;
+
 namespace ZaspeSharp.GUI
 {
 	public class AddEvent
@@ -27,13 +29,26 @@ namespace ZaspeSharp.GUI
 		[Widget]
 		Dialog dlgAddEvent;
 		
+		[Widget]
+		ComboBox cmbEventTypes;
+		
 		public AddEvent(Window parent)
 		{
 			Glade.XML gxml = new Glade.XML ("add_event.glade", "dlgAddEvent", null);
 			gxml.Autoconnect(this);
 			
 			this.dlgAddEvent.TransientFor = parent;
-			this.dlgAddEvent.Show();
+			
+			// Load event types
+			EventTypesManager etp = EventTypesManager.Instance;
+			
+			this.cmbEventTypes.RemoveText(0);
+			
+			foreach (EventType anEventType in etp.RetrieveAll()) {
+				this.cmbEventTypes.PrependText(anEventType.Name);
+			}
+			
+			this.dlgAddEvent.ShowAll();
 		}
 		
 		public void OnCancelClicked(object o, EventArgs args)

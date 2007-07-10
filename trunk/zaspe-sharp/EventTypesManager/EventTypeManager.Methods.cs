@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 using Gentle.Framework;
@@ -67,8 +68,13 @@ namespace ZaspeSharp.Events
 			SqlBuilder sb = new SqlBuilder(StatementType.Select, typeof(EventType));
 			SqlStatement stmt = sb.GetStatement(true);
 			
-			EventType[] eventTypes = (EventType[])ObjectFactory.GetCollection(typeof(EventType), stmt.Execute());
-			return eventTypes;
+			IList eventTypes = ObjectFactory.GetCollection(typeof(EventType), stmt.Execute());
+			
+			List<EventType> eventTypes_result = new List<EventType>();
+			foreach (EventType et in eventTypes)
+				eventTypes_result.Add(et);
+			
+			return eventTypes_result.ToArray();
 		}
 		#endregion
 		

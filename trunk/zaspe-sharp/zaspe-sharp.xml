@@ -177,6 +177,8 @@
 			<Reference name="glib-sharp"/>
 			<Reference name="gtk-sharp"/>
 			<Reference name="PersonsManager" localCopy="true"/>
+			<Reference name="EventsManager" localCopy="true"/>
+			<Reference name="EventTypesManager" localCopy="true"/>
 			<Reference path="..\Gentle.NET" name="Gentle.Common" localCopy="true"/>
 			<Reference path="..\Gentle.NET" name="Gentle.Framework" localCopy="true"/>
 			<Reference path="..\Gentle.NET" name="Gentle.Provider.SQLite" localCopy="true"/>
