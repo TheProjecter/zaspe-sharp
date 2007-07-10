@@ -131,6 +131,8 @@ namespace ZaspeSharp.GUI
 			                             typeof(string), typeof(string),
 			                             typeof(Person));
 			
+			this.persons.RowDeleted += new RowDeletedHandler(this.OnPersonsListRowDeleted);
+			
 			this.tvPersons.Model = this.persons;
 			
 			// Handler when a row is selected, to enable person modify button
@@ -232,6 +234,21 @@ namespace ZaspeSharp.GUI
 		}
 		
 #region Event handlers
+		private void DisablePersonActionsButtons()
+		{
+			this.imiModifyPerson.Sensitive = false;
+			this.imiRemovePerson.Sensitive = false;
+		}
+		
+		public void OnPersonsListRowDeleted(object o, EventArgs args)
+		{
+			TreeIter iter = TreeIter.Zero;
+			this.persons.GetIterFirst(out iter);
+			
+			if (iter.Equals(TreeIter.Zero))
+				this.DisablePersonActionsButtons();
+		}
+		
 		[GLib.ConnectBefore]
 		public void OnPersonsListButtonPress(object o, ButtonPressEventArgs args)
 		{
@@ -248,8 +265,7 @@ namespace ZaspeSharp.GUI
 		
 		public void OnPersonsListHidden(object o, EventArgs args)
 		{
-			this.imiModifyPerson.Sensitive = false;
-			this.imiRemovePerson.Sensitive = false;
+			this.DisablePersonActionsButtons();
 		}
 		
 		public void OnPersonsListRowActivated(object o, EventArgs args)
