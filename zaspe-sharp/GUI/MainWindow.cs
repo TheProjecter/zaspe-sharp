@@ -68,17 +68,18 @@ namespace ZaspeSharp.GUI
 		private ImageMenuItem imiRemoveEvent;
 		
 		private Person selectedPerson;
+		private Event selectedEvent;
 		private TreeIter selectedTreeIter;
 		
 		public MainWindow()
 		{
 			Glade.XML gxml_person = new Glade.XML("main_window.glade", "menuPersonActions", null);
 			gxml_person.Autoconnect(this);
-			
 			this.imiModifyPerson = (ImageMenuItem)gxml_person.GetWidget("imiModifyPerson");
 			this.imiRemovePerson = (ImageMenuItem)gxml_person.GetWidget("imiRemovePerson");
 			
 			Glade.XML gxml_event = new Glade.XML("main_window.glade", "menuEventActions", null);
+			gxml_event.Autoconnect(this);
 			this.imiModifyEvent = (ImageMenuItem)gxml_event.GetWidget("imiModifyEvent");
 			this.imiRemoveEvent = (ImageMenuItem)gxml_event.GetWidget("imiRemoveEvent");
 			
@@ -167,12 +168,23 @@ namespace ZaspeSharp.GUI
 			eventName.AddAttribute(eventNameText, "text", 0);
 			eventDate.AddAttribute(eventDateText, "text", 1);
 			
-			this.events = new ListStore(typeof(string), typeof(string));
+			this.events = new ListStore(typeof(string), typeof(string), typeof(Event));
 			
-			// Example item
-			//this.events.AppendValues("Evento de", "Prueba");
+			this.events.RowDeleted += new RowDeletedHandler(this.OnEventsListRowDeleted);
 			
 			this.tvEvents.Model = this.events;
+			
+			// Handler when a row is selected, to enable event modify button
+			this.tvEvents.CursorChanged += new EventHandler(this.OnEventsListCursorChanged);
+			
+			// Handler when a row is double clicked
+			this.tvEvents.RowActivated += new RowActivatedHandler(this.OnEventsListRowActivated);
+			
+			// Handler to disable modify and remove event buttons
+			this.tvEvents.Hidden += new EventHandler(this.OnEventsListHidden);
+			
+			this.tvEvents.ButtonPressEvent += new ButtonPressEventHandler(this.OnEventsListButtonPress);
+			this.tvEvents.PopupMenu += new PopupMenuHandler(this.OnEventsListPopupMenu);
 			
 			// TreeView example
 			TreeViewColumn persons = new TreeViewColumn();
@@ -240,10 +252,27 @@ namespace ZaspeSharp.GUI
 		}
 		
 #region Event handlers
+		private void DisableEventActionsButtons()
+		{
+			this.imiModifyEvent.Sensitive = false;
+			this.imiRemoveEvent.Sensitive = false;
+		}
+		
 		private void DisablePersonActionsButtons()
 		{
 			this.imiModifyPerson.Sensitive = false;
 			this.imiRemovePerson.Sensitive = false;
+		}
+		
+		public void OnEventsListRowDeleted(object o, EventArgs args)
+		{
+			/* TODO: I don't know if this is the best way to know if a
+			 * TreeView is empty */
+			TreeIter iter = TreeIter.Zero;
+			this.events.GetIterFirst(out iter);
+			
+			if (iter.Equals(TreeIter.Zero))
+				this.DisableEventActionsButtons();
 		}
 		
 		public void OnPersonsListRowDeleted(object o, EventArgs args)
@@ -258,6 +287,14 @@ namespace ZaspeSharp.GUI
 		}
 		
 		[GLib.ConnectBefore]
+		public void OnEventsListButtonPress(object o, ButtonPressEventArgs args)
+		{
+			// Check if pressed button is the the right one
+			if (args.Event.Button == 3)
+				this.menuEventActions.Popup();
+		}
+		
+		[GLib.ConnectBefore]
 		public void OnPersonsListButtonPress(object o, ButtonPressEventArgs args)
 		{
 			// Check if pressed button is the the right one
@@ -265,10 +302,22 @@ namespace ZaspeSharp.GUI
 				this.menuPersonActions.Popup();
 		}
 		
+		public void OnEventsListPopupMenu(object o, PopupMenuArgs args)
+		{
+			this.menuEventActions.ShowAll();
+			this.menuEventActions.Popup();
+		}
+		
 		public void OnPersonsListPopupMenu(object o, PopupMenuArgs args)
 		{
 			this.menuPersonActions.ShowAll();
-			this.menuPersonActions.Popup(null, null, null, 0, 0);
+			this.menuEventActions.Popup();
+			//this.menuPersonActions.Popup(null, null, null, 0, 0);
+		}
+		
+		public void OnEventsListHidden(object o, EventArgs args)
+		{
+			this.DisableEventActionsButtons();
 		}
 		
 		public void OnPersonsListHidden(object o, EventArgs args)
@@ -276,9 +325,23 @@ namespace ZaspeSharp.GUI
 			this.DisablePersonActionsButtons();
 		}
 		
+		public void OnEventsListRowActivated(object o, EventArgs args)
+		{
+			new ModifyEvent(this.mainWindow, this.selectedEvent);
+		}
+		
 		public void OnPersonsListRowActivated(object o, EventArgs args)
 		{
 			new ModifyPerson(this.mainWindow, this.selectedPerson);
+		}
+		
+		public void OnEventsListCursorChanged(object o, EventArgs args)
+		{
+			this.imiModifyEvent.Sensitive = true;
+			this.imiRemoveEvent.Sensitive = true;
+			
+			this.tvEvents.Selection.GetSelected(out this.selectedTreeIter);
+			this.selectedEvent = (Event)this.events.GetValue(this.selectedTreeIter, 2);
 		}
 		
 		public void OnPersonsListCursorChanged(object o, EventArgs args)
@@ -310,18 +373,28 @@ namespace ZaspeSharp.GUI
 			}
 			
 			md.Destroy();
-
-			return;
 		}
 		
 		public void OnMenuItemModifyEventActivate(object o, EventArgs args)
 		{
-			
+			new ModifyEvent(this.mainWindow, this.selectedEvent);
 		}
 		
 		public void OnMenuItemRemoveEventActivate(object o, EventArgs args)
 		{
+			MessageDialog md = new MessageDialog(this.mainWindow, DialogFlags.Modal,
+			                                     MessageType.Question, ButtonsType.YesNo,
+			                                     "¿Seguro que desea eliminar el evento?");
+			md.Title = "Confirmación de eliminación";
 			
+			ResponseType response = (ResponseType)md.Run();
+			
+			if (response == ResponseType.Yes) {
+				this.selectedEvent.Remove();
+				this.events.Remove(ref this.selectedTreeIter);
+			}
+			
+			md.Destroy();
 		}
 		
 		
@@ -398,12 +471,19 @@ namespace ZaspeSharp.GUI
 #endregion
 		
 #region Other methods
+		public void EventChanged()
+		{
+			this.events.SetValue(this.selectedTreeIter, 0, this.selectedEvent.Name);
+			this.events.SetValue(this.selectedTreeIter, 1, this.selectedEvent.Date.ToString());
+		}
+		
 		public void PersonChanged()
 		{
 			this.persons.SetValue(this.selectedTreeIter, 0, this.selectedPerson.Name);
 			this.persons.SetValue(this.selectedTreeIter, 1, this.selectedPerson.Surname);
 			this.persons.SetValue(this.selectedTreeIter, 2, this.selectedPerson.EMail);
 			
+			// This is to avoid print birthday if it was not set
 			if (!this.selectedPerson.BirthdayDate.Equals(DateTime.MinValue))
 				this.persons.SetValue(this.selectedTreeIter, 3, this.FormatDateTime(this.selectedPerson.BirthdayDate));
 		}
@@ -430,7 +510,7 @@ namespace ZaspeSharp.GUI
 //			if (p.BirthdayDate.Equals(DateTime.MinValue))
 //			    birthday = "";
 			
-			this.events.AppendValues(e.Name, e.Name);
+			this.events.AppendValues(e.Name, e.Date.ToString(), e);
 		}
 		
 		private void AddTreeViewInVBox(TreeView tv)

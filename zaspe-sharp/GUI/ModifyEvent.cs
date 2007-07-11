@@ -17,6 +17,7 @@
 */
 
 using System;
+using System.Collections;
 using Glade;
 using Gtk;
 
@@ -24,16 +25,10 @@ using ZaspeSharp.Events;
 
 namespace ZaspeSharp.GUI
 {
-	public class AddEvent
+	public class ModifyEvent
 	{
 		[Widget]
 		Dialog dlgAddEvent;
-		
-		[Widget]
-		ComboBox cmbEventTypes;
-		
-		[Widget]
-		Entry entryName;
 		
 		[Widget]
 		SpinButton spbtnDay;
@@ -48,24 +43,50 @@ namespace ZaspeSharp.GUI
 		SpinButton spbtnMinute;
 		
 		[Widget]
+		ComboBox cmbEventTypes;
+		
+		[Widget]
+		Entry entryName;
+		
+		[Widget]
 		TextView textviewGoals;
 		
 		[Widget]
 		TextView textviewObservations;
 		
+#region Buttons
+		[Widget]
+		Button btnOkClose;
+		
+		[Widget]
+		Button btnOkAdd;
+#endregion
+		
+		[Widget]
+		Gtk.HButtonBox dialogButtons;
+		
+		private Event anEvent;
+		
 		private string lastGeneratedEventName = "";
 		
-		public AddEvent(Window parent)
+		public ModifyEvent(Gtk.Window parent, Event anEvent)
 		{
 			Glade.XML gxml = new Glade.XML ("add_event.glade", "dlgAddEvent", null);
 			gxml.Autoconnect(this);
 			
 			this.dlgAddEvent.TransientFor = parent;
+			this.dlgAddEvent.Title = "Modificar evento";
 			
-			// Set actual day and month
-			this.spbtnDay.Value = DateTime.Now.Day;
-			this.cmbMonth.Active = DateTime.Now.Month - 1;
+			this.dialogButtons.Remove(this.btnOkClose);
+			this.btnOkAdd.Label = "Guardar";
 			
+			// Event data
+			this.spbtnDay.Value = anEvent.Date.Day;
+			this.cmbMonth.Active = anEvent.Date.Month - 1;
+			this.spbtnHour.Value = anEvent.Date.Hour;
+			this.spbtnMinute.Value = anEvent.Date.Minute;
+			
+			// TODO
 			// Load event types
 			EventTypesManager etm = EventTypesManager.Instance;
 			
@@ -74,6 +95,14 @@ namespace ZaspeSharp.GUI
 			foreach (EventType anEventType in etm.RetrieveAll()) {
 				this.cmbEventTypes.AppendText(anEventType.Name);
 			}
+			
+			this.cmbEventTypes.Active = anEvent.IdEventType - 1;
+			
+			this.entryName.Text = anEvent.Name;
+			this.textviewGoals.Buffer.Text = anEvent.Goals;
+			this.textviewObservations.Buffer.Text = anEvent.Observations;
+			
+			this.anEvent = anEvent;
 			
 			this.dlgAddEvent.ShowAll();
 		}
@@ -92,6 +121,41 @@ namespace ZaspeSharp.GUI
 			return (this.cmbEventTypes.ActiveText + " " +
 			        this.spbtnDay.Value.ToString() +
 			        " de " + this.cmbMonth.ActiveText);
+		}
+		
+		// This is, in fact, the Save button
+		public void OnOkAddClicked(object o, EventArgs args)
+		{
+			int hour = (int)this.spbtnHour.Value;
+			int minute = (int)this.spbtnMinute.Value;
+			int day = (int)this.spbtnDay.Value;
+			int month = this.cmbMonth.Active + 1;
+			int year = DateTime.Now.Year + (month < DateTime.Now.Month ? 1 : 0);
+			DateTime date;
+			
+			try {
+				date = new DateTime(year, month, day, hour, minute, 0);
+			}
+			catch (Exception ex) {
+				throw new Exception("La fecha para el evento no es válida.");
+			}
+			
+			this.anEvent.Date = date;
+			this.anEvent.IdEventType = this.cmbEventTypes.Active + 1;
+			this.anEvent.Name = this.entryName.Text;
+			this.anEvent.Goals = this.textviewGoals.Buffer.Text;
+			this.anEvent.Observations = this.textviewObservations.Buffer.Text;
+			
+			// Save changes to database
+			this.anEvent.Persist();
+			
+			MainWindow.mainWindowInstance.EventChanged();
+			
+			this.dlgAddEvent.Destroy();
+		}
+		
+		public void OnOkCloseClicked(object o, EventArgs args)
+		{
 		}
 		
 		public void OnEventTypesChanged(object o, EventArgs args)
@@ -117,70 +181,6 @@ namespace ZaspeSharp.GUI
 		public void OnCancelClicked(object o, EventArgs args)
 		{
 			this.dlgAddEvent.Destroy();
-		}
-		
-		public void OnOkCloseClicked(object o, EventArgs args)
-		{
-			this.Add();
-			try {
-				
-			}
-			catch (Exception ex)
-			{
-				this.ShowErrorMessage(ex);
-				
-				return;
-			}
-			
-			this.dlgAddEvent.Destroy();
-		}
-		
-		public void OnOkAddClicked(object o, EventArgs args)
-		{
-		
-		}
-		
-		private void Add()
-		{
-			EventsManager em = EventsManager.Instance;
-			Event anEvent = null;
-			
-			int hour = (int)this.spbtnHour.Value;
-			int minute = (int)this.spbtnMinute.Value;
-			int day = (int)this.spbtnDay.Value;
-			int month = this.cmbMonth.Active + 1;
-			int year = DateTime.Now.Year + (month < DateTime.Now.Month ? 1 : 0);
-			DateTime date;
-			
-			try {
-				date = new DateTime(year, month, day, hour, minute, 0);
-			}
-			catch (Exception ex) {
-				throw new Exception("La fecha para el evento no es válida.");
-			}
-			
-			if (this.cmbEventTypes.Active < 0)
-				throw new Exception("Se debe escoger el tipo del evento.");
-			
-			EventType eventTypeSelected = EventTypesManager.Instance.Retrieve(this.cmbEventTypes.ActiveText);
-			
-			anEvent = em.AddEvent(date, this.entryName.Text, eventTypeSelected,
-			                      this.textviewGoals.Buffer.Text,
-			                      this.textviewObservations.Buffer.Text);
-			
-			// Update persons list in the main window
-			MainWindow.mainWindowInstance.AddEventToList(anEvent);
-		}
-		
-		private void ShowErrorMessage(Exception ex)
-		{
-			MessageDialog md = new MessageDialog(this.dlgAddEvent, DialogFlags.Modal,
-			                                     MessageType.Error, ButtonsType.Ok,
-			                                     ex.Message);
-			md.Title = "Error al ingresar el evento";
-			
-			md.Run();
-			md.Destroy();
 		}
 	}
 }
