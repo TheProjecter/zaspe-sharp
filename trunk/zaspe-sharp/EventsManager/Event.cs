@@ -35,6 +35,7 @@ namespace ZaspeSharp.Events
 	public partial class Event : Persistent
 	{
 		#region User variables
+		int id;
 		DateTime date;
 		string name;
 		

@@ -147,7 +147,7 @@ namespace ZaspeSharp.GUI
 				                    "únicamente con números, y no otros caracteres como los puntos.");
 			}
 			
-			int day = Convert.ToInt32(this.spbtnDay.Text);
+			int day = (int)this.spbtnDay.Value;
 			int month = this.cmbMonth.Active + 1;
 			DateTime birthday;
 			

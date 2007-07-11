@@ -35,11 +35,14 @@ CREATE TABLE persons (
 );
 
 CREATE TABLE events (
-	date date primary key,
+	id integer primary key autoincrement,
+	date date,
 	name varchar(30) not null,
 	id_event_type integer not null,
 	goals varchar(50),
-	observations varchar(50)
+	observations varchar(50),
+
+	unique (date)
 );
 
 CREATE TABLE event_types (
