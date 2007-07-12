@@ -17,6 +17,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 using Glade;
 using Gtk;
 
@@ -67,9 +68,9 @@ namespace ZaspeSharp.GUI
 		private ImageMenuItem imiModifyEvent;
 		private ImageMenuItem imiRemoveEvent;
 		
-		private Person selectedPerson;
-		private Event selectedEvent;
-		private TreeIter selectedTreeIter;
+		private List<Person> selectedPersons;
+		private List<Event> selectedEvents;
+		private List<TreeIter> selectedTreeIters;
 		
 		public MainWindow()
 		{
@@ -89,6 +90,10 @@ namespace ZaspeSharp.GUI
 			this.menuPersonActions = (Menu)gxml_person.GetWidget("menuPersonActions");
 			this.menuEventActions = (Menu)gxml_event.GetWidget("menuEventActions");
 			
+			this.selectedPersons = new List<Person>();
+			this.selectedEvents = new List<Event>();
+			this.selectedTreeIters = new List<Gtk.TreeIter>();
+			
 			// Icon for the main window
 			this.mainWindow.Icon = new Gdk.Pixbuf("blue_fea.gif");
 			
@@ -98,7 +103,8 @@ namespace ZaspeSharp.GUI
 			// tvPersons
 			this.tvPersons = new TreeView();
 			this.tvPersons.HeadersVisible = true;
-			
+			this.tvPersons.Selection.Mode = SelectionMode.Multiple;
+				
 			TreeViewColumn surname = new TreeViewColumn();
 			surname.Title = "Apellido";
 			CellRendererText surnameText = new CellRendererText();
@@ -138,7 +144,7 @@ namespace ZaspeSharp.GUI
 			this.tvPersons.Model = this.persons;
 			
 			// Handler when a row is selected, to enable person modify button
-			this.tvPersons.CursorChanged += new EventHandler(this.OnPersonsListCursorChanged);
+			this.tvPersons.Selection.Changed += new EventHandler(this.OnPersonsListSelectionChanged);
 			
 			// Handler when a row is double clicked
 			this.tvPersons.RowActivated += new RowActivatedHandler(this.OnPersonsListRowActivated);
@@ -151,6 +157,8 @@ namespace ZaspeSharp.GUI
 			
 			// tvEvents
 			this.tvEvents = new TreeView();
+			this.tvEvents.HeadersVisible = true;
+			this.tvEvents.Selection.Mode = SelectionMode.Multiple;
 			
 			TreeViewColumn eventName = new TreeViewColumn();
 			eventName.Title = "Nombre";
@@ -327,12 +335,12 @@ namespace ZaspeSharp.GUI
 		
 		public void OnEventsListRowActivated(object o, EventArgs args)
 		{
-			new ModifyEvent(this.mainWindow, this.selectedEvent);
+			new ModifyEvent(this.mainWindow, this.selectedEvents[0]);
 		}
 		
 		public void OnPersonsListRowActivated(object o, EventArgs args)
 		{
-			new ModifyPerson(this.mainWindow, this.selectedPerson);
+			new ModifyPerson(this.mainWindow, this.selectedPersons[0]);
 		}
 		
 		public void OnEventsListCursorChanged(object o, EventArgs args)
@@ -340,36 +348,87 @@ namespace ZaspeSharp.GUI
 			this.imiModifyEvent.Sensitive = true;
 			this.imiRemoveEvent.Sensitive = true;
 			
-			this.tvEvents.Selection.GetSelected(out this.selectedTreeIter);
-			this.selectedEvent = (Event)this.events.GetValue(this.selectedTreeIter, 2);
+			TreePath[] selection = this.tvEvents.Selection.GetSelectedRows();
+			
+			// if more than one row was selected, disable modify button
+			if (selection.Length > 1)
+				this.imiModifyEvent.Sensitive = false;
+			else
+				this.imiModifyEvent.Sensitive = true;
+			
+			// Clear selected events
+			this.selectedEvents.Clear();
+			this.selectedTreeIters.Clear();
+			
+			// Add selected events to list
+			TreeIter iter;
+			for (int i=0; i<selection.Length; i++) {
+				this.events.GetIter(out iter, selection[i]);
+				
+				this.selectedTreeIters.Add(iter);
+				this.selectedEvents.Add((Event)this.events.GetValue(iter, 2));
+			}
 		}
 		
-		public void OnPersonsListCursorChanged(object o, EventArgs args)
+		public void OnPersonsListSelectionChanged(object o, EventArgs args)
 		{
 			this.imiModifyPerson.Sensitive = true;
 			this.imiRemovePerson.Sensitive = true;
 			
-			this.tvPersons.Selection.GetSelected(out this.selectedTreeIter);
-			this.selectedPerson = (Person)this.persons.GetValue(this.selectedTreeIter, 4);
+			//this.tvPersons.Selection.GetSelected(out this.selectedTreeIter);
+			TreePath[] selection = this.tvPersons.Selection.GetSelectedRows();
+			
+			// if more than one row was selected, disable modify button
+			if (selection.Length > 1)
+				this.imiModifyPerson.Sensitive = false;
+			else
+				this.imiModifyPerson.Sensitive = true;
+			
+			// Clear selected persons
+			this.selectedPersons.Clear();
+			this.selectedTreeIters.Clear();
+			
+			// Add selected persons to list
+			TreeIter iter;
+			for (int i=0; i<selection.Length; i++) {
+				this.persons.GetIter(out iter, selection[i]);
+				
+				this.selectedTreeIters.Add(iter);
+				this.selectedPersons.Add((Person)this.persons.GetValue(iter, 4));
+			}
 		}
 		
 		public void OnMenuItemModifyPersonActivate(object o, EventArgs args)
 		{
-			new ModifyPerson(this.mainWindow, this.selectedPerson);
+			new ModifyPerson(this.mainWindow, this.selectedPersons[0]);
 		}
 		
 		public void OnMenuItemRemovePersonActivate(object o, EventArgs args)
 		{
+			string msg;
+			if (this.selectedPersons.Count > 1)
+				msg = "¿Seguro que desea eliminar las personas seleccionadas?";
+			else
+				msg = "¿Seguro que desea eliminar la persona seleccionada?";
+			
 			MessageDialog md = new MessageDialog(this.mainWindow, DialogFlags.Modal,
 			                                     MessageType.Question, ButtonsType.YesNo,
-			                                     "¿Seguro que desea eliminar la persona?");
+			                                     msg);
 			md.Title = "Confirmación de eliminación";
 			
 			ResponseType response = (ResponseType)md.Run();
 			
+			TreeIter iter;
 			if (response == ResponseType.Yes) {
-				this.selectedPerson.Remove();
-				this.persons.Remove(ref this.selectedTreeIter);
+				Person[] personsToRemove = this.selectedPersons.ToArray();
+				TreeIter[] itersToRemove = this.selectedTreeIters.ToArray();
+				
+				for (int i=0; i<personsToRemove.Length; i++) {
+					personsToRemove[i].Remove();
+					
+					iter = itersToRemove[i];
+					this.persons.Remove(ref iter);
+				}
 			}
 			
 			md.Destroy();
@@ -377,7 +436,7 @@ namespace ZaspeSharp.GUI
 		
 		public void OnMenuItemModifyEventActivate(object o, EventArgs args)
 		{
-			new ModifyEvent(this.mainWindow, this.selectedEvent);
+			new ModifyEvent(this.mainWindow, this.selectedEvents[0]);
 		}
 		
 		public void OnMenuItemRemoveEventActivate(object o, EventArgs args)
@@ -389,9 +448,14 @@ namespace ZaspeSharp.GUI
 			
 			ResponseType response = (ResponseType)md.Run();
 			
+			TreeIter iter;
 			if (response == ResponseType.Yes) {
-				this.selectedEvent.Remove();
-				this.events.Remove(ref this.selectedTreeIter);
+				for (int i=0; i<this.selectedEvents.Count; i++) {
+					this.selectedEvents[i].Remove();
+					
+					iter = this.selectedTreeIters[i];
+					this.events.Remove(ref iter);
+				}
 			}
 			
 			md.Destroy();
@@ -473,19 +537,19 @@ namespace ZaspeSharp.GUI
 #region Other methods
 		public void EventChanged()
 		{
-			this.events.SetValue(this.selectedTreeIter, 0, this.selectedEvent.Name);
-			this.events.SetValue(this.selectedTreeIter, 1, this.selectedEvent.Date.ToString());
+			this.events.SetValue(this.selectedTreeIters[0], 0, this.selectedEvents[0].Name);
+			this.events.SetValue(this.selectedTreeIters[0], 1, this.selectedEvents[0].Date.ToString());
 		}
 		
 		public void PersonChanged()
 		{
-			this.persons.SetValue(this.selectedTreeIter, 0, this.selectedPerson.Name);
-			this.persons.SetValue(this.selectedTreeIter, 1, this.selectedPerson.Surname);
-			this.persons.SetValue(this.selectedTreeIter, 2, this.selectedPerson.EMail);
+			this.persons.SetValue(this.selectedTreeIters[0], 0, this.selectedPersons[0].Name);
+			this.persons.SetValue(this.selectedTreeIters[0], 1, this.selectedPersons[0].Surname);
+			this.persons.SetValue(this.selectedTreeIters[0], 2, this.selectedPersons[0].EMail);
 			
 			// This is to avoid print birthday if it was not set
-			if (!this.selectedPerson.BirthdayDate.Equals(DateTime.MinValue))
-				this.persons.SetValue(this.selectedTreeIter, 3, this.FormatDateTime(this.selectedPerson.BirthdayDate));
+			if (!this.selectedPersons[0].BirthdayDate.Equals(DateTime.MinValue))
+				this.persons.SetValue(this.selectedTreeIters[0], 3, this.FormatDateTime(this.selectedPersons[0].BirthdayDate));
 		}
 		
 		private string FormatDateTime(DateTime dt)
