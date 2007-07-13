@@ -131,21 +131,27 @@ namespace ZaspeSharp.GUI
 			int day = (int)this.spbtnDay.Value;
 			int month = this.cmbMonth.Active + 1;
 			int year = DateTime.Now.Year + (month < DateTime.Now.Month ? 1 : 0);
-			DateTime date;
+			DateTime date = DateTime.MinValue;
 			
 			try {
 				date = new DateTime(year, month, day, hour, minute, 0);
 			}
-			catch (Exception ex) {
-				throw new Exception("La fecha para el evento no es válida.");
+			catch (Exception) {
+				this.ShowErrorMessage("La fecha para el evento no es válida.");
 			}
 			
-			this.anEvent.Date = date;
-			this.anEvent.IdEventType = this.cmbEventTypes.Active + 1;
-			this.anEvent.Name = this.entryName.Text;
-			this.anEvent.Goals = this.textviewGoals.Buffer.Text;
-			this.anEvent.Observations = this.textviewObservations.Buffer.Text;
-			
+			try {
+				this.anEvent.Date = date;
+				this.anEvent.IdEventType = this.cmbEventTypes.Active + 1;
+				this.anEvent.Name = this.entryName.Text;
+				this.anEvent.Goals = this.textviewGoals.Buffer.Text;
+				this.anEvent.Observations = this.textviewObservations.Buffer.Text;
+			}
+			catch (Exception ex) {
+				this.ShowErrorMessage(ex.Message);
+				return;
+			}
+					
 			// Save changes to database
 			this.anEvent.Persist();
 			
@@ -181,6 +187,22 @@ namespace ZaspeSharp.GUI
 		public void OnCancelClicked(object o, EventArgs args)
 		{
 			this.dlgAddEvent.Destroy();
+		}
+			
+		private void ShowErrorMessage(string errorMsg)
+		{
+			MessageDialog md = new MessageDialog(this.dlgAddEvent, DialogFlags.Modal,
+			                                     MessageType.Error, ButtonsType.Ok,
+			                                     errorMsg);
+			md.Title = "Error al modificar datos del evento";
+			
+			md.Run();
+			md.Destroy();
+		}
+		
+		private void ShowErrorMessage(Exception ex)
+		{
+			this.ShowErrorMessage(ex.Message);
 		}
 	}
 }

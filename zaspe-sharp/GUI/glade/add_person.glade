@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.2.0 on Sun Jul  8 23:28:32 2007 by miltondp@miltondp-desktop-->
+<!--Generated with glade3 3.2.0 on Thu Jul 12 22:14:19 2007 by miltondp@miltondp-desktop-->
 <glade-interface>
   <widget class="GtkDialog" id="dlgAddPerson">
     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
@@ -496,7 +496,7 @@ Mujer</property>
                             </child>
                             <child>
                               <widget class="GtkLabel" id="label7">
-                                <property name="width_request">25</property>
+                                <property name="width_request">20</property>
                                 <property name="visible">True</property>
                                 <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                                 <property name="label" translatable="yes">de</property>
@@ -509,7 +509,7 @@ Mujer</property>
                             </child>
                             <child>
                               <widget class="GtkComboBox" id="cmbMonth">
-                                <property name="width_request">100</property>
+                                <property name="width_request">105</property>
                                 <property name="visible">True</property>
                                 <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                                 <property name="active">0</property>

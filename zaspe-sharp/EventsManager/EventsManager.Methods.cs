@@ -95,8 +95,9 @@ namespace ZaspeSharp.Events
 				return newEvent;
 			}
 			
-			throw new EventExistsException("Se está intentando ingresar un evento que" +
-					" ya existe en la base de datos.");
+			throw new EventExistsException("Se está intentando ingresar un evento que " +
+			                               "ya existe en la base de datos. Cada evento " +
+			                               "tiene una fecha y hora únicos.");
 		}
 		#endregion
 		

@@ -121,9 +121,8 @@ namespace ZaspeSharp.GUI
 		
 		public void OnOkCloseClicked(object o, EventArgs args)
 		{
-			this.Add();
 			try {
-				
+				this.Add();
 			}
 			catch (Exception ex)
 			{
@@ -137,7 +136,38 @@ namespace ZaspeSharp.GUI
 		
 		public void OnOkAddClicked(object o, EventArgs args)
 		{
-		
+			try {
+				this.Add();
+			}
+			catch(Exception ex)
+			{
+				this.ShowErrorMessage(ex);
+				return;
+			}
+			
+			// Show message saying event was successfully added
+			MessageDialog md = new MessageDialog(this.dlgAddEvent, DialogFlags.Modal,
+			                                     MessageType.Info, ButtonsType.Ok,
+			                                     "El evento fue ingresado correctamente.");
+			md.Title = "Ingreso de evento correcto";
+			
+			md.Run();
+			md.Destroy();
+			
+			// Clean controls to add a new event
+			// Set actual day and month
+			this.spbtnDay.Value = DateTime.Now.Day;
+			this.cmbMonth.Active = DateTime.Now.Month - 1;
+			this.spbtnHour.Value = 12;
+			this.spbtnMinute.Value = 0;
+			
+			this.cmbEventTypes.Active = -1;
+			this.entryName.Text = "";
+			this.textviewGoals.Buffer.Text = "";
+			this.textviewObservations.Buffer.Text = "";
+			
+			// spbtnDay has focus to quick adding without using the mouse
+			this.spbtnDay.HasFocus = true;
 		}
 		
 		private void Add()
@@ -155,7 +185,7 @@ namespace ZaspeSharp.GUI
 			try {
 				date = new DateTime(year, month, day, hour, minute, 0);
 			}
-			catch (Exception ex) {
+			catch (Exception) {
 				throw new Exception("La fecha para el evento no es válida.");
 			}
 			
@@ -164,9 +194,9 @@ namespace ZaspeSharp.GUI
 			
 			EventType eventTypeSelected = EventTypesManager.Instance.Retrieve(this.cmbEventTypes.ActiveText);
 			
-			anEvent = em.AddEvent(date, this.entryName.Text, eventTypeSelected,
-			                      this.textviewGoals.Buffer.Text,
-			                      this.textviewObservations.Buffer.Text);
+			anEvent = em.AddEvent(date, this.entryName.Text.Trim(), eventTypeSelected,
+			                      this.textviewGoals.Buffer.Text.Trim(),
+			                      this.textviewObservations.Buffer.Text.Trim());
 			
 			// Update persons list in the main window
 			MainWindow.mainWindowInstance.AddEventToList(anEvent);
