@@ -37,7 +37,7 @@ namespace ZaspeSharp.GUI
 			
 			this.adAbout.TransientFor = parent;
 			
-			this.adAbout.Show();
+			this.adAbout.ShowAll();
 		}
 	}
 }

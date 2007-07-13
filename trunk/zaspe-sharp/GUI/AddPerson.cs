@@ -84,9 +84,8 @@ namespace ZaspeSharp.GUI
 			
 			this.dlgAddPerson.TransientFor = parent;
 			this.cmbSex.Active = 0;
-			//this.cmbMonth.Active = 0;
 			
-			this.dlgAddPerson.Show();
+			this.dlgAddPerson.ShowAll();
 		}
 		
 		public void OnCancelClicked(object o, EventArgs args)
@@ -133,7 +132,7 @@ namespace ZaspeSharp.GUI
 			this.cmbMonth.Active = -1;
 			this.chkIsDataComplete.Active = false;
 			
-			// entryName has focus to quick adding without the mouse
+			// entryName has focus to quick adding without using the mouse
 			this.entryName.HasFocus = true;
 		}
 		
@@ -145,7 +144,6 @@ namespace ZaspeSharp.GUI
 			catch (Exception ex)
 			{
 				this.ShowErrorMessage(ex);
-				
 				return;
 			}
 			
@@ -176,12 +174,12 @@ namespace ZaspeSharp.GUI
 			catch (Exception) {
 			}
 			
-			aPerson = pm.AddPerson(dni, this.entrySurname.Text, this.entryName.Text,
+			aPerson = pm.AddPerson(dni, this.entrySurname.Text.Trim(), this.entryName.Text.Trim(),
 			                       this.cmbSex.ActiveText.Equals("Hombre") ? true : false,
-			                       birthday, this.entryAddress.Text,
-			                       this.entryCity.Text, this.entryLandPhone.Text,
-			                       this.entryMobilePhone.Text, this.entryEMail.Text,
-			                       this.entryCommunity.Text, this.chkIsActive.Active,
+			                       birthday, this.entryAddress.Text.Trim(),
+			                       this.entryCity.Text.Trim(), this.entryLandPhone.Text.Trim(),
+			                       this.entryMobilePhone.Text.Trim(), this.entryEMail.Text.Trim(),
+			                       this.entryCommunity.Text.Trim(), this.chkIsActive.Active,
 			                       this.chkIsDataComplete.Active);
 			
 			// Update persons list in the main window

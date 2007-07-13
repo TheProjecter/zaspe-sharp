@@ -183,7 +183,7 @@ namespace ZaspeSharp.GUI
 			this.tvEvents.Model = this.events;
 			
 			// Handler when a row is selected, to enable event modify button
-			this.tvEvents.CursorChanged += new EventHandler(this.OnEventsListCursorChanged);
+			this.tvEvents.Selection.Changed += new EventHandler(this.OnEventsListSelectionChanged);
 			
 			// Handler when a row is double clicked
 			this.tvEvents.RowActivated += new RowActivatedHandler(this.OnEventsListRowActivated);
@@ -343,7 +343,7 @@ namespace ZaspeSharp.GUI
 			new ModifyPerson(this.mainWindow, this.selectedPersons[0]);
 		}
 		
-		public void OnEventsListCursorChanged(object o, EventArgs args)
+		public void OnEventsListSelectionChanged(object o, EventArgs args)
 		{
 			this.imiModifyEvent.Sensitive = true;
 			this.imiRemoveEvent.Sensitive = true;
@@ -375,7 +375,6 @@ namespace ZaspeSharp.GUI
 			this.imiModifyPerson.Sensitive = true;
 			this.imiRemovePerson.Sensitive = true;
 			
-			//this.tvPersons.Selection.GetSelected(out this.selectedTreeIter);
 			TreePath[] selection = this.tvPersons.Selection.GetSelectedRows();
 			
 			// if more than one row was selected, disable modify button
@@ -441,19 +440,28 @@ namespace ZaspeSharp.GUI
 		
 		public void OnMenuItemRemoveEventActivate(object o, EventArgs args)
 		{
+			string msg;
+			if (this.selectedEvents.Count > 1)
+				msg = "¿Seguro que desea eliminar los eventos seleccionados?";
+			else
+				msg = "¿Seguro que desea eliminar el evento seleccionado?";
+			
 			MessageDialog md = new MessageDialog(this.mainWindow, DialogFlags.Modal,
 			                                     MessageType.Question, ButtonsType.YesNo,
-			                                     "¿Seguro que desea eliminar el evento?");
+			                                     msg);
 			md.Title = "Confirmación de eliminación";
 			
 			ResponseType response = (ResponseType)md.Run();
 			
 			TreeIter iter;
 			if (response == ResponseType.Yes) {
-				for (int i=0; i<this.selectedEvents.Count; i++) {
-					this.selectedEvents[i].Remove();
+				Event[] eventsToRemove = this.selectedEvents.ToArray();
+				TreeIter[] itersToRemove = this.selectedTreeIters.ToArray();
+				
+				for (int i=0; i<eventsToRemove.Length; i++) {
+					eventsToRemove[i].Remove();
 					
-					iter = this.selectedTreeIters[i];
+					iter = itersToRemove[i];
 					this.events.Remove(ref iter);
 				}
 			}

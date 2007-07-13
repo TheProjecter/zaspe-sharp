@@ -43,7 +43,7 @@ namespace ZaspeSharp.Events
 			get { return this.name; }
 			set	{
 				if (value.Equals(""))
-					throw new Exception("El nombre de la propiedad no puede ser nulo.");
+					throw new Exception("El nombre del evento no puede ser nulo.");
 				
 				this.name = value;
 			}

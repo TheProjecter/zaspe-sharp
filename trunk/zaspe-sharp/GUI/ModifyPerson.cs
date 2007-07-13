@@ -127,7 +127,7 @@ namespace ZaspeSharp.GUI
 			
 			this.person = aPerson;
 			
-			this.dlgAddPerson.Show();
+			this.dlgAddPerson.ShowAll();
 		}
 		
 		public void OnCancelClicked(object o, EventArgs args)
@@ -138,13 +138,14 @@ namespace ZaspeSharp.GUI
 		// This is, in fact, the Save button
 		public void OnOkAddClicked(object o, EventArgs args)
 		{
-			int dni;
+			int dni = 0;
 			try {
 				dni = Convert.ToInt32(this.entryDNI.Text);
 			}
 			catch (Exception) {
-				throw new Exception("El DNI no está en un formato correcto. El mismo debe formarse " +
+				this.ShowErrorMessage("El DNI no está en un formato correcto. El mismo debe formarse " +
 				                    "únicamente con números, y no otros caracteres como los puntos.");
+				return;
 			}
 			
 			int day = (int)this.spbtnDay.Value;
@@ -159,20 +160,20 @@ namespace ZaspeSharp.GUI
 			}
 			
 			// Basic data
-			this.person.Name = this.entryName.Text;
-			this.person.Surname = this.entrySurname.Text;
+			this.person.Name = this.entryName.Text.Trim();
+			this.person.Surname = this.entrySurname.Text.Trim();
 			this.person.Dni = dni;
 			this.person.IsMan = this.cmbSex.Active == 0 ? true : false;
 			
 			// Contact data
-			this.person.Address = this.entryAddress.Text;
-			this.person.City = this.entryCity.Text;
-			this.person.LandPhoneNumber = this.entryLandPhone.Text;
-			this.person.MobileNumber = this.entryMobilePhone.Text;
-			this.person.EMail = this.entryEMail.Text;
+			this.person.Address = this.entryAddress.Text.Trim();
+			this.person.City = this.entryCity.Text.Trim();
+			this.person.LandPhoneNumber = this.entryLandPhone.Text.Trim();
+			this.person.MobileNumber = this.entryMobilePhone.Text.Trim();
+			this.person.EMail = this.entryEMail.Text.Trim();
 			
 			// Other data
-			this.person.Community = this.entryCommunity.Text;
+			this.person.Community = this.entryCommunity.Text.Trim();
 			this.person.IsActive = this.chkIsActive.Active;
 			this.person.BirthdayDate = birthday;
 			this.person.IsDataComplete = this.chkIsDataComplete.Active;
@@ -189,15 +190,20 @@ namespace ZaspeSharp.GUI
 		{
 		}
 		
-		private void ShowErrorMessage(Exception ex)
+		private void ShowErrorMessage(string errorMsg)
 		{
 			MessageDialog md = new MessageDialog(this.dlgAddPerson, DialogFlags.Modal,
 			                                     MessageType.Error, ButtonsType.Ok,
-			                                     ex.Message);
-			md.Title = "Error al ingresar la persona";
+			                                     errorMsg);
+			md.Title = "Error al modificar datos de la persona";
 			
 			md.Run();
 			md.Destroy();
+		}
+		
+		private void ShowErrorMessage(Exception ex)
+		{
+			this.ShowErrorMessage(ex.Message);
 		}
 	}
 }
