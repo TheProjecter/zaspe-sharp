@@ -551,8 +551,8 @@ namespace ZaspeSharp.GUI
 		
 		public void PersonChanged()
 		{
-			this.persons.SetValue(this.selectedTreeIters[0], 0, this.selectedPersons[0].Name);
-			this.persons.SetValue(this.selectedTreeIters[0], 1, this.selectedPersons[0].Surname);
+			this.persons.SetValue(this.selectedTreeIters[0], 0, this.selectedPersons[0].Surname);
+			this.persons.SetValue(this.selectedTreeIters[0], 1, this.selectedPersons[0].Name);
 			this.persons.SetValue(this.selectedTreeIters[0], 2, this.selectedPersons[0].EMail);
 			
 			// This is to avoid print birthday if it was not set
