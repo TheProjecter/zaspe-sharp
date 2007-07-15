@@ -26,14 +26,13 @@ using Gentle.Framework;
 
 namespace ZaspeSharp.Attendances
 {
-	public partial class AttendanceManager
+	public partial class AttendancesManager
 	{
-		#region Retrieve methods
+#region Retrieve methods
 		public Attendance Retrieve(Person aPerson, Event anEvent) {
-			// I look for the person through DNI
-			Key key = new Key(typeof(Person), true);
-			key.Add("idPerson", aPerson.Id);
-			key.Add("eventDate", anEvent.Date);
+			Key key = new Key(true);
+			key.Add("id_person", aPerson.Id);
+			key.Add("id_event", anEvent.Id);
 			
 			Attendance anAttendance =
 				Broker.SessionBroker.TryRetrieveInstance(typeof(Attendance), key) as Attendance;
@@ -74,15 +73,15 @@ namespace ZaspeSharp.Attendances
 			
 			return attendances;
 		}
-		#endregion
+#endregion
 		
-		#region Entry methods
+#region Entry methods
 		public Attendance AddAttendance(Person aPerson, Event anEvent) {
 			try {
 				Retrieve(aPerson, anEvent);
 			}
 			catch (AttendanceDoesNotExistException) {
-				Attendance newAttendance = new Attendance(aPerson.Id, anEvent.Date);
+				Attendance newAttendance = new Attendance(aPerson.Id, anEvent.Id);
 				newAttendance.Persist();
 				
 				return newAttendance;
@@ -91,6 +90,17 @@ namespace ZaspeSharp.Attendances
 			throw new AttendanceExistsException("Se está intentando ingresar una asistencia que" +
 					" ya existe en la base de datos.");
 		}
-		#endregion
+#endregion
+		
+#region Deletion methods
+		public void RemoveAttendance(Person aPerson, Event anEvent) {
+			Attendance at = Retrieve(aPerson, anEvent);
+			
+			if (at == null)
+				throw new Exception("La asistencia que se intenta eliminar no existe en la base de datos.");
+			
+			at.Remove();
+		}
+#endregion
 	}
 }

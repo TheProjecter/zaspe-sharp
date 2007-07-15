@@ -17,12 +17,14 @@
 */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Glade;
 using Gtk;
 
 using ZaspeSharp.Persons;
 using ZaspeSharp.Events;
+using ZaspeSharp.Attendances;
 
 namespace ZaspeSharp.GUI
 {
@@ -72,6 +74,8 @@ namespace ZaspeSharp.GUI
 		private List<Event> selectedEvents;
 		private List<TreeIter> selectedTreeIters;
 		
+		private List<Event> lastEvents;
+		
 		public MainWindow()
 		{
 			Glade.XML gxml_person = new Glade.XML("main_window.glade", "menuPersonActions", null);
@@ -93,6 +97,7 @@ namespace ZaspeSharp.GUI
 			this.selectedPersons = new List<Person>();
 			this.selectedEvents = new List<Event>();
 			this.selectedTreeIters = new List<Gtk.TreeIter>();
+			this.lastEvents = new List<Event>();
 			
 			// Icon for the main window
 			this.mainWindow.Icon = new Gdk.Pixbuf("blue_fea.gif");
@@ -100,7 +105,7 @@ namespace ZaspeSharp.GUI
 			this.mtbAddPerson.Menu = this.menuPersonActions;
 			this.mtbAddEvent.Menu = this.menuEventActions;
 			
-			// tvPersons
+			// ### tvPersons ###
 			this.tvPersons = new TreeView();
 			this.tvPersons.HeadersVisible = true;
 			this.tvPersons.Selection.Mode = SelectionMode.Multiple;
@@ -155,7 +160,8 @@ namespace ZaspeSharp.GUI
 			this.tvPersons.ButtonPressEvent += new ButtonPressEventHandler(this.OnPersonsListButtonPress);
 			this.tvPersons.PopupMenu += new PopupMenuHandler(this.OnPersonsListPopupMenu);
 			
-			// tvEvents
+			
+			// ### tvEvents ###
 			this.tvEvents = new TreeView();
 			this.tvEvents.HeadersVisible = true;
 			this.tvEvents.Selection.Mode = SelectionMode.Multiple;
@@ -194,61 +200,109 @@ namespace ZaspeSharp.GUI
 			this.tvEvents.ButtonPressEvent += new ButtonPressEventHandler(this.OnEventsListButtonPress);
 			this.tvEvents.PopupMenu += new PopupMenuHandler(this.OnEventsListPopupMenu);
 			
-			// TreeView example
-			TreeViewColumn persons = new TreeViewColumn();
-			persons.Title = "Personas";
 			
-			CellRendererText personCell = new CellRendererText();
-			persons.PackStart(personCell, true);
+			// ### tvAttendaces ###
+			this.lastEvents.AddRange(EventsManager.Instance.RetrieveLast(3));
+			Person[] allPersons = PersonsManager.Instance.RetrieveAll();
 			
-			TreeViewColumn event1 = new TreeViewColumn();
-			event1.Title = "Misa 27/05 - 19 hs";
+			List<Type> columnTypes = new List<Type>();
+			// Types to create ListStore. First type is string (name of persons)
+			columnTypes.Add(typeof(string));
 			
-			TreeViewColumn event2 = new TreeViewColumn();
-			event2.Title = "Ensayo 26/05 - 19 hs";
+			if (this.lastEvents.Count > 0 && allPersons.Length > 0) {
+				TreeViewColumn persons = new TreeViewColumn();
+				persons.Title = "Personas";
+				
+				CellRendererText personCell = new CellRendererText();
+				persons.PackStart(personCell, true);
+				persons.AddAttribute(personCell, "text", 0);
+				
+				this.tvAttendances.AppendColumn(persons);
+				
+				// Retrieve latest events added, and add them as columns
+				TreeViewColumn eventColumn;
+				CustomCellRendererToggle eventCellRenderer;
+				
+				int k = 1;
+				
+				foreach (Event anEvent in lastEvents) {
+					columnTypes.Add(typeof(bool));
+					
+					// Create cell renderer
+					eventCellRenderer = new CustomCellRendererToggle(k);
+					eventCellRenderer.Activatable = true;
+					eventCellRenderer.Toggled += new ToggledHandler(this.OnCellRendererColumnsToggleEvent);
+					
+					// Create column
+					eventColumn = new TreeViewColumn();
+					eventColumn.Title = anEvent.Name + "\n(" + this.FormatEventDateTime(anEvent.Date) + ")";
+					eventColumn.Alignment = 0.5f;
+					eventColumn.PackStart(eventCellRenderer, true);
+					eventColumn.AddAttribute(eventCellRenderer, "active", k++);
+					
+					this.tvAttendances.AppendColumn(eventColumn);
+				}
+				
+				CellRendererText eventCellRendererText = new CellRendererText();
+				eventCellRendererText.Sensitive = false;
+				
+				// Create column
+				eventColumn = new TreeViewColumn();
+				eventColumn.Title = "";
+				eventColumn.PackStart(eventCellRendererText, false);
+				
+				this.tvAttendances.AppendColumn(eventColumn);
+			}
 			
-			TreeViewColumn event3 = new TreeViewColumn();
-			event3.Title = "Misa 3/06 - 19 hs";
-			
-			CellRendererToggle event1Cell = new CellRendererToggle();
-			CellRendererToggle event2Cell = new CellRendererToggle();
-			CellRendererToggle event3Cell = new CellRendererToggle();
-			
-			event1Cell.Activatable = true;
-			event2Cell.Activatable = true;
-			event3Cell.Activatable = true;
-			
-			event1Cell.Toggled += this.OnCellRendererToggleEvent1Toggled;
-			event2Cell.Toggled += this.OnCellRendererToggleEvent2Toggled;
-			event3Cell.Toggled += this.OnCellRendererToggleEvent3Toggled;
-			
-			event1.PackStart(event1Cell, true);
-			event2.PackStart(event2Cell, true);
-			event3.PackStart(event3Cell, true);
-			
-			this.tvAttendances.AppendColumn(persons);
-			this.tvAttendances.AppendColumn(event1);
-			this.tvAttendances.AppendColumn(event2);
-			this.tvAttendances.AppendColumn(event3);
-			
-			persons.AddAttribute(personCell, "text", 0);
-			event1.AddAttribute(event1Cell, "active", 1);
-			event2.AddAttribute(event2Cell, "active", 2);
-			event3.AddAttribute(event3Cell, "active", 3);
-			
-			this.attendances = new ListStore(typeof(string), typeof(bool),
-				typeof(bool), typeof(bool));
-			
-			this.attendances.AppendValues("Arnoldo Braida", false, false, false);
-			this.attendances.AppendValues("Pepe Biondi", true, false, true);
-			this.attendances.AppendValues("Damián Paduán", false, true, false);
-			this.attendances.AppendValues("Fito Páez", false, false, false);
-			
+			this.attendances = new ListStore(columnTypes.ToArray());
 			this.tvAttendances.Model = this.attendances;
 			
+//			TreeViewColumn event1 = new TreeViewColumn();
+//			event1.Title = "Misa 27/05 - 19 hs";
+//			
+//			TreeViewColumn event2 = new TreeViewColumn();
+//			event2.Title = "Ensayo 26/05 - 19 hs";
+//			
+//			TreeViewColumn event3 = new TreeViewColumn();
+//			event3.Title = "Misa 3/06 - 19 hs";
+//			
+//			CellRendererToggle event1Cell = new CellRendererToggle();
+//			CellRendererToggle event2Cell = new CellRendererToggle();
+//			CellRendererToggle event3Cell = new CellRendererToggle();
+//			
+//			event1Cell.Activatable = true;
+//			event2Cell.Activatable = true;
+//			event3Cell.Activatable = true;
+//			
+//			event1Cell.Toggled += this.OnCellRendererToggleEvent1Toggled;
+//			event2Cell.Toggled += this.OnCellRendererToggleEvent2Toggled;
+//			event3Cell.Toggled += this.OnCellRendererToggleEvent3Toggled;
+//			
+//			event1.PackStart(event1Cell, true);
+//			event2.PackStart(event2Cell, true);
+//			event3.PackStart(event3Cell, true);
+//			
+//			this.tvAttendances.AppendColumn(persons);
+//			this.tvAttendances.AppendColumn(event1);
+//			this.tvAttendances.AppendColumn(event2);
+//			this.tvAttendances.AppendColumn(event3);
+//			
+//			persons.AddAttribute(personCell, "text", 0);
+//			event1.AddAttribute(event1Cell, "active", 1);
+//			event2.AddAttribute(event2Cell, "active", 2);
+//			event3.AddAttribute(event3Cell, "active", 3);
+//			
+//			this.attendances = new ListStore(typeof(string), typeof(bool),
+//				typeof(bool), typeof(bool));
+//			
+//			this.attendances.AppendValues("Arnoldo Braida", false, false, false);
+//			this.attendances.AppendValues("Pepe Biondi", true, false, true);
+//			this.attendances.AppendValues("Damián Paduán", false, true, false);
+//			this.attendances.AppendValues("Fito Páez", false, false, false);
+			
+			// ### Persons and events loading ###
 			// Read persons from database
-			PersonsManager pm = PersonsManager.Instance;
-			foreach (Person p in pm.RetrieveAll())
+			foreach (Person p in allPersons)
 				this.AddPersonToList(p);
 			
 			// Read events from database
@@ -485,35 +539,45 @@ namespace ZaspeSharp.GUI
 			this.AddTreeViewInVBox(this.tvAttendances);
 		}
 		
-		public void OnCellRendererToggleEvent1Toggled(object o, ToggledArgs args)
+		public void OnCellRendererColumnsToggleEvent(object o, ToggledArgs args)
 		{
 			TreeIter iter;
 			
 			if (this.attendances.GetIter(out iter, new TreePath(args.Path))) {
-				bool old = (bool)this.attendances.GetValue(iter, 1);
-				this.attendances.SetValue(iter, 1, !old);
+				bool old = (bool)this.attendances.GetValue(iter, ((CustomCellRendererToggle)o).ColumnNumber);
+				this.attendances.SetValue(iter, ((CustomCellRendererToggle)o).ColumnNumber, !old);
 			}
 		}
-		
-		public void OnCellRendererToggleEvent2Toggled(object o, ToggledArgs args)
-		{
-			TreeIter iter;
-			
-			if (this.attendances.GetIter(out iter, new TreePath(args.Path))) {
-				bool old = (bool)this.attendances.GetValue(iter, 2);
-				this.attendances.SetValue(iter, 2, !old);
-			}
-		}
-		
-		public void OnCellRendererToggleEvent3Toggled(object o, ToggledArgs args)
-		{
-			TreeIter iter;
-			
-			if (this.attendances.GetIter(out iter, new TreePath(args.Path))) {
-				bool old = (bool)this.attendances.GetValue(iter, 3);
-				this.attendances.SetValue(iter, 3, !old);
-			}
-		}
+
+//		public void OnCellRendererToggleEvent1Toggled(object o, ToggledArgs args)
+//		{
+//			TreeIter iter;
+//			
+//			if (this.attendances.GetIter(out iter, new TreePath(args.Path))) {
+//				bool old = (bool)this.attendances.GetValue(iter, 1);
+//				this.attendances.SetValue(iter, 1, !old);
+//			}
+//		}
+//		
+//		public void OnCellRendererToggleEvent2Toggled(object o, ToggledArgs args)
+//		{
+//			TreeIter iter;
+//			
+//			if (this.attendances.GetIter(out iter, new TreePath(args.Path))) {
+//				bool old = (bool)this.attendances.GetValue(iter, 2);
+//				this.attendances.SetValue(iter, 2, !old);
+//			}
+//		}
+//		
+//		public void OnCellRendererToggleEvent3Toggled(object o, ToggledArgs args)
+//		{
+//			TreeIter iter;
+//			
+//			if (this.attendances.GetIter(out iter, new TreePath(args.Path))) {
+//				bool old = (bool)this.attendances.GetValue(iter, 3);
+//				this.attendances.SetValue(iter, 3, !old);
+//			}
+//		}
 		
 		public void OnAddPersonClicked(object o, EventArgs args)
 		{
@@ -546,7 +610,7 @@ namespace ZaspeSharp.GUI
 		public void EventChanged()
 		{
 			this.events.SetValue(this.selectedTreeIters[0], 0, this.selectedEvents[0].Name);
-			this.events.SetValue(this.selectedTreeIters[0], 1, this.selectedEvents[0].Date.ToString());
+			this.events.SetValue(this.selectedTreeIters[0], 1, this.FormatEventDateTime(this.selectedEvents[0].Date));
 		}
 		
 		public void PersonChanged()
@@ -557,22 +621,39 @@ namespace ZaspeSharp.GUI
 			
 			// This is to avoid print birthday if it was not set
 			if (!this.selectedPersons[0].BirthdayDate.Equals(DateTime.MinValue))
-				this.persons.SetValue(this.selectedTreeIters[0], 3, this.FormatDateTime(this.selectedPersons[0].BirthdayDate));
+				this.persons.SetValue(this.selectedTreeIters[0], 3, this.FormatBirthdayDateTime(this.selectedPersons[0].BirthdayDate));
 		}
 		
-		private string FormatDateTime(DateTime dt)
+		private string FormatEventDateTime(DateTime dt)
+		{
+			return (dt.ToString("d") + " " + dt.ToString("t"));
+		}
+		
+		private string FormatBirthdayDateTime(DateTime dt)
 		{
 			return (dt.ToString("dd") + " de " + dt.ToString("MMMM"));
 		}
 		
 		public void AddPersonToList(Person p)
 		{
-			string birthday = this.FormatDateTime(p.BirthdayDate);
+			string birthday = this.FormatBirthdayDateTime(p.BirthdayDate);
 			
 			if (p.BirthdayDate.Equals(DateTime.MinValue))
 			    birthday = "";
 			
+			// Add to persons list
 			this.persons.AppendValues(p.Surname, p.Name, p.EMail, birthday, p);
+			
+			// Add to attendances list
+			AttendancesManager am = AttendancesManager.Instance;
+			ArrayList data = new ArrayList();
+			
+			data.Add(p.Name + " " + p.Surname);
+			
+			foreach (Event anEvent in this.lastEvents)
+				data.Add(am.Attended(p, anEvent));
+			
+			this.attendances.AppendValues(data.ToArray());
 		}
 		
 		public void AddEventToList(Event e)
@@ -582,7 +663,7 @@ namespace ZaspeSharp.GUI
 //			if (p.BirthdayDate.Equals(DateTime.MinValue))
 //			    birthday = "";
 			
-			this.events.AppendValues(e.Name, e.Date.ToString(), e);
+			this.events.AppendValues(e.Name, this.FormatEventDateTime(e.Date), e);
 		}
 		
 		private void AddTreeViewInVBox(TreeView tv)

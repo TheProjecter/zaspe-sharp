@@ -17,22 +17,23 @@
 */
 
 using System;
+using Gtk;
 
-namespace ZaspeSharp.Attendances
+namespace ZaspeSharp.GUI
 {
-	/// <summary>
-	/// Description of ControladorAsistencias.
-	/// </summary>
-	public partial class AttendancesManager
+	public class CustomCellRendererToggle : CellRendererToggle
 	{
-		#region User Variables
-		private static AttendancesManager instance;
-		#endregion
+		private int columnNumber;
 		
-		#region Constructores
-		private AttendancesManager()
+		public CustomCellRendererToggle(int columnNumber) : base()
 		{
+			this.columnNumber = columnNumber;
 		}
-		#endregion
+		
+		public int ColumnNumber
+		{
+			get { return this.columnNumber; }
+			set { this.columnNumber = value; }
+		}
 	}
 }

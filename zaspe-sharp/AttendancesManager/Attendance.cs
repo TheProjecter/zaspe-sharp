@@ -26,27 +26,21 @@ using Gentle.Framework;
 namespace ZaspeSharp.Attendances
 {
 	/// <summary>
-	/// Description of Asistencia.
+	/// Description of Attendance.
 	/// </summary>
 	[TableName("attendances")]
 	public partial class Attendance : Persistent
 	{
 		#region User Variables
-		private int person_id;
 		private Person aPerson;
-		
-		private DateTime eventDate;
 		private Event anEvent;
 		#endregion
 		
 		#region Constructors
-		public Attendance(int idPerson, DateTime eventDate)
+		public Attendance(int id_person, int id_event)
 		{
-			this.person_id = person_id;
-			this.eventDate = eventDate;
-			
-			this.aPerson = PersonsManager.Instance.Retrieve(this.person_id);
-			this.anEvent = EventsManager.Instance.Retrieve(this.eventDate);
+			this.aPerson = PersonsManager.Instance.RetrieveById(id_person);
+			this.anEvent = EventsManager.Instance.Retrieve(id_event);
 		}
 		#endregion
 	}

@@ -2,8 +2,8 @@ Bugs
 ----
 
 * Date of events must be carrefully revised. What happen if an event is added
-on 30 of December with date 5 of January? _Year_ of that date must be
-set correctly.
+on 30 of December with date 5 of January? _Year_ of that date must be set
+correctly.
 
 
 Improvements

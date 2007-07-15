@@ -20,14 +20,14 @@ using System;
 
 namespace ZaspeSharp.Attendances
 {
-	public partial class AttendanceManager
+	public partial class AttendancesManager
 	{
-		public static AttendanceManager Instance
+		public static AttendancesManager Instance
 		{
 			get
 			{
 				if (instance == null)
-					instance = new AttendanceManager();
+					instance = new AttendancesManager();
 				
 				return instance;
 			}

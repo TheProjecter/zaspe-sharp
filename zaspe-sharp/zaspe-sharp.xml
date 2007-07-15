@@ -180,6 +180,7 @@
 			<Reference name="PersonsManager" localCopy="true"/>
 			<Reference name="EventsManager" localCopy="true"/>
 			<Reference name="EventTypesManager" localCopy="true"/>
+			<Reference name="AttendancesManager" localCopy="true"/>
 			<Reference path="..\Gentle.NET" name="Gentle.Common" localCopy="true"/>
 			<Reference path="..\Gentle.NET" name="Gentle.Framework" localCopy="true"/>
 			<Reference path="..\Gentle.NET" name="Gentle.Provider.SQLite" localCopy="true"/>
@@ -194,6 +195,7 @@
 				<Match path=".\resources" pattern="blue_fea.gif" recurse="false" buildAction="None" copyToOutput="Always" link="true" />
 				<Match path=".\glade" pattern="*.glade" recurse="false" buildAction="None" copyToOutput="Always" link="true" />
 				<Match pattern="*.cs" recurse="false" buildAction="Compile"/>
+				<Match path=".\CustomWidgets" pattern="*.cs" recurse="false" buildAction="Compile"/>
 			</Files>
 		</Project>
 		
