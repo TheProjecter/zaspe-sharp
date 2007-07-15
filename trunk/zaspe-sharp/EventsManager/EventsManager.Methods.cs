@@ -27,9 +27,23 @@ namespace ZaspeSharp.Events
 	public partial class EventsManager
 	{
 		#region Retrieve methods
+		public Event Retrieve(int id)
+		{
+			Key key = new Key(typeof(Event), true);
+			key.Add("id", id);
+			
+			Event anEvent = Broker.SessionBroker.TryRetrieveInstance(
+				typeof(Event), key) as Event;
+			
+			if (anEvent != null)
+				return anEvent;
+			
+			throw new EventDoesNotExistException();
+		}
+		
 		public Event Retrieve(DateTime date)
 		{
-			// Los segundos no cuentan
+			// Seconds are not important
 			DateTime dateWithoutSeconds = new DateTime(date.Year, date.Month, date.Day,
 			                                         date.Hour, date.Minute, 0);
 			
@@ -59,15 +73,21 @@ namespace ZaspeSharp.Events
 			return events_result.ToArray();
 		}
 		
-		public Event[] RetrieveLast(int nroEventosRecuperar) {			
+		public Event[] RetrieveLast(int numberOfEvents) {			
 			SqlBuilder sb = new SqlBuilder(StatementType.Select, typeof(Event));
-			sb.SetRowLimit(nroEventosRecuperar);
-			sb.AddOrderByField(false, "fecha");
+			sb.SetRowLimit(numberOfEvents);
+			sb.AddOrderByField(false, "date");
+			sb.AddConstraint(Operator.LessThanOrEquals, "date", DateTime.Now);
 			
 			SqlStatement stmt = sb.GetStatement(true);
 			
-			Event[] events = (Event[])ObjectFactory.GetCollection(typeof(Event), stmt.Execute());
-			return events;
+			IList events = ObjectFactory.GetCollection(typeof(Event), stmt.Execute());
+			
+			List<Event> events_result = new List<Event>();
+			foreach (Event e in events)
+				events_result.Add(e);
+			
+			return events_result.ToArray();
 		}
 		#endregion
 		

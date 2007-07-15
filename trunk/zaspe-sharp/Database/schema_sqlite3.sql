@@ -55,8 +55,8 @@ CREATE TABLE event_types (
 
 CREATE TABLE attendances (
 	id_person integer,
-	event_date date,
-	primary key(id_person, event_date)
+	id_event integer,
+	primary key(id_person, id_event)
 );
 
 CREATE TABLE instruments (

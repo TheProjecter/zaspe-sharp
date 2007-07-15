@@ -27,31 +27,33 @@ namespace ZaspeSharp.Persons
 	public partial class PersonsManager
 	{
 #region Retrieve methods
-		/// <summary>
-		/// Recupera una persona por su id o DNI
-		/// </summary>
-		/// <param name="dni_id">Puede ser el id o DNI. Si falla con uno trata con el otro.</param>
-		/// <returns></returns>
-		public Person Retrieve(int dni_id)
+		public Person RetrieveById(int id)
 		{
 			// I look for a person by his DNI
 			Key key = new Key(typeof(Person), true);
-			key.Add("dni", dni_id);
+			key.Add("id", id);
 			
 			Person aPerson = Broker.SessionBroker.TryRetrieveInstance(typeof(Person), key) as Person;
 			
 			// If found, it's returned
 			if (aPerson != null)
 				return aPerson;
-
-			// Now i look for by id
-			//key = new Key(typeof(Person), true);
-			//key.Add("id", dni_id);
 			
-			//aPerson = Broker.SessionBroker.TryRetrieveInstance(typeof(Person), key) as Person;
+			// the person who is looked for does not exist
+			throw new PersonDoesNotExistException("No existe una persona con ese Id");
+		}
+		
+		public Person RetrieveByDNI(int dni)
+		{
+			// I look for a person by his DNI
+			Key key = new Key(typeof(Person), true);
+			key.Add("dni", dni);
 			
-			//if (aPerson != null)
-			//	return aPerson;
+			Person aPerson = Broker.SessionBroker.TryRetrieveInstance(typeof(Person), key) as Person;
+			
+			// If found, it's returned
+			if (aPerson != null)
+				return aPerson;
 			
 			// the person who is looked for does not exist
 			throw new PersonDoesNotExistException("No existe una persona con ese DNI");
@@ -105,7 +107,7 @@ namespace ZaspeSharp.Persons
 		{
 			// Check if exists another person with the same dni.
 			try {
-				Retrieve(dni);
+				RetrieveByDNI(dni);
 			}
 			catch (PersonDoesNotExistException) {
 				Person newPerson = new Person(dni, surname, name, is_man,
@@ -129,7 +131,7 @@ namespace ZaspeSharp.Persons
 			Person aPerson;
 			
 			try {
-				aPerson = Retrieve(dni);
+				aPerson = RetrieveByDNI(dni);
 			}
 			catch (PersonDoesNotExistException) {
 				throw new PersonDoesNotExistException("Se está intentando eliminar una persona que" + 
