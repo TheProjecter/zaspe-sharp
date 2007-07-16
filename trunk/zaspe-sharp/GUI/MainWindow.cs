@@ -1,4 +1,4 @@
-/*
+﻿/*
     Zaspe# - Attendance management
     Copyright (C) 2006, 2007 Milton Pividori
 
@@ -697,7 +697,7 @@ namespace ZaspeSharp.GUI
 		// Only valid if tvAttendances is visible
 		public Person GetPerson(TreeIter iter)
 		{
-			return ((Person)this.attendances.GetValue(iter, 4));
+			return ((Person)this.attendances.GetValue(iter, 1+this.lastEvents.Count));
 		}
 		
 		public void AddPersonToList(Person p)
