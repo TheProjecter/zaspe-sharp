@@ -27,35 +27,39 @@ namespace ZaspeSharp.GUI
 	public class AddEvent
 	{
 		[Widget]
-		Dialog dlgAddEvent;
+		protected Dialog dlgAddEvent;
 		
 		[Widget]
-		ComboBox cmbEventTypes;
+		protected ComboBox cmbEventTypes;
 		
 		[Widget]
-		Entry entryName;
+		protected Entry entryName;
 		
 		[Widget]
-		SpinButton spbtnDay;
+		protected SpinButton spbtnDay;
 		
 		[Widget]
-		ComboBox cmbMonth;
+		protected ComboBox cmbMonth;
 		
 		[Widget]
-		SpinButton spbtnHour;
+		protected SpinButton spbtnYear;
 		
 		[Widget]
-		SpinButton spbtnMinute;
+		protected SpinButton spbtnHour;
 		
 		[Widget]
-		TextView textviewGoals;
+		protected SpinButton spbtnMinute;
 		
 		[Widget]
-		TextView textviewObservations;
+		protected TextView textviewGoals;
 		
-		private string lastGeneratedEventName = "";
+		[Widget]
+		protected TextView textviewObservations;
 		
-		public AddEvent(Window parent)
+		protected string lastGeneratedEventName = "";
+		
+		// Constructor for subclasses of this class
+		protected AddEvent(Window parent, bool showDialog)
 		{
 			Glade.XML gxml = new Glade.XML ("add_event.glade", "dlgAddEvent", null);
 			gxml.Autoconnect(this);
@@ -66,6 +70,10 @@ namespace ZaspeSharp.GUI
 			this.spbtnDay.Value = DateTime.Now.Day;
 			this.cmbMonth.Active = DateTime.Now.Month - 1;
 			
+			this.spbtnYear.Adjustment.Lower = DateTime.Now.Year;
+			this.spbtnYear.Adjustment.Upper = 9999;
+			this.spbtnYear.Value = DateTime.Now.Year;
+			
 			// Load event types
 			EventTypesManager etm = EventTypesManager.Instance;
 			
@@ -75,10 +83,14 @@ namespace ZaspeSharp.GUI
 				this.cmbEventTypes.AppendText(anEventType.Name);
 			}
 			
-			this.dlgAddEvent.ShowAll();
+			if (showDialog)
+				this.dlgAddEvent.ShowAll();
 		}
 		
-		private bool EventNameCanBeChanged()
+		// Constructor for users of this class
+		public AddEvent(Window parent) : this(parent, true) {}
+		
+		protected bool EventNameCanBeChanged()
 		{
 			if (this.entryName.Text.Equals(this.lastGeneratedEventName) ||
 			    this.entryName.Text.Equals(""))
@@ -87,11 +99,22 @@ namespace ZaspeSharp.GUI
 			return false;
 		}
 		
-		private string GenerateEventName()
+		protected string GenerateEventName()
 		{
 			return (this.cmbEventTypes.ActiveText + " " +
 			        this.spbtnDay.Value.ToString() +
 			        " de " + this.cmbMonth.ActiveText);
+		}
+		
+		public void OnMonthChanged(object o, EventArgs args)
+		{
+			/* If we are on November or Dicember, and the event's month is January
+			 * or February, then the year is the next, not the actual. */
+			if (DateTime.Now.Month > 10 && (this.cmbMonth.Active + 1) < 3)
+				this.spbtnYear.Value = DateTime.Now.Year + 1;
+			
+			// Call because of event's name generation issues
+			this.OnEventTypesChanged(null, null);
 		}
 		
 		public void OnEventTypesChanged(object o, EventArgs args)
@@ -175,11 +198,12 @@ namespace ZaspeSharp.GUI
 			EventsManager em = EventsManager.Instance;
 			Event anEvent = null;
 			
-			int hour = (int)this.spbtnHour.Value;
-			int minute = (int)this.spbtnMinute.Value;
-			int day = (int)this.spbtnDay.Value;
+			int hour = this.spbtnHour.ValueAsInt;
+			int minute = this.spbtnMinute.ValueAsInt;
+			int day = this.spbtnDay.ValueAsInt;
 			int month = this.cmbMonth.Active + 1;
-			int year = DateTime.Now.Year + (month < DateTime.Now.Month ? 1 : 0);
+			int year = this.spbtnYear.ValueAsInt;
+			
 			DateTime date;
 			
 			try {
@@ -202,15 +226,20 @@ namespace ZaspeSharp.GUI
 			MainWindow.mainWindowInstance.AddEventToList(anEvent);
 		}
 		
-		private void ShowErrorMessage(Exception ex)
+		protected void ShowErrorMessage(string errorMsg)
 		{
 			MessageDialog md = new MessageDialog(this.dlgAddEvent, DialogFlags.Modal,
 			                                     MessageType.Error, ButtonsType.Ok,
-			                                     ex.Message);
-			md.Title = "Error al ingresar el evento";
+			                                     errorMsg);
+			md.Title = "Error con el evento";
 			
 			md.Run();
 			md.Destroy();
+		}
+		
+		protected void ShowErrorMessage(Exception ex)
+		{
+			this.ShowErrorMessage(ex.Message);
 		}
 	}
 }

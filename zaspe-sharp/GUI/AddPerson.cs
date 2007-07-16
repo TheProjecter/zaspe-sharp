@@ -27,57 +27,58 @@ namespace ZaspeSharp.GUI
 	public class AddPerson
 	{
 		[Widget]
-		Dialog dlgAddPerson;
+		protected Dialog dlgAddPerson;
 		
 		#region Basic data
 		[Widget]
-		Entry entryName;
+		protected Entry entryName;
 		
 		[Widget]
-		Entry entrySurname;
+		protected Entry entrySurname;
 		
 		[Widget]
-		Entry entryDNI;
+		protected Entry entryDNI;
 		
 		[Widget]
-		ComboBox cmbSex;
+		protected ComboBox cmbSex;
 		#endregion
 		
 		#region Contact data
 		[Widget]
-		Entry entryAddress;
+		protected Entry entryAddress;
 		
 		[Widget]
-		Entry entryCity;
+		protected Entry entryCity;
 		
 		[Widget]
-		Entry entryLandPhone;
+		protected Entry entryLandPhone;
 		
 		[Widget]
-		Entry entryMobilePhone;
+		protected Entry entryMobilePhone;
 		
 		[Widget]
-		Entry entryEMail;
+		protected Entry entryEMail;
 		#endregion
 		
 		#region Other data
 		[Widget]
-		Entry entryCommunity;
+		protected Entry entryCommunity;
 		
 		[Widget]
-		CheckButton chkIsActive;
+		protected CheckButton chkIsActive;
 		
 		[Widget]
-		CheckButton chkIsDataComplete;
+		protected CheckButton chkIsDataComplete;
 		
 		[Widget]
-		SpinButton spbtnDay;
+		protected SpinButton spbtnDay;
 		
 		[Widget]
-		ComboBox cmbMonth;
+		protected ComboBox cmbMonth;
 		#endregion
 		
-		public AddPerson(Gtk.Window parent)
+		// Constructor for subclasses of this class
+		protected AddPerson(Gtk.Window parent, bool showDialog)
 		{
 			Glade.XML gxml = new Glade.XML ("add_person.glade", "dlgAddPerson", null);
 			gxml.Autoconnect(this);
@@ -85,8 +86,12 @@ namespace ZaspeSharp.GUI
 			this.dlgAddPerson.TransientFor = parent;
 			this.cmbSex.Active = 0;
 			
-			this.dlgAddPerson.ShowAll();
+			if (showDialog)
+				this.dlgAddPerson.ShowAll();
 		}
+		
+		// Constructor for users of this class
+		public AddPerson(Gtk.Window parent) : this(parent, true) {}
 		
 		public void OnCancelClicked(object o, EventArgs args)
 		{
@@ -186,15 +191,20 @@ namespace ZaspeSharp.GUI
 			MainWindow.mainWindowInstance.AddPersonToList(aPerson);
 		}
 		
-		private void ShowErrorMessage(Exception ex)
+		protected void ShowErrorMessage(string errorMsg)
 		{
 			MessageDialog md = new MessageDialog(this.dlgAddPerson, DialogFlags.Modal,
 			                                     MessageType.Error, ButtonsType.Ok,
-			                                     ex.Message);
-			md.Title = "Error al ingresar la persona";
+			                                     errorMsg);
+			md.Title = "Error con la persona";
 			
 			md.Run();
 			md.Destroy();
+		}
+		
+		protected void ShowErrorMessage(Exception ex)
+		{
+			this.ShowErrorMessage(ex.Message);
 		}
 	}
 }

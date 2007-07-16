@@ -78,6 +78,8 @@ namespace ZaspeSharp.GUI
 		
 		public MainWindow()
 		{
+			PersonsManager.Instance.PersonsCount();
+			
 			Glade.XML gxml_person = new Glade.XML("main_window.glade", "menuPersonActions", null);
 			gxml_person.Autoconnect(this);
 			this.imiModifyPerson = (ImageMenuItem)gxml_person.GetWidget("imiModifyPerson");
@@ -202,112 +204,74 @@ namespace ZaspeSharp.GUI
 			
 			
 			// ### tvAttendaces ###
-			this.lastEvents.AddRange(EventsManager.Instance.RetrieveLast(3));
-			Person[] allPersons = PersonsManager.Instance.RetrieveAll();
+			this.LoadLastEvents();
 			
-			List<Type> columnTypes = new List<Type>();
-			// Types to create ListStore. First type is string (name of persons)
-			columnTypes.Add(typeof(string));
-			
-			if (this.lastEvents.Count > 0 && allPersons.Length > 0) {
-				TreeViewColumn persons = new TreeViewColumn();
-				persons.Title = "Personas";
-				
-				CellRendererText personCell = new CellRendererText();
-				persons.PackStart(personCell, true);
-				persons.AddAttribute(personCell, "text", 0);
-				
-				this.tvAttendances.AppendColumn(persons);
-				
-				// Retrieve latest events added, and add them as columns
-				TreeViewColumn eventColumn;
-				CustomCellRendererToggle eventCellRenderer;
-				
-				int k = 1;
-				
-				foreach (Event anEvent in lastEvents) {
-					columnTypes.Add(typeof(bool));
-					
-					// Create cell renderer
-					eventCellRenderer = new CustomCellRendererToggle(k);
-					eventCellRenderer.Activatable = true;
-					eventCellRenderer.Toggled += new ToggledHandler(this.OnCellRendererColumnsToggleEvent);
-					
-					// Create column
-					eventColumn = new TreeViewColumn();
-					eventColumn.Title = anEvent.Name + "\n(" + this.FormatEventDateTime(anEvent.Date) + ")";
-					eventColumn.Alignment = 0.5f;
-					eventColumn.PackStart(eventCellRenderer, true);
-					eventColumn.AddAttribute(eventCellRenderer, "active", k++);
-					
-					this.tvAttendances.AppendColumn(eventColumn);
-				}
-				
-				CellRendererText eventCellRendererText = new CellRendererText();
-				eventCellRendererText.Sensitive = false;
-				
-				// Create column
-				eventColumn = new TreeViewColumn();
-				eventColumn.Title = "";
-				eventColumn.PackStart(eventCellRendererText, false);
-				
-				this.tvAttendances.AppendColumn(eventColumn);
-			}
-			
-			this.attendances = new ListStore(columnTypes.ToArray());
-			this.tvAttendances.Model = this.attendances;
-			
-//			TreeViewColumn event1 = new TreeViewColumn();
-//			event1.Title = "Misa 27/05 - 19 hs";
+//			this.lastEvents.AddRange(EventsManager.Instance.RetrieveLast(3));
+//			Person[] allPersons = PersonsManager.Instance.RetrieveAll();
 //			
-//			TreeViewColumn event2 = new TreeViewColumn();
-//			event2.Title = "Ensayo 26/05 - 19 hs";
+//			List<Type> columnTypes = new List<Type>();
+//			// Types to create ListStore. First type is string (name of persons)
+//			columnTypes.Add(typeof(string));
 //			
-//			TreeViewColumn event3 = new TreeViewColumn();
-//			event3.Title = "Misa 3/06 - 19 hs";
+//			if (this.lastEvents.Count > 0 && allPersons.Length > 0) {
+//				TreeViewColumn persons = new TreeViewColumn();
+//				persons.Title = "Personas";
+//				
+//				CellRendererText personCell = new CellRendererText();
+//				persons.PackStart(personCell, true);
+//				persons.AddAttribute(personCell, "text", 0);
+//				
+//				this.tvAttendances.AppendColumn(persons);
+//				
+//				// Retrieve latest events added, and add them as columns
+//				TreeViewColumn eventColumn;
+//				CustomCellRendererToggle eventCellRenderer;
+//				
+//				int k = 1;
+//				
+//				foreach (Event anEvent in lastEvents) {
+//					columnTypes.Add(typeof(bool));
+//					
+//					// Create cell renderer
+//					eventCellRenderer = new CustomCellRendererToggle(k, anEvent);
+//					eventCellRenderer.Activatable = true;
+//					eventCellRenderer.Toggled += new ToggledHandler(this.OnCellRendererColumnsToggleEvent);
+//					
+//					// Create column
+//					eventColumn = new TreeViewColumn();
+//					eventColumn.Title = anEvent.Name + "\n(" + this.FormatEventDateTime(anEvent.Date) + ")";
+//					eventColumn.Alignment = 0.5f;
+//					eventColumn.PackStart(eventCellRenderer, true);
+//					eventColumn.AddAttribute(eventCellRenderer, "active", k++);
+//					
+//					this.tvAttendances.AppendColumn(eventColumn);
+//				}
+//				
+//				// Add an empty column to avoid last one to expand
+//				CellRendererText eventCellRendererText = new CellRendererText();
+//				eventCellRendererText.Sensitive = false;
+//				
+//				// Create column
+//				eventColumn = new TreeViewColumn();
+//				eventColumn.Title = "";
+//				eventColumn.PackStart(eventCellRendererText, false);
+//				
+//				this.tvAttendances.AppendColumn(eventColumn);
+//				
+//				// Last type is Person
+//				columnTypes.Add(typeof(Person));
+//			}
 //			
-//			CellRendererToggle event1Cell = new CellRendererToggle();
-//			CellRendererToggle event2Cell = new CellRendererToggle();
-//			CellRendererToggle event3Cell = new CellRendererToggle();
-//			
-//			event1Cell.Activatable = true;
-//			event2Cell.Activatable = true;
-//			event3Cell.Activatable = true;
-//			
-//			event1Cell.Toggled += this.OnCellRendererToggleEvent1Toggled;
-//			event2Cell.Toggled += this.OnCellRendererToggleEvent2Toggled;
-//			event3Cell.Toggled += this.OnCellRendererToggleEvent3Toggled;
-//			
-//			event1.PackStart(event1Cell, true);
-//			event2.PackStart(event2Cell, true);
-//			event3.PackStart(event3Cell, true);
-//			
-//			this.tvAttendances.AppendColumn(persons);
-//			this.tvAttendances.AppendColumn(event1);
-//			this.tvAttendances.AppendColumn(event2);
-//			this.tvAttendances.AppendColumn(event3);
-//			
-//			persons.AddAttribute(personCell, "text", 0);
-//			event1.AddAttribute(event1Cell, "active", 1);
-//			event2.AddAttribute(event2Cell, "active", 2);
-//			event3.AddAttribute(event3Cell, "active", 3);
-//			
-//			this.attendances = new ListStore(typeof(string), typeof(bool),
-//				typeof(bool), typeof(bool));
-//			
-//			this.attendances.AppendValues("Arnoldo Braida", false, false, false);
-//			this.attendances.AppendValues("Pepe Biondi", true, false, true);
-//			this.attendances.AppendValues("Damián Paduán", false, true, false);
-//			this.attendances.AppendValues("Fito Páez", false, false, false);
+//			this.attendances = new ListStore(columnTypes.ToArray());
+//			this.tvAttendances.Model = this.attendances;
 			
 			// ### Persons and events loading ###
 			// Read persons from database
-			foreach (Person p in allPersons)
+			foreach (Person p in PersonsManager.Instance.RetrieveAll())
 				this.AddPersonToList(p);
 			
 			// Read events from database
-			EventsManager em = EventsManager.Instance;
-			foreach (Event e in em.RetrieveAll())
+			foreach (Event e in EventsManager.Instance.RetrieveAll())
 				this.AddEventToList(e);
 			
 			this.mainWindow.ShowAll();
@@ -543,41 +507,24 @@ namespace ZaspeSharp.GUI
 		{
 			TreeIter iter;
 			
-			if (this.attendances.GetIter(out iter, new TreePath(args.Path))) {
-				bool old = (bool)this.attendances.GetValue(iter, ((CustomCellRendererToggle)o).ColumnNumber);
-				this.attendances.SetValue(iter, ((CustomCellRendererToggle)o).ColumnNumber, !old);
-			}
+			if (!this.attendances.GetIter(out iter, new TreePath(args.Path)))
+				return;
+			
+			CustomCellRendererToggle cellRendererEvent = (CustomCellRendererToggle)o;
+			
+			// Invert values
+			bool oldValue = (bool)this.attendances.GetValue(iter, cellRendererEvent.ColumnNumber);
+			bool newValue = !oldValue;
+			this.attendances.SetValue(iter, cellRendererEvent.ColumnNumber, !oldValue);
+			
+			// Depending on newValue, we add or remove the attendance
+			Person person = this.GetPerson(iter);
+			
+			if (newValue == true)
+				AttendancesManager.Instance.AddAttendance(person, cellRendererEvent.Event);
+			else
+				AttendancesManager.Instance.RemoveAttendance(person, cellRendererEvent.Event);
 		}
-
-//		public void OnCellRendererToggleEvent1Toggled(object o, ToggledArgs args)
-//		{
-//			TreeIter iter;
-//			
-//			if (this.attendances.GetIter(out iter, new TreePath(args.Path))) {
-//				bool old = (bool)this.attendances.GetValue(iter, 1);
-//				this.attendances.SetValue(iter, 1, !old);
-//			}
-//		}
-//		
-//		public void OnCellRendererToggleEvent2Toggled(object o, ToggledArgs args)
-//		{
-//			TreeIter iter;
-//			
-//			if (this.attendances.GetIter(out iter, new TreePath(args.Path))) {
-//				bool old = (bool)this.attendances.GetValue(iter, 2);
-//				this.attendances.SetValue(iter, 2, !old);
-//			}
-//		}
-//		
-//		public void OnCellRendererToggleEvent3Toggled(object o, ToggledArgs args)
-//		{
-//			TreeIter iter;
-//			
-//			if (this.attendances.GetIter(out iter, new TreePath(args.Path))) {
-//				bool old = (bool)this.attendances.GetValue(iter, 3);
-//				this.attendances.SetValue(iter, 3, !old);
-//			}
-//		}
 		
 		public void OnAddPersonClicked(object o, EventArgs args)
 		{
@@ -607,14 +554,125 @@ namespace ZaspeSharp.GUI
 #endregion
 		
 #region Other methods
+		// Returns true if update is necessary. False otherwise.
+		private bool LoadLastEvents()
+		{
+			// Add to attendances list.
+			// First we check if there are persons added.
+			if (PersonsManager.Instance.PersonsCount() == 0)
+				return false;
+			
+			/* We get the last 3 events before the actual date. If they do not exists, then
+			 * we quit. */
+			Event[] lastEventsAgain = EventsManager.Instance.RetrieveLast(3);
+			
+			if (lastEventsAgain.Length == 0)
+				return false;
+			
+			/* If they have changed, we continue, if not we stop: it's not necessary
+			 * to update anything. */
+			if (lastEventsAgain.Equals(this.lastEvents.ToArray()))
+				return false;
+			
+			// Add as lastEvents the really last events :)
+			this.lastEvents.Clear();
+			this.lastEvents.AddRange(lastEventsAgain);
+			
+			// Remove old events columns
+			foreach (TreeViewColumn tvc in this.tvAttendances.Columns)
+				this.tvAttendances.RemoveColumn(tvc);
+			
+			// We'll need to update the model, so we save the new types
+			List<Type> columnTypes = new List<Type>();
+			// Types to create ListStore. First type is string (name of persons)
+			columnTypes.Add(typeof(string));
+			
+			// Add column of persons
+			TreeViewColumn persons = new TreeViewColumn();
+			persons.Title = "Personas";
+			
+			CellRendererText personCell = new CellRendererText();
+			persons.PackStart(personCell, true);
+			persons.AddAttribute(personCell, "text", 0);
+			
+			this.tvAttendances.AppendColumn(persons);
+			
+			// Add new ones
+			TreeViewColumn eventColumn;
+			CustomCellRendererToggle eventCellRenderer;
+			
+			int k = 1;
+			
+			foreach(Event anEvent in this.lastEvents) {
+				columnTypes.Add(typeof(bool));
+				
+				// Create cell renderer
+				eventCellRenderer = new CustomCellRendererToggle(k, anEvent);
+				eventCellRenderer.Activatable = true;
+				eventCellRenderer.Toggled += new ToggledHandler(this.OnCellRendererColumnsToggleEvent);
+				
+				// Create column
+				eventColumn = new TreeViewColumn();
+				eventColumn.Title = anEvent.Name + "\n(" + this.FormatEventDateTime(anEvent.Date) + ")";
+				eventColumn.Alignment = 0.5f;
+				eventColumn.PackStart(eventCellRenderer, true);
+				eventColumn.AddAttribute(eventCellRenderer, "active", k++);
+				
+				this.tvAttendances.AppendColumn(eventColumn);
+			}
+			
+			// Add an empty column to avoid last one to expand
+			CellRendererText eventCellRendererText = new CellRendererText();
+			eventCellRendererText.Sensitive = false;
+			
+			// Create column
+			eventColumn = new TreeViewColumn();
+			eventColumn.Title = "";
+			eventColumn.PackStart(eventCellRendererText, false);
+			
+			this.tvAttendances.AppendColumn(eventColumn);
+			
+			// Last type is Person
+			columnTypes.Add(typeof(Person));
+			
+			this.attendances = new ListStore(columnTypes.ToArray());
+			this.tvAttendances.Model = this.attendances;
+			
+			// We add all persons again
+			AttendancesManager am = AttendancesManager.Instance;
+			ArrayList data = new ArrayList();
+			
+			foreach (Person p in PersonsManager.Instance.RetrieveAll()) {
+				data.Clear();
+				
+				// Person's data
+				data.Add(p.Name + " " + p.Surname);
+				
+				// Events
+				foreach (Event anEvent in this.lastEvents)
+					data.Add(am.Attended(p, anEvent));
+				
+				// ... and the person object itself. We'll need it.
+				data.Add(p);
+				
+				this.attendances.AppendValues(data.ToArray());
+			}
+			
+			return true;
+		}
+		
 		public void EventChanged()
 		{
+			// Update events list
 			this.events.SetValue(this.selectedTreeIters[0], 0, this.selectedEvents[0].Name);
 			this.events.SetValue(this.selectedTreeIters[0], 1, this.FormatEventDateTime(this.selectedEvents[0].Date));
+			
+			// TODO: Update attendances list
 		}
 		
 		public void PersonChanged()
 		{
+			// Update persons list
 			this.persons.SetValue(this.selectedTreeIters[0], 0, this.selectedPersons[0].Surname);
 			this.persons.SetValue(this.selectedTreeIters[0], 1, this.selectedPersons[0].Name);
 			this.persons.SetValue(this.selectedTreeIters[0], 2, this.selectedPersons[0].EMail);
@@ -622,6 +680,8 @@ namespace ZaspeSharp.GUI
 			// This is to avoid print birthday if it was not set
 			if (!this.selectedPersons[0].BirthdayDate.Equals(DateTime.MinValue))
 				this.persons.SetValue(this.selectedTreeIters[0], 3, this.FormatBirthdayDateTime(this.selectedPersons[0].BirthdayDate));
+			
+			// TODO: Update attendances list
 		}
 		
 		private string FormatEventDateTime(DateTime dt)
@@ -632,6 +692,12 @@ namespace ZaspeSharp.GUI
 		private string FormatBirthdayDateTime(DateTime dt)
 		{
 			return (dt.ToString("dd") + " de " + dt.ToString("MMMM"));
+		}
+		
+		// Only valid if tvAttendances is visible
+		public Person GetPerson(TreeIter iter)
+		{
+			return ((Person)this.attendances.GetValue(iter, 4));
 		}
 		
 		public void AddPersonToList(Person p)
@@ -645,25 +711,40 @@ namespace ZaspeSharp.GUI
 			this.persons.AppendValues(p.Surname, p.Name, p.EMail, birthday, p);
 			
 			// Add to attendances list
+			
+			/* First load last events. If this fuction returns true, it means that an update
+			 * to the last events was necessary, and the persons have been added, so it's not
+			 * necessary to add this person again. */
+			if (this.LoadLastEvents())
+				return;
+			
+			// If there are no last events, we quit.
+			if (this.lastEvents.Count == 0)
+				return;
+			
 			AttendancesManager am = AttendancesManager.Instance;
 			ArrayList data = new ArrayList();
 			
+			// Person's data
 			data.Add(p.Name + " " + p.Surname);
 			
+			// Events
 			foreach (Event anEvent in this.lastEvents)
 				data.Add(am.Attended(p, anEvent));
+			
+			// ... and the person object itself. We'll need it.
+			data.Add(p);
 			
 			this.attendances.AppendValues(data.ToArray());
 		}
 		
 		public void AddEventToList(Event e)
 		{
-//			string date = this.FormatDateTime(p.BirthdayDate);
-//			
-//			if (p.BirthdayDate.Equals(DateTime.MinValue))
-//			    birthday = "";
-			
+			// Add to events list
 			this.events.AppendValues(e.Name, this.FormatEventDateTime(e.Date), e);
+			
+			// Mange attendances treeview
+			this.LoadLastEvents();
 		}
 		
 		private void AddTreeViewInVBox(TreeView tv)

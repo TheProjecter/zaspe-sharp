@@ -148,6 +148,16 @@ namespace ZaspeSharp.Persons
 		{
 			Gentle.Common.CacheManager.Clear();
 		}
+		
+		public int PersonsCount()
+		{
+			SqlBuilder sb = new SqlBuilder(StatementType.Count, typeof(Person));
+			SqlStatement stmt = sb.GetStatement(true);
+			
+			SqlResult sql_result = stmt.Execute();
+			
+			return sql_result.Count;
+		}
 #endregion
 	}
 }

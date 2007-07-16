@@ -25,56 +25,23 @@ using ZaspeSharp.Events;
 
 namespace ZaspeSharp.GUI
 {
-	public class ModifyEvent
+	public class ModifyEvent : AddEvent
 	{
-		[Widget]
-		Dialog dlgAddEvent;
-		
-		[Widget]
-		SpinButton spbtnDay;
-		
-		[Widget]
-		ComboBox cmbMonth;
-		
-		[Widget]
-		SpinButton spbtnHour;
-		
-		[Widget]
-		SpinButton spbtnMinute;
-		
-		[Widget]
-		ComboBox cmbEventTypes;
-		
-		[Widget]
-		Entry entryName;
-		
-		[Widget]
-		TextView textviewGoals;
-		
-		[Widget]
-		TextView textviewObservations;
-		
-#region Buttons
 		[Widget]
 		Button btnOkClose;
 		
 		[Widget]
 		Button btnOkAdd;
-#endregion
 		
 		[Widget]
 		Gtk.HButtonBox dialogButtons;
 		
 		private Event anEvent;
 		
-		private string lastGeneratedEventName = "";
+		protected string errorMessageTitle = "Error al modificar el evento";
 		
-		public ModifyEvent(Gtk.Window parent, Event anEvent)
+		public ModifyEvent(Gtk.Window parent, Event anEvent) : base(parent, false)
 		{
-			Glade.XML gxml = new Glade.XML ("add_event.glade", "dlgAddEvent", null);
-			gxml.Autoconnect(this);
-			
-			this.dlgAddEvent.TransientFor = parent;
 			this.dlgAddEvent.Title = "Modificar evento";
 			
 			this.dialogButtons.Remove(this.btnOkClose);
@@ -83,18 +50,9 @@ namespace ZaspeSharp.GUI
 			// Event data
 			this.spbtnDay.Value = anEvent.Date.Day;
 			this.cmbMonth.Active = anEvent.Date.Month - 1;
+			this.spbtnYear.Value = anEvent.Date.Year;
 			this.spbtnHour.Value = anEvent.Date.Hour;
 			this.spbtnMinute.Value = anEvent.Date.Minute;
-			
-			// TODO
-			// Load event types
-			EventTypesManager etm = EventTypesManager.Instance;
-			
-			this.cmbEventTypes.RemoveText(0);
-			
-			foreach (EventType anEventType in etm.RetrieveAll()) {
-				this.cmbEventTypes.AppendText(anEventType.Name);
-			}
 			
 			this.cmbEventTypes.Active = anEvent.IdEventType - 1;
 			
@@ -107,30 +65,15 @@ namespace ZaspeSharp.GUI
 			this.dlgAddEvent.ShowAll();
 		}
 		
-		private bool EventNameCanBeChanged()
-		{
-			if (this.entryName.Text.Equals(this.lastGeneratedEventName) ||
-			    this.entryName.Text.Equals(""))
-				return true;
-			
-			return false;
-		}
-		
-		private string GenerateEventName()
-		{
-			return (this.cmbEventTypes.ActiveText + " " +
-			        this.spbtnDay.Value.ToString() +
-			        " de " + this.cmbMonth.ActiveText);
-		}
-		
 		// This is, in fact, the Save button
 		public void OnOkAddClicked(object o, EventArgs args)
 		{
-			int hour = (int)this.spbtnHour.Value;
-			int minute = (int)this.spbtnMinute.Value;
-			int day = (int)this.spbtnDay.Value;
+			int hour = this.spbtnHour.ValueAsInt;
+			int minute = this.spbtnMinute.ValueAsInt;
+			int day = this.spbtnDay.ValueAsInt;
 			int month = this.cmbMonth.Active + 1;
-			int year = DateTime.Now.Year + (month < DateTime.Now.Month ? 1 : 0);
+			int year = this.spbtnYear.ValueAsInt;
+			
 			DateTime date = DateTime.MinValue;
 			
 			try {
@@ -158,51 +101,6 @@ namespace ZaspeSharp.GUI
 			MainWindow.mainWindowInstance.EventChanged();
 			
 			this.dlgAddEvent.Destroy();
-		}
-		
-		public void OnOkCloseClicked(object o, EventArgs args)
-		{
-		}
-		
-		public void OnEventTypesChanged(object o, EventArgs args)
-		{
-			if (this.cmbEventTypes.Active < 0 || this.cmbMonth.Active < 0)
-				return;
-			
-			if (this.cmbEventTypes.ActiveText.Equals("Otro") ||
-			     !this.EventNameCanBeChanged())
-				return;
-			
-			this.entryName.Text =
-				this.GenerateEventName();
-			
-			this.lastGeneratedEventName = this.entryName.Text;
-		}
-		
-		public void OnDayValueChanged(object o, EventArgs args)
-		{
-			this.OnEventTypesChanged(null, null);
-		}
-		
-		public void OnCancelClicked(object o, EventArgs args)
-		{
-			this.dlgAddEvent.Destroy();
-		}
-			
-		private void ShowErrorMessage(string errorMsg)
-		{
-			MessageDialog md = new MessageDialog(this.dlgAddEvent, DialogFlags.Modal,
-			                                     MessageType.Error, ButtonsType.Ok,
-			                                     errorMsg);
-			md.Title = "Error al modificar datos del evento";
-			
-			md.Run();
-			md.Destroy();
-		}
-		
-		private void ShowErrorMessage(Exception ex)
-		{
-			this.ShowErrorMessage(ex.Message);
 		}
 	}
 }
