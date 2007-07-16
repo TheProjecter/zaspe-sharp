@@ -19,21 +19,31 @@
 using System;
 using Gtk;
 
+using ZaspeSharp.Events;
+
 namespace ZaspeSharp.GUI
 {
 	public class CustomCellRendererToggle : CellRendererToggle
 	{
 		private int columnNumber;
+		private Event anEvent;
 		
-		public CustomCellRendererToggle(int columnNumber) : base()
+		public CustomCellRendererToggle(int columnNumber, Event anEvent) : base()
 		{
 			this.columnNumber = columnNumber;
+			this.anEvent = anEvent;
 		}
 		
 		public int ColumnNumber
 		{
 			get { return this.columnNumber; }
 			set { this.columnNumber = value; }
+		}
+		
+		public Event Event
+		{
+			get { return this.anEvent; }
+			set { this.anEvent = value; }
 		}
 	}
 }

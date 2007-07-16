@@ -36,5 +36,20 @@ namespace ZaspeSharp.Events
 			this.name = name;
 		}
 		#endregion
+		
+#region Methods
+		public override bool Equals (object o)
+		{
+			if (!(o is EventType))
+				return false;
+			
+			EventType et = (EventType)o;
+			
+			if (this.id == et.id && this.name == et.name)
+				return true;
+			
+			return false;
+		}
+#endregion
 	}
 }

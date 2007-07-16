@@ -21,13 +21,6 @@ using Gentle.Framework;
 
 namespace ZaspeSharp.Events
 {
-	// This would be changed to be generic
-	public enum Types {
-		MISA = 1,
-		ENSAYO = 2,
-		OTRO = 3
-	}
-	
 	/// <summary>
 	/// Description of Evento.
 	/// </summary>
@@ -54,14 +47,11 @@ namespace ZaspeSharp.Events
 		public Event(DateTime date, string name, EventType eventType,
 		             string goals, string observations) {
 			
-			if (name.Equals(""))
-				throw new Exception("El nombre de la propiedad no puede ser nulo.");
-			
-			this.date = date;
-			this.name = name;
-			this.eventType = eventType;
-			this.goals = goals;
-			this.observations = observations;
+			this.Date = date;
+			this.Name = name;
+			this.EventType = eventType;
+			this.Goals = goals;
+			this.Observations = observations;
 		}
 		#endregion
 	}

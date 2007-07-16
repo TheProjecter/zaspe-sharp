@@ -24,79 +24,21 @@ using ZaspeSharp.Persons;
 
 namespace ZaspeSharp.GUI
 {
-	public class ModifyPerson
+	public class ModifyPerson : AddPerson
 	{
-		[Widget]
-		Dialog dlgAddPerson;
-		
-#region Basic data
-		[Widget]
-		Entry entryName;
-		
-		[Widget]
-		Entry entrySurname;
-		
-		[Widget]
-		Entry entryDNI;
-		
-		[Widget]
-		ComboBox cmbSex;
-#endregion
-		
-#region Contact data
-		[Widget]
-		Entry entryAddress;
-		
-		[Widget]
-		Entry entryCity;
-		
-		[Widget]
-		Entry entryLandPhone;
-		
-		[Widget]
-		Entry entryMobilePhone;
-		
-		[Widget]
-		Entry entryEMail;
-#endregion
-		
-#region Other data
-		[Widget]
-		Entry entryCommunity;
-		
-		[Widget]
-		CheckButton chkIsActive;
-		
-		[Widget]
-		CheckButton chkIsDataComplete;
-		
-		[Widget]
-		SpinButton spbtnDay;
-		
-		[Widget]
-		ComboBox cmbMonth;
-#endregion
-		
-#region Buttons
 		[Widget]
 		Button btnOkClose;
 		
 		[Widget]
 		Button btnOkAdd;
-#endregion
 		
 		[Widget]
 		Gtk.HButtonBox dialogButtons;
 		
 		private Person person;
 		
-		public ModifyPerson(Gtk.Window parent, Person aPerson)
+		public ModifyPerson(Gtk.Window parent, Person aPerson) : base (parent, false)
 		{
-			Glade.XML gxml = new Glade.XML ("add_person.glade", "dlgAddPerson", null);
-			gxml.Autoconnect(this);
-			
-			this.dlgAddPerson.TransientFor = parent;
-			
 			this.dlgAddPerson.Title = "Modificar persona";
 			
 			this.dialogButtons.Remove(this.btnOkClose);
@@ -130,11 +72,6 @@ namespace ZaspeSharp.GUI
 			this.dlgAddPerson.ShowAll();
 		}
 		
-		public void OnCancelClicked(object o, EventArgs args)
-		{
-			this.dlgAddPerson.Destroy();
-		}
-		
 		// This is, in fact, the Save button
 		public void OnOkAddClicked(object o, EventArgs args)
 		{
@@ -159,24 +96,30 @@ namespace ZaspeSharp.GUI
 				birthday = DateTime.MinValue;
 			}
 			
-			// Basic data
-			this.person.Name = this.entryName.Text.Trim();
-			this.person.Surname = this.entrySurname.Text.Trim();
-			this.person.Dni = dni;
-			this.person.IsMan = this.cmbSex.Active == 0 ? true : false;
-			
-			// Contact data
-			this.person.Address = this.entryAddress.Text.Trim();
-			this.person.City = this.entryCity.Text.Trim();
-			this.person.LandPhoneNumber = this.entryLandPhone.Text.Trim();
-			this.person.MobileNumber = this.entryMobilePhone.Text.Trim();
-			this.person.EMail = this.entryEMail.Text.Trim();
-			
-			// Other data
-			this.person.Community = this.entryCommunity.Text.Trim();
-			this.person.IsActive = this.chkIsActive.Active;
-			this.person.BirthdayDate = birthday;
-			this.person.IsDataComplete = this.chkIsDataComplete.Active;
+			try {
+				// Basic data
+				this.person.Name = this.entryName.Text.Trim();
+				this.person.Surname = this.entrySurname.Text.Trim();
+				this.person.Dni = dni;
+				this.person.IsMan = this.cmbSex.Active == 0 ? true : false;
+				
+				// Contact data
+				this.person.Address = this.entryAddress.Text.Trim();
+				this.person.City = this.entryCity.Text.Trim();
+				this.person.LandPhoneNumber = this.entryLandPhone.Text.Trim();
+				this.person.MobileNumber = this.entryMobilePhone.Text.Trim();
+				this.person.EMail = this.entryEMail.Text.Trim();
+				
+				// Other data
+				this.person.Community = this.entryCommunity.Text.Trim();
+				this.person.IsActive = this.chkIsActive.Active;
+				this.person.BirthdayDate = birthday;
+				this.person.IsDataComplete = this.chkIsDataComplete.Active;
+			}
+			catch (Exception ex) {
+				this.ShowErrorMessage(ex);
+				return;
+			}
 			
 			// Save data to database
 			this.person.Persist();
@@ -184,26 +127,6 @@ namespace ZaspeSharp.GUI
 			MainWindow.mainWindowInstance.PersonChanged();
 			
 			this.dlgAddPerson.Destroy();
-		}
-		
-		public void OnOkCloseClicked(object o, EventArgs args)
-		{
-		}
-		
-		private void ShowErrorMessage(string errorMsg)
-		{
-			MessageDialog md = new MessageDialog(this.dlgAddPerson, DialogFlags.Modal,
-			                                     MessageType.Error, ButtonsType.Ok,
-			                                     errorMsg);
-			md.Title = "Error al modificar datos de la persona";
-			
-			md.Run();
-			md.Destroy();
-		}
-		
-		private void ShowErrorMessage(Exception ex)
-		{
-			this.ShowErrorMessage(ex.Message);
 		}
 	}
 }

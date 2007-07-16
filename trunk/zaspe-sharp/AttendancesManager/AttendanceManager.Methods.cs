@@ -29,7 +29,7 @@ namespace ZaspeSharp.Attendances
 	public partial class AttendancesManager
 	{
 #region Retrieve methods
-		public Attendance Retrieve(Person aPerson, Event anEvent) {
+		private Attendance Retrieve(Person aPerson, Event anEvent) {
 			Key key = new Key(true);
 			key.Add("id_person", aPerson.Id);
 			key.Add("id_event", anEvent.Id);
@@ -77,10 +77,7 @@ namespace ZaspeSharp.Attendances
 		
 #region Entry methods
 		public Attendance AddAttendance(Person aPerson, Event anEvent) {
-			try {
-				Retrieve(aPerson, anEvent);
-			}
-			catch (AttendanceDoesNotExistException) {
+			if (Retrieve(aPerson, anEvent) == null) {
 				Attendance newAttendance = new Attendance(aPerson.Id, anEvent.Id);
 				newAttendance.Persist();
 				

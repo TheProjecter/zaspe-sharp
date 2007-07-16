@@ -35,7 +35,8 @@ namespace ZaspeSharp.Events
 			
 			Event theOtherEvent = (Event)obj;
 			
-			if (this.date.Equals(theOtherEvent.date)
+			if (this.id == theOtherEvent.id
+			    && this.date.Equals(theOtherEvent.date)
 			    && this.name.Equals(theOtherEvent.name)
 			    && this.goals.Equals(theOtherEvent.goals)
 			    && this.observations.Equals(theOtherEvent.observations)

@@ -92,15 +92,6 @@ namespace ZaspeSharp.Events
 		#endregion
 		
 		#region Entry methods
-//		public Event AddEvent(DateTime fecha, string nombre, Types tipoEvento)
-//		{
-//			// Quitamos los segundos de la fecha
-//			DateTime fechaSinSegundos = new DateTime(fecha.Year, fecha.Month, fecha.Day,
-//			                                         fecha.Hour, fecha.Minute, 0);
-//			
-//			return AddEvent(fechaSinSegundos, nombre, (int)tipoEvento, null, null);
-//		}
-		
 		public Event AddEvent(DateTime date, string name, EventType eventType,
 			string goals, string observations) {
 			
