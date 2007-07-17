@@ -47,7 +47,7 @@ namespace ZaspeSharp.GUI
 			// Person data
 			this.entryName.Text = aPerson.Name;
 			this.entrySurname.Text = aPerson.Surname;
-			this.entryDNI.Text = aPerson.Dni.ToString();
+			this.entryDNI.Text = aPerson.Dni == 0 ? "" : aPerson.Dni.ToString();
 			
 			this.cmbSex.Active = aPerson.IsMan ? 0 : 1;
 			

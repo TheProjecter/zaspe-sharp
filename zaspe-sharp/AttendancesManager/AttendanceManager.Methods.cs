@@ -98,6 +98,24 @@ namespace ZaspeSharp.Attendances
 			
 			at.Remove();
 		}
+		
+		public void RemoveAllAttendancesOfPerson(Person aPerson)
+		{
+			SqlBuilder sb = new SqlBuilder(StatementType.Delete, typeof(Attendance));
+			sb.AddConstraint(Operator.Equals, "id_person", aPerson.Id);
+			
+			SqlStatement stmt = sb.GetStatement(true);
+			SqlResult sr = stmt.Execute();
+		}
+		
+		public void RemoveAllAttendancesOfEvent(Event anEvent)
+		{
+			SqlBuilder sb = new SqlBuilder(StatementType.Delete, typeof(Attendance));
+			sb.AddConstraint(Operator.Equals, "id_event", anEvent.Id);
+			
+			SqlStatement stmt = sb.GetStatement(true);
+			SqlResult sr = stmt.Execute();
+		}
 #endregion
 	}
 }

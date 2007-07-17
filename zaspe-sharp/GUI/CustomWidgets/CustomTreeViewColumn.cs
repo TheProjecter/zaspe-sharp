@@ -17,29 +17,27 @@
 */
 
 using System;
+using Gtk;
 
-namespace ZaspeSharp.Events
+using ZaspeSharp.Events;
+
+namespace ZaspeSharp.GUI
 {
-	public partial class Event
+	public class CustomTreeViewColumn : TreeViewColumn
 	{
-		#region Other methods
-		public override string ToString()
+		private Event anEvent;
+		
+		public CustomTreeViewColumn() : base() {}
+		
+		public CustomTreeViewColumn(Event anEvent) : base()
 		{
-			return (name + " (" + date.ToString("dd/mm/yyyy H:mm") + ")");
+			this.anEvent = anEvent;
 		}
 		
-		public override bool Equals (object o)
+		public Event Event
 		{
-			if (! (o is Event))
-				return false;
-			
-			Event theOtherEvent = (Event)o;
-			
-			if (this.id == theOtherEvent.id)
-				return true;
-			
-			return false;
+			get { return this.anEvent; }
+			set { this.anEvent = value; }
 		}
-		#endregion
 	}
 }
