@@ -28,10 +28,10 @@ CREATE TABLE persons (
 	is_active integer not null,
 
 	/* Si los datos de la persona están completos */
-	is_data_complete integer not null,
+	is_data_complete integer not null
 
-	/* dni es unico */
-	unique (dni)
+	/* dni es unico
+	unique (dni) */
 );
 
 CREATE TABLE events (

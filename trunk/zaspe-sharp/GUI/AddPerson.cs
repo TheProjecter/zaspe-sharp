@@ -161,13 +161,21 @@ namespace ZaspeSharp.GUI
 			Person aPerson = null;
 			
 			int dni;
-			try {
-				dni = Convert.ToInt32(this.entryDNI.Text);
+			
+			if (this.entryDNI.Text.Trim().Equals("0"))
+				throw new Exception("El DNI no puede ser cero.");
+			
+			if (!this.entryDNI.Text.Equals("")) {
+				try {
+					dni = Convert.ToInt32(this.entryDNI.Text.Trim());
+				}
+				catch (Exception) {
+					throw new Exception("El DNI no está en un formato correcto. El mismo debe formarse " +
+					                    "únicamente con números, y no otros caracteres como los puntos.");
+				}
 			}
-			catch (Exception) {
-				throw new Exception("El DNI no está en un formato correcto. El mismo debe formarse " +
-				                    "únicamente con números, y no otros caracteres como los puntos.");
-			}
+			else
+				dni = 0;
 			
 			int day = (int)this.spbtnDay.Value;
 			int month = this.cmbMonth.Active + 1;

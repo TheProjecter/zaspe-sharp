@@ -106,10 +106,10 @@ namespace ZaspeSharp.Persons
 		                        string comunity, bool is_active, bool is_data_complete)
 		{
 			// Check if exists another person with the same dni.
-			try {
-				RetrieveByDNI(dni);
-			}
-			catch (PersonDoesNotExistException) {
+//			try {
+//				RetrieveByDNI(dni);
+//			}
+//			catch (PersonDoesNotExistException) {
 				Person newPerson = new Person(dni, surname, name, is_man,
 				                              birthday_date, address, city,
 				                              land_phone_number, mobile_number, email,
@@ -117,7 +117,7 @@ namespace ZaspeSharp.Persons
 				newPerson.Persist();
 				
 				return newPerson;
-			}
+//			}
 			
 			throw new Exception("Se está intentando ingresar una persona que " +
 			                    "ya existe en la base de datos: El DNI ingresado " +

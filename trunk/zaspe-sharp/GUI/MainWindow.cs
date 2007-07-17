@@ -53,13 +53,8 @@ namespace ZaspeSharp.GUI
 		[Widget]
 		private TreeView tvEvents;
 		
-		[Widget]
 		private ListStore attendances;
-		
-		[Widget]
 		private ListStore persons;
-		
-		[Widget]
 		private ListStore events;
 		
 		private Menu menuPersonActions;
@@ -75,6 +70,8 @@ namespace ZaspeSharp.GUI
 		private List<TreeIter> selectedTreeIters;
 		
 		private List<Event> lastEvents;
+		
+		private List<Person> personsInAttendancesList;
 		
 		public MainWindow()
 		{
@@ -100,6 +97,7 @@ namespace ZaspeSharp.GUI
 			this.selectedEvents = new List<Event>();
 			this.selectedTreeIters = new List<Gtk.TreeIter>();
 			this.lastEvents = new List<Event>();
+			this.personsInAttendancesList = new List<Person>();
 			
 			// Icon for the main window
 			this.mainWindow.Icon = new Gdk.Pixbuf("blue_fea.gif");
@@ -204,66 +202,7 @@ namespace ZaspeSharp.GUI
 			
 			
 			// ### tvAttendaces ###
-			this.LoadLastEvents();
-			
-//			this.lastEvents.AddRange(EventsManager.Instance.RetrieveLast(3));
-//			Person[] allPersons = PersonsManager.Instance.RetrieveAll();
-//			
-//			List<Type> columnTypes = new List<Type>();
-//			// Types to create ListStore. First type is string (name of persons)
-//			columnTypes.Add(typeof(string));
-//			
-//			if (this.lastEvents.Count > 0 && allPersons.Length > 0) {
-//				TreeViewColumn persons = new TreeViewColumn();
-//				persons.Title = "Personas";
-//				
-//				CellRendererText personCell = new CellRendererText();
-//				persons.PackStart(personCell, true);
-//				persons.AddAttribute(personCell, "text", 0);
-//				
-//				this.tvAttendances.AppendColumn(persons);
-//				
-//				// Retrieve latest events added, and add them as columns
-//				TreeViewColumn eventColumn;
-//				CustomCellRendererToggle eventCellRenderer;
-//				
-//				int k = 1;
-//				
-//				foreach (Event anEvent in lastEvents) {
-//					columnTypes.Add(typeof(bool));
-//					
-//					// Create cell renderer
-//					eventCellRenderer = new CustomCellRendererToggle(k, anEvent);
-//					eventCellRenderer.Activatable = true;
-//					eventCellRenderer.Toggled += new ToggledHandler(this.OnCellRendererColumnsToggleEvent);
-//					
-//					// Create column
-//					eventColumn = new TreeViewColumn();
-//					eventColumn.Title = anEvent.Name + "\n(" + this.FormatEventDateTime(anEvent.Date) + ")";
-//					eventColumn.Alignment = 0.5f;
-//					eventColumn.PackStart(eventCellRenderer, true);
-//					eventColumn.AddAttribute(eventCellRenderer, "active", k++);
-//					
-//					this.tvAttendances.AppendColumn(eventColumn);
-//				}
-//				
-//				// Add an empty column to avoid last one to expand
-//				CellRendererText eventCellRendererText = new CellRendererText();
-//				eventCellRendererText.Sensitive = false;
-//				
-//				// Create column
-//				eventColumn = new TreeViewColumn();
-//				eventColumn.Title = "";
-//				eventColumn.PackStart(eventCellRendererText, false);
-//				
-//				this.tvAttendances.AppendColumn(eventColumn);
-//				
-//				// Last type is Person
-//				columnTypes.Add(typeof(Person));
-//			}
-//			
-//			this.attendances = new ListStore(columnTypes.ToArray());
-//			this.tvAttendances.Model = this.attendances;
+			//this.LoadAttendancesListData();
 			
 			// ### Persons and events loading ###
 			// Read persons from database
@@ -288,6 +227,20 @@ namespace ZaspeSharp.GUI
 		{
 			this.imiModifyPerson.Sensitive = false;
 			this.imiRemovePerson.Sensitive = false;
+		}
+		
+		public void OnAttendancesListRowDeleted(object o, EventArgs args)
+		{
+			/* TODO: I don't know if this is the best way to know if a
+			 * TreeView is empty */
+			TreeIter iter = TreeIter.Zero;
+			this.attendances.GetIterFirst(out iter);
+			
+			if (iter.Equals(TreeIter.Zero)) {
+				// Remove all columns
+				foreach (TreeViewColumn tvc in this.tvAttendances.Columns)
+					this.tvAttendances.RemoveColumn(tvc);
+			}
 		}
 		
 		public void OnEventsListRowDeleted(object o, EventArgs args)
@@ -441,10 +394,16 @@ namespace ZaspeSharp.GUI
 				TreeIter[] itersToRemove = this.selectedTreeIters.ToArray();
 				
 				for (int i=0; i<personsToRemove.Length; i++) {
+					AttendancesManager.Instance.RemoveAllAttendancesOfPerson(personsToRemove[i]);
 					personsToRemove[i].Remove();
 					
 					iter = itersToRemove[i];
 					this.persons.Remove(ref iter);
+					
+					iter = this.GetAttendancesListIterByPerson(personsToRemove[i]);
+					this.attendances.Remove(ref iter);
+					
+					this.personsInAttendancesList.Remove(personsToRemove[i]);
 				}
 			}
 			
@@ -472,18 +431,24 @@ namespace ZaspeSharp.GUI
 			ResponseType response = (ResponseType)md.Run();
 			
 			TreeIter iter;
+			CustomTreeViewColumn tvc;
 			if (response == ResponseType.Yes) {
 				Event[] eventsToRemove = this.selectedEvents.ToArray();
 				TreeIter[] itersToRemove = this.selectedTreeIters.ToArray();
 				
 				for (int i=0; i<eventsToRemove.Length; i++) {
+					AttendancesManager.Instance.RemoveAllAttendancesOfEvent(eventsToRemove[i]);
 					eventsToRemove[i].Remove();
 					
 					iter = itersToRemove[i];
 					this.events.Remove(ref iter);
+					
+					tvc = this.GetAttendancesListColumnByEvent(eventsToRemove[i]);
+					this.tvAttendances.RemoveColumn(tvc);
 				}
 			}
 			
+			this.LoadAttendancesListData();
 			md.Destroy();
 		}
 		
@@ -554,25 +519,60 @@ namespace ZaspeSharp.GUI
 #endregion
 		
 #region Other methods
-		// Returns true if update is necessary. False otherwise.
-		private bool LoadLastEvents()
+		public TreeIter GetAttendancesListIterByPerson(Person aPerson)
+		{
+			TreeIter iter;
+			
+			this.attendances.GetIterFirst(out iter);
+			
+			if (this.GetPerson(iter).Equals(aPerson))
+				return iter;
+			
+			while (this.attendances.IterNext(ref iter)) {
+				if (this.GetPerson(iter).Equals(aPerson))
+					return iter;
+			}
+			
+			return TreeIter.Zero;
+		}
+		
+		public CustomTreeViewColumn GetAttendancesListColumnByEvent(Event anEvent)
+		{
+			foreach (CustomTreeViewColumn tvc in this.tvAttendances.Columns) {
+				if (tvc.Event != null && tvc.Event.Equals(anEvent))
+					return tvc;
+			}
+			
+			return null;
+		}
+		
+		// Returns true if persons were readded. False otherwise.
+		private void LoadAttendancesListData()
 		{
 			// Add to attendances list.
 			// First we check if there are persons added.
 			if (PersonsManager.Instance.PersonsCount() == 0)
-				return false;
+				return;
 			
 			/* We get the last 3 events before the actual date. If they do not exists, then
 			 * we quit. */
 			Event[] lastEventsAgain = EventsManager.Instance.RetrieveLast(3);
 			
 			if (lastEventsAgain.Length == 0)
-				return false;
+				return;
 			
 			/* If they have changed, we continue, if not we stop: it's not necessary
 			 * to update anything. */
-			if (lastEventsAgain.Equals(this.lastEvents.ToArray()))
-				return false;
+			if (lastEventsAgain.Length == this.lastEvents.Count) {
+				int j;
+				for (j=0; j<lastEventsAgain.Length; j++) {
+					if (!lastEventsAgain[j].Equals(this.lastEvents[j]))
+						break;
+				}
+				
+				if (j == lastEventsAgain.Length)
+					return;
+			}
 			
 			// Add as lastEvents the really last events :)
 			this.lastEvents.Clear();
@@ -588,7 +588,7 @@ namespace ZaspeSharp.GUI
 			columnTypes.Add(typeof(string));
 			
 			// Add column of persons
-			TreeViewColumn persons = new TreeViewColumn();
+			CustomTreeViewColumn persons = new CustomTreeViewColumn();
 			persons.Title = "Personas";
 			
 			CellRendererText personCell = new CellRendererText();
@@ -598,7 +598,7 @@ namespace ZaspeSharp.GUI
 			this.tvAttendances.AppendColumn(persons);
 			
 			// Add new ones
-			TreeViewColumn eventColumn;
+			CustomTreeViewColumn eventColumn;
 			CustomCellRendererToggle eventCellRenderer;
 			
 			int k = 1;
@@ -612,7 +612,7 @@ namespace ZaspeSharp.GUI
 				eventCellRenderer.Toggled += new ToggledHandler(this.OnCellRendererColumnsToggleEvent);
 				
 				// Create column
-				eventColumn = new TreeViewColumn();
+				eventColumn = new CustomTreeViewColumn(anEvent);
 				eventColumn.Title = anEvent.Name + "\n(" + this.FormatEventDateTime(anEvent.Date) + ")";
 				eventColumn.Alignment = 0.5f;
 				eventColumn.PackStart(eventCellRenderer, true);
@@ -626,7 +626,7 @@ namespace ZaspeSharp.GUI
 			eventCellRendererText.Sensitive = false;
 			
 			// Create column
-			eventColumn = new TreeViewColumn();
+			eventColumn = new CustomTreeViewColumn();
 			eventColumn.Title = "";
 			eventColumn.PackStart(eventCellRendererText, false);
 			
@@ -636,6 +636,7 @@ namespace ZaspeSharp.GUI
 			columnTypes.Add(typeof(Person));
 			
 			this.attendances = new ListStore(columnTypes.ToArray());
+			this.attendances.RowDeleted += new RowDeletedHandler(this.OnAttendancesListRowDeleted);
 			this.tvAttendances.Model = this.attendances;
 			
 			// We add all persons again
@@ -656,9 +657,12 @@ namespace ZaspeSharp.GUI
 				data.Add(p);
 				
 				this.attendances.AppendValues(data.ToArray());
+				
+				if (!this.personsInAttendancesList.Contains(p))
+					this.personsInAttendancesList.Add(p);
 			}
 			
-			return true;
+			return;
 		}
 		
 		public void EventChanged()
@@ -715,7 +719,10 @@ namespace ZaspeSharp.GUI
 			/* First load last events. If this fuction returns true, it means that an update
 			 * to the last events was necessary, and the persons have been added, so it's not
 			 * necessary to add this person again. */
-			if (this.LoadLastEvents())
+			this.LoadAttendancesListData();
+			
+			// If persons in attendances list is updated, quit
+			if (this.personsInAttendancesList.Contains(p))
 				return;
 			
 			// If there are no last events, we quit.
@@ -736,6 +743,9 @@ namespace ZaspeSharp.GUI
 			data.Add(p);
 			
 			this.attendances.AppendValues(data.ToArray());
+			
+			if (!this.personsInAttendancesList.Contains(p))
+				this.personsInAttendancesList.Add(p);
 		}
 		
 		public void AddEventToList(Event e)
@@ -744,7 +754,7 @@ namespace ZaspeSharp.GUI
 			this.events.AppendValues(e.Name, this.FormatEventDateTime(e.Date), e);
 			
 			// Mange attendances treeview
-			this.LoadLastEvents();
+			this.LoadAttendancesListData();
 		}
 		
 		private void AddTreeViewInVBox(TreeView tv)
