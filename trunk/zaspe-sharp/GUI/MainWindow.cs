@@ -69,9 +69,8 @@ namespace ZaspeSharp.GUI
 		private List<Event> selectedEvents;
 		private List<TreeIter> selectedTreeIters;
 		
-		private List<Event> lastEvents;
-		
-		private List<Person> personsInAttendancesList;
+		private Dictionary<Person, TreeIter> treeItersOnAttendancesList;
+		private List<Event> lastEventsOnAttendancesList;
 		
 		public MainWindow()
 		{
@@ -96,8 +95,8 @@ namespace ZaspeSharp.GUI
 			this.selectedPersons = new List<Person>();
 			this.selectedEvents = new List<Event>();
 			this.selectedTreeIters = new List<Gtk.TreeIter>();
-			this.lastEvents = new List<Event>();
-			this.personsInAttendancesList = new List<Person>();
+			this.lastEventsOnAttendancesList = new List<Event>();
+			this.treeItersOnAttendancesList = new Dictionary<Person,TreeIter>();
 			
 			// Icon for the main window
 			this.mainWindow.Icon = new Gdk.Pixbuf("blue_fea.gif");
@@ -229,20 +228,6 @@ namespace ZaspeSharp.GUI
 			this.imiRemovePerson.Sensitive = false;
 		}
 		
-		public void OnAttendancesListRowDeleted(object o, EventArgs args)
-		{
-			/* TODO: I don't know if this is the best way to know if a
-			 * TreeView is empty */
-			TreeIter iter = TreeIter.Zero;
-			this.attendances.GetIterFirst(out iter);
-			
-			if (iter.Equals(TreeIter.Zero)) {
-				// Remove all columns
-				foreach (TreeViewColumn tvc in this.tvAttendances.Columns)
-					this.tvAttendances.RemoveColumn(tvc);
-			}
-		}
-		
 		public void OnEventsListRowDeleted(object o, EventArgs args)
 		{
 			/* TODO: I don't know if this is the best way to know if a
@@ -250,8 +235,12 @@ namespace ZaspeSharp.GUI
 			TreeIter iter = TreeIter.Zero;
 			this.events.GetIterFirst(out iter);
 			
-			if (iter.Equals(TreeIter.Zero))
+			if (iter.Equals(TreeIter.Zero)) {
+				// Disable buttons to modify and remove events
 				this.DisableEventActionsButtons();
+				
+				this.CleanAttendancesList();
+			}
 		}
 		
 		public void OnPersonsListRowDeleted(object o, EventArgs args)
@@ -261,8 +250,26 @@ namespace ZaspeSharp.GUI
 			TreeIter iter = TreeIter.Zero;
 			this.persons.GetIterFirst(out iter);
 			
-			if (iter.Equals(TreeIter.Zero))
+			if (iter.Equals(TreeIter.Zero)) {
+				// Disable buttons to modify and remove persons
 				this.DisablePersonActionsButtons();
+				
+				this.CleanAttendancesList();
+			}
+		}
+		
+		// This method erase all rows and columns in the attendances list
+		private void CleanAttendancesList()
+		{
+			// Erase all rows
+			this.attendances.Clear();
+			
+			// Erase all columns
+			foreach (TreeViewColumn tvc in this.tvAttendances.Columns)
+				this.tvAttendances.RemoveColumn(tvc);
+			
+			// Clean lastEvents list
+			this.lastEventsOnAttendancesList.Clear();
 		}
 		
 		[GLib.ConnectBefore]
@@ -400,10 +407,10 @@ namespace ZaspeSharp.GUI
 					iter = itersToRemove[i];
 					this.persons.Remove(ref iter);
 					
-					iter = this.GetAttendancesListIterByPerson(personsToRemove[i]);
+					iter = this.treeItersOnAttendancesList[personsToRemove[i]];
 					this.attendances.Remove(ref iter);
 					
-					this.personsInAttendancesList.Remove(personsToRemove[i]);
+					this.treeItersOnAttendancesList.Remove(personsToRemove[i]);
 				}
 			}
 			
@@ -437,12 +444,15 @@ namespace ZaspeSharp.GUI
 				TreeIter[] itersToRemove = this.selectedTreeIters.ToArray();
 				
 				for (int i=0; i<eventsToRemove.Length; i++) {
+					// Remove all attendances with that event, and the event itself.
 					AttendancesManager.Instance.RemoveAllAttendancesOfEvent(eventsToRemove[i]);
 					eventsToRemove[i].Remove();
 					
+					// Remove row in the events list
 					iter = itersToRemove[i];
 					this.events.Remove(ref iter);
 					
+					// Remove column in the attendances list
 					tvc = this.GetAttendancesListColumnByEvent(eventsToRemove[i]);
 					this.tvAttendances.RemoveColumn(tvc);
 				}
@@ -519,22 +529,22 @@ namespace ZaspeSharp.GUI
 #endregion
 		
 #region Other methods
-		public TreeIter GetAttendancesListIterByPerson(Person aPerson)
-		{
-			TreeIter iter;
-			
-			this.attendances.GetIterFirst(out iter);
-			
-			if (this.GetPerson(iter).Equals(aPerson))
-				return iter;
-			
-			while (this.attendances.IterNext(ref iter)) {
-				if (this.GetPerson(iter).Equals(aPerson))
-					return iter;
-			}
-			
-			return TreeIter.Zero;
-		}
+//		public TreeIter GetAttendancesListIterByPerson(Person aPerson)
+//		{
+//			TreeIter iter;
+//			
+//			this.attendances.GetIterFirst(out iter);
+//			
+//			if (this.GetPerson(iter).Equals(aPerson))
+//				return iter;
+//			
+//			while (this.attendances.IterNext(ref iter)) {
+//				if (this.GetPerson(iter).Equals(aPerson))
+//					return iter;
+//			}
+//			
+//			return TreeIter.Zero;
+//		}
 		
 		public CustomTreeViewColumn GetAttendancesListColumnByEvent(Event anEvent)
 		{
@@ -563,10 +573,10 @@ namespace ZaspeSharp.GUI
 			
 			/* If they have changed, we continue, if not we stop: it's not necessary
 			 * to update anything. */
-			if (lastEventsAgain.Length == this.lastEvents.Count) {
+			if (lastEventsAgain.Length == this.lastEventsOnAttendancesList.Count) {
 				int j;
 				for (j=0; j<lastEventsAgain.Length; j++) {
-					if (!lastEventsAgain[j].Equals(this.lastEvents[j]))
+					if (!lastEventsAgain[j].Equals(this.lastEventsOnAttendancesList[j]))
 						break;
 				}
 				
@@ -575,8 +585,8 @@ namespace ZaspeSharp.GUI
 			}
 			
 			// Add as lastEvents the really last events :)
-			this.lastEvents.Clear();
-			this.lastEvents.AddRange(lastEventsAgain);
+			this.lastEventsOnAttendancesList.Clear();
+			this.lastEventsOnAttendancesList.AddRange(lastEventsAgain);
 			
 			// Remove old events columns
 			foreach (TreeViewColumn tvc in this.tvAttendances.Columns)
@@ -603,7 +613,7 @@ namespace ZaspeSharp.GUI
 			
 			int k = 1;
 			
-			foreach(Event anEvent in this.lastEvents) {
+			foreach(Event anEvent in this.lastEventsOnAttendancesList) {
 				columnTypes.Add(typeof(bool));
 				
 				// Create cell renderer
@@ -636,12 +646,15 @@ namespace ZaspeSharp.GUI
 			columnTypes.Add(typeof(Person));
 			
 			this.attendances = new ListStore(columnTypes.ToArray());
-			this.attendances.RowDeleted += new RowDeletedHandler(this.OnAttendancesListRowDeleted);
 			this.tvAttendances.Model = this.attendances;
+			
+			// Clean dictionary with persons and TreeIter of attendances list
+			this.treeItersOnAttendancesList.Clear();
 			
 			// We add all persons again
 			AttendancesManager am = AttendancesManager.Instance;
 			ArrayList data = new ArrayList();
+			TreeIter iter;
 			
 			foreach (Person p in PersonsManager.Instance.RetrieveAll()) {
 				data.Clear();
@@ -650,16 +663,16 @@ namespace ZaspeSharp.GUI
 				data.Add(p.Name + " " + p.Surname);
 				
 				// Events
-				foreach (Event anEvent in this.lastEvents)
+				foreach (Event anEvent in this.lastEventsOnAttendancesList)
 					data.Add(am.Attended(p, anEvent));
 				
 				// ... and the person object itself. We'll need it.
 				data.Add(p);
 				
-				this.attendances.AppendValues(data.ToArray());
+				iter = this.attendances.AppendValues(data.ToArray());
 				
-				if (!this.personsInAttendancesList.Contains(p))
-					this.personsInAttendancesList.Add(p);
+				if (!this.treeItersOnAttendancesList.ContainsKey(p))
+					this.treeItersOnAttendancesList.Add(p, iter);
 			}
 			
 			return;
@@ -685,7 +698,8 @@ namespace ZaspeSharp.GUI
 			if (!this.selectedPersons[0].BirthdayDate.Equals(DateTime.MinValue))
 				this.persons.SetValue(this.selectedTreeIters[0], 3, this.FormatBirthdayDateTime(this.selectedPersons[0].BirthdayDate));
 			
-			// TODO: Update attendances list
+			// Update attendances list
+			//foreach (
 		}
 		
 		private string FormatEventDateTime(DateTime dt)
@@ -701,7 +715,7 @@ namespace ZaspeSharp.GUI
 		// Only valid if tvAttendances is visible
 		public Person GetPerson(TreeIter iter)
 		{
-			return ((Person)this.attendances.GetValue(iter, 1+this.lastEvents.Count));
+			return ((Person)this.attendances.GetValue(iter, 1+this.lastEventsOnAttendancesList.Count));
 		}
 		
 		public void AddPersonToList(Person p)
@@ -722,11 +736,13 @@ namespace ZaspeSharp.GUI
 			this.LoadAttendancesListData();
 			
 			// If persons in attendances list is updated, quit
-			if (this.personsInAttendancesList.Contains(p))
+			if (this.treeItersOnAttendancesList.ContainsKey(p))
 				return;
+//			if (this.personsInAttendancesList.Contains(p))
+//				return;
 			
 			// If there are no last events, we quit.
-			if (this.lastEvents.Count == 0)
+			if (this.lastEventsOnAttendancesList.Count == 0)
 				return;
 			
 			AttendancesManager am = AttendancesManager.Instance;
@@ -736,16 +752,16 @@ namespace ZaspeSharp.GUI
 			data.Add(p.Name + " " + p.Surname);
 			
 			// Events
-			foreach (Event anEvent in this.lastEvents)
+			foreach (Event anEvent in this.lastEventsOnAttendancesList)
 				data.Add(am.Attended(p, anEvent));
 			
 			// ... and the person object itself. We'll need it.
 			data.Add(p);
 			
-			this.attendances.AppendValues(data.ToArray());
+			TreeIter iter = this.attendances.AppendValues(data.ToArray());
 			
-			if (!this.personsInAttendancesList.Contains(p))
-				this.personsInAttendancesList.Add(p);
+			if (!this.treeItersOnAttendancesList.ContainsKey(p))
+					this.treeItersOnAttendancesList.Add(p, iter);
 		}
 		
 		public void AddEventToList(Event e)

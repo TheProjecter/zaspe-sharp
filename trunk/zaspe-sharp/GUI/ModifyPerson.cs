@@ -75,15 +75,7 @@ namespace ZaspeSharp.GUI
 		// This is, in fact, the Save button
 		public void OnOkAddClicked(object o, EventArgs args)
 		{
-			int dni = 0;
-			try {
-				dni = Convert.ToInt32(this.entryDNI.Text);
-			}
-			catch (Exception) {
-				this.ShowErrorMessage("El DNI no está en un formato correcto. El mismo debe formarse " +
-				                    "únicamente con números, y no otros caracteres como los puntos.");
-				return;
-			}
+			int dni = this.GetDNI();
 			
 			int day = (int)this.spbtnDay.Value;
 			int month = this.cmbMonth.Active + 1;

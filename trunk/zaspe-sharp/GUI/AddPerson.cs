@@ -160,22 +160,7 @@ namespace ZaspeSharp.GUI
 			PersonsManager pm = PersonsManager.Instance;
 			Person aPerson = null;
 			
-			int dni;
-			
-			if (this.entryDNI.Text.Trim().Equals("0"))
-				throw new Exception("El DNI no puede ser cero.");
-			
-			if (!this.entryDNI.Text.Equals("")) {
-				try {
-					dni = Convert.ToInt32(this.entryDNI.Text.Trim());
-				}
-				catch (Exception) {
-					throw new Exception("El DNI no está en un formato correcto. El mismo debe formarse " +
-					                    "únicamente con números, y no otros caracteres como los puntos.");
-				}
-			}
-			else
-				dni = 0;
+			int dni = this.GetDNI();
 			
 			int day = (int)this.spbtnDay.Value;
 			int month = this.cmbMonth.Active + 1;
@@ -197,6 +182,24 @@ namespace ZaspeSharp.GUI
 			
 			// Update persons list in the main window
 			MainWindow.mainWindowInstance.AddPersonToList(aPerson);
+		}
+		
+		protected int GetDNI()
+		{
+			if (this.entryDNI.Text.Trim().Equals("0"))
+				throw new Exception("El DNI no puede ser cero.");
+			
+			if (!this.entryDNI.Text.Equals("")) {
+				try {
+					return Convert.ToInt32(this.entryDNI.Text.Trim());
+				}
+				catch (Exception) {
+					throw new Exception("El DNI no está en un formato correcto. El mismo debe formarse " +
+					                    "únicamente con números, y no otros caracteres como los puntos.");
+				}
+			}
+			else
+				return 0;
 		}
 		
 		protected void ShowErrorMessage(string errorMsg)
