@@ -35,8 +35,19 @@ namespace ZaspeSharp.Events
 			
 			Event theOtherEvent = (Event)o;
 			
-			if (this.id == theOtherEvent.id)
+			if (this.id == theOtherEvent.id
+			    && this.date.Equals(theOtherEvent.date)
+			    && this.name.Equals(theOtherEvent.name)
+			    && this.eventType.Equals(theOtherEvent.eventType)
+			    && this.goals.Equals(theOtherEvent.goals)
+			    && this.observations.Equals(theOtherEvent.observations)) {
+			
+				//Console.WriteLine(this.date.ToString() + " igual a " + theOtherEvent.date.ToString());
+				
 				return true;
+			}
+			
+			//Console.WriteLine(this.date.ToString() + " distinto a " + theOtherEvent.date.ToString());
 			
 			return false;
 		}
