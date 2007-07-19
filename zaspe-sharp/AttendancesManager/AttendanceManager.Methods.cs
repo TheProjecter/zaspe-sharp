@@ -105,7 +105,7 @@ namespace ZaspeSharp.Attendances
 			sb.AddConstraint(Operator.Equals, "id_person", aPerson.Id);
 			
 			SqlStatement stmt = sb.GetStatement(true);
-			SqlResult sr = stmt.Execute();
+			stmt.Execute();
 		}
 		
 		public void RemoveAllAttendancesOfEvent(Event anEvent)
@@ -114,7 +114,7 @@ namespace ZaspeSharp.Attendances
 			sb.AddConstraint(Operator.Equals, "id_event", anEvent.Id);
 			
 			SqlStatement stmt = sb.GetStatement(true);
-			SqlResult sr = stmt.Execute();
+			stmt.Execute();
 		}
 #endregion
 	}

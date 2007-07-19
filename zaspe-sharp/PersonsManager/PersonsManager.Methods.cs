@@ -119,9 +119,9 @@ namespace ZaspeSharp.Persons
 				return newPerson;
 //			}
 			
-			throw new Exception("Se está intentando ingresar una persona que " +
-			                    "ya existe en la base de datos: El DNI ingresado " +
-			                    "pertenece a una persona previamente agregada.");
+//			throw new Exception("Se está intentando ingresar una persona que " +
+//			                    "ya existe en la base de datos: El DNI ingresado " +
+//			                    "pertenece a una persona previamente agregada.");
 		}
 #endregion
 		

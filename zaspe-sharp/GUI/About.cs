@@ -17,6 +17,7 @@
 */
 
 using System;
+using System.Reflection;
 using Glade;
 using Gtk;
 
@@ -36,6 +37,11 @@ namespace ZaspeSharp.GUI
 			this.adAbout.Logo = pf;
 			
 			this.adAbout.TransientFor = parent;
+			
+			// Set version
+			Version assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
+			this.adAbout.Version = assemblyVersion.Major + "." +
+				assemblyVersion.Minor + "." + assemblyVersion.Build;
 			
 			this.adAbout.ShowAll();
 		}

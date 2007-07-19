@@ -47,11 +47,11 @@ namespace ZaspeSharp.Events
 		public Event(DateTime date, string name, EventType eventType,
 		             string goals, string observations) {
 			
-			this.Date = date;
-			this.Name = name;
-			this.EventType = eventType;
-			this.Goals = goals;
-			this.Observations = observations;
+			this.date = date;
+			this.name = name;
+			this.eventType = eventType;
+			this.goals = goals;
+			this.observations = observations;
 		}
 		#endregion
 	}
