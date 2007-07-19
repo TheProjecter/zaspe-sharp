@@ -53,6 +53,9 @@ namespace ZaspeSharp.GUI
 		[Widget]
 		private TreeView tvEvents;
 		
+		[Widget]
+		private ToolButton tbReload;
+		
 		private ListStore attendances;
 		private ListStore persons;
 		private ListStore events;
@@ -201,7 +204,7 @@ namespace ZaspeSharp.GUI
 			
 			
 			// ### tvAttendaces ###
-			//this.LoadAttendancesListData();
+			this.tvAttendances.Hidden += new EventHandler(this.OnAttendancesListHidden);
 			
 			// ### Persons and events loading ###
 			// Read persons from database
@@ -216,6 +219,11 @@ namespace ZaspeSharp.GUI
 		}
 		
 #region Event handlers
+		public void OnToolButtonReloadClicked(object o, EventArgs args)
+		{
+			this.LoadAttendancesListData();
+		}
+		
 		private void DisableEventActionsButtons()
 		{
 			this.imiModifyEvent.Sensitive = false;
@@ -299,6 +307,11 @@ namespace ZaspeSharp.GUI
 			this.menuPersonActions.ShowAll();
 			this.menuEventActions.Popup();
 			//this.menuPersonActions.Popup(null, null, null, 0, 0);
+		}
+		
+		public void OnAttendancesListHidden(object o, EventArgs args)
+		{
+			this.tbReload.Sensitive = false;
 		}
 		
 		public void OnEventsListHidden(object o, EventArgs args)
@@ -476,6 +489,7 @@ namespace ZaspeSharp.GUI
 		public void OnAttendancesListToggle(object o, EventArgs args)
 		{
 			this.AddTreeViewInVBox(this.tvAttendances);
+			this.tbReload.Sensitive = true;
 		}
 		
 		public void OnCellRendererColumnsToggleEvent(object o, ToggledArgs args)
@@ -556,6 +570,11 @@ namespace ZaspeSharp.GUI
 			return null;
 		}
 		
+		private string GenerateColumnTitle(Event anEvent)
+		{
+			return (anEvent.Name + "\n(" + this.FormatEventDateTime(anEvent.Date) + ")");
+		}
+		
 		// Returns true if persons were readded. False otherwise.
 		private void LoadAttendancesListData()
 		{
@@ -576,12 +595,22 @@ namespace ZaspeSharp.GUI
 			if (lastEventsAgain.Length == this.lastEventsOnAttendancesList.Count) {
 				int j;
 				for (j=0; j<lastEventsAgain.Length; j++) {
+					// Check if events (objects) are equals
 					if (!lastEventsAgain[j].Equals(this.lastEventsOnAttendancesList[j]))
 						break;
 				}
 				
-				if (j == lastEventsAgain.Length)
+				/* If events are the same, regenerate columns titles (maybe it's not necessary,
+				 * but it the same that checking if they are equals or not to the correct one). */
+				if (j == lastEventsAgain.Length) {
+					
+					foreach(CustomTreeViewColumn ctvc in this.tvAttendances.Columns) {
+						if (ctvc.Event != null)
+							ctvc.Title = this.GenerateColumnTitle(ctvc.Event);
+					}
+					
 					return;
+				}
 			}
 			
 			// Add as lastEvents the really last events :)
@@ -623,7 +652,7 @@ namespace ZaspeSharp.GUI
 				
 				// Create column
 				eventColumn = new CustomTreeViewColumn(anEvent);
-				eventColumn.Title = anEvent.Name + "\n(" + this.FormatEventDateTime(anEvent.Date) + ")";
+				eventColumn.Title = this.GenerateColumnTitle(anEvent);
 				eventColumn.Alignment = 0.5f;
 				eventColumn.PackStart(eventCellRenderer, true);
 				eventColumn.AddAttribute(eventCellRenderer, "active", k++);
@@ -684,7 +713,8 @@ namespace ZaspeSharp.GUI
 			this.events.SetValue(this.selectedTreeIters[0], 0, this.selectedEvents[0].Name);
 			this.events.SetValue(this.selectedTreeIters[0], 1, this.FormatEventDateTime(this.selectedEvents[0].Date));
 			
-			// TODO: Update attendances list
+			// Update attendances list
+			this.LoadAttendancesListData();
 		}
 		
 		public void PersonChanged()
@@ -699,7 +729,13 @@ namespace ZaspeSharp.GUI
 				this.persons.SetValue(this.selectedTreeIters[0], 3, this.FormatBirthdayDateTime(this.selectedPersons[0].BirthdayDate));
 			
 			// Update attendances list
-			//foreach (
+			// First see if the attendances list is enabled (there are last events)
+			if (this.lastEventsOnAttendancesList.Count == 0)
+				return;
+			
+			this.attendances.SetValue(this.treeItersOnAttendancesList[this.selectedPersons[0]],
+			                          0,
+			                          this.selectedPersons[0].Name + " " + this.selectedPersons[0].Surname);
 		}
 		
 		private string FormatEventDateTime(DateTime dt)
@@ -738,8 +774,6 @@ namespace ZaspeSharp.GUI
 			// If persons in attendances list is updated, quit
 			if (this.treeItersOnAttendancesList.ContainsKey(p))
 				return;
-//			if (this.personsInAttendancesList.Contains(p))
-//				return;
 			
 			// If there are no last events, we quit.
 			if (this.lastEventsOnAttendancesList.Count == 0)
