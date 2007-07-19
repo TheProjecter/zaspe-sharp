@@ -34,7 +34,20 @@ namespace ZaspeSharp.Events
 		public DateTime Date
 		{
 			get { return this.date; }
-			set { this.date = value; }
+			set {
+				
+				try {
+					Event anEvent = EventsManager.Instance.Retrieve(value);
+					
+					if (!this.Equals(anEvent))
+						throw new Exception("Otro evento ya tiene esa fecha. Las fechas son " +
+						                    "únicas para los eventos.");
+				}
+				catch (EventDoesNotExistException) {
+				}
+				
+				this.date = value;
+			}
 		}
 		
 		[TableColumn("name", NotNull=true)]

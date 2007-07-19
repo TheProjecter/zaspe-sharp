@@ -66,7 +66,7 @@ namespace ZaspeSharp.GUI
 		}
 		
 		// This is, in fact, the Save button
-		public void OnOkAddClicked(object o, EventArgs args)
+		public new void OnOkAddClicked(object o, EventArgs args)
 		{
 			int hour = this.spbtnHour.ValueAsInt;
 			int minute = this.spbtnMinute.ValueAsInt;

@@ -270,7 +270,8 @@ namespace ZaspeSharp.GUI
 		private void CleanAttendancesList()
 		{
 			// Erase all rows
-			this.attendances.Clear();
+			if (this.attendances != null)
+				this.attendances.Clear();
 			
 			// Erase all columns
 			foreach (TreeViewColumn tvc in this.tvAttendances.Columns)
@@ -414,16 +415,21 @@ namespace ZaspeSharp.GUI
 				TreeIter[] itersToRemove = this.selectedTreeIters.ToArray();
 				
 				for (int i=0; i<personsToRemove.Length; i++) {
+					// Remove all attendances of the person and the person itself
 					AttendancesManager.Instance.RemoveAllAttendancesOfPerson(personsToRemove[i]);
 					personsToRemove[i].Remove();
 					
+					// Remove treeiters from persons list
 					iter = itersToRemove[i];
 					this.persons.Remove(ref iter);
 					
-					iter = this.treeItersOnAttendancesList[personsToRemove[i]];
-					this.attendances.Remove(ref iter);
-					
-					this.treeItersOnAttendancesList.Remove(personsToRemove[i]);
+					/* Remove treeiters from attendances list, but only if that list
+					 * is enabled (if there are events added as columns, it's enabled) */
+					if (this.lastEventsOnAttendancesList.Count > 0) {
+						iter = this.treeItersOnAttendancesList[personsToRemove[i]];
+						this.attendances.Remove(ref iter);
+						this.treeItersOnAttendancesList.Remove(personsToRemove[i]);
+					}
 				}
 			}
 			
@@ -587,8 +593,11 @@ namespace ZaspeSharp.GUI
 			 * we quit. */
 			Event[] lastEventsAgain = EventsManager.Instance.RetrieveLast(3);
 			
-			if (lastEventsAgain.Length == 0)
+			if (lastEventsAgain.Length == 0) {
+				this.CleanAttendancesList();
+				
 				return;
+			}
 			
 			/* If they have changed, we continue, if not we stop: it's not necessary
 			 * to update anything. */
@@ -613,13 +622,11 @@ namespace ZaspeSharp.GUI
 				}
 			}
 			
-			// Add as lastEvents the really last events :)
-			this.lastEventsOnAttendancesList.Clear();
-			this.lastEventsOnAttendancesList.AddRange(lastEventsAgain);
+			// Clear attendances list
+			this.CleanAttendancesList();
 			
-			// Remove old events columns
-			foreach (TreeViewColumn tvc in this.tvAttendances.Columns)
-				this.tvAttendances.RemoveColumn(tvc);
+			// Add as lastEvents the really last events :)
+			this.lastEventsOnAttendancesList.AddRange(lastEventsAgain);
 			
 			// We'll need to update the model, so we save the new types
 			List<Type> columnTypes = new List<Type>();
