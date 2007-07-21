@@ -1,0 +1,38 @@
+<Project name="Tests" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="./bin/Debug" assembly="Tests" />
+      <Build debugmode="True" target="Library" />
+      <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="DotNetProjectConfiguration">
+      <Output directory="./bin/Release" assembly="Tests" />
+      <Build debugmode="False" target="Library" />
+      <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <Contents>
+    <File name="./AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="./AttendanceManagerTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./ControladorEventosTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./ControladorInstrumentosTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./PersonsManagerTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="./ControladorTiposEventoTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="../Gentle.NET/Gentle.config" subtype="Code" buildaction="FileCopy" />
+    <File name="../Database/data.db" subtype="Code" buildaction="FileCopy" />
+    <File name="../Gentle.NET/Mono.Data.SqliteClient.dll" subtype="Code" buildaction="FileCopy" />
+    <File name="../Gentle.NET/libsqlite3.so.0" subtype="Code" buildaction="FileCopy" />
+  </Contents>
+  <References>
+    <ProjectReference type="Project" localcopy="True" refto="AttendanceManager" />
+    <ProjectReference type="Project" localcopy="True" refto="EventsManager" />
+    <ProjectReference type="Project" localcopy="True" refto="InstrumentsManager" />
+    <ProjectReference type="Project" localcopy="True" refto="PersonsManager" />
+    <ProjectReference type="Project" localcopy="True" refto="EventTypesManager" />
+    <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="nunit.framework, Version=2.2.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+  </References>
+  <DeployTargets />
+</Project>
