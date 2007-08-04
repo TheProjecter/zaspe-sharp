@@ -17,6 +17,7 @@
 */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using ZaspeSharp.Persons;
@@ -72,6 +73,21 @@ namespace ZaspeSharp.Attendances
 				(Attendance[])ObjectFactory.GetCollection(typeof(Attendance), stmt.Execute());
 			
 			return attendances;
+		}
+		
+		public List<Person> WhoHadAttended(Event anEvent)
+		{
+			SqlBuilder sb = new SqlBuilder(StatementType.Select, typeof(Attendance));
+			sb.AddConstraint(Operator.Equals, "id_event", anEvent.Id);
+			SqlStatement stmt = sb.GetStatement(true);
+			
+			IList attendances = ObjectFactory.GetCollection(typeof(Attendance), stmt.Execute());
+			
+			List<Person> persons = new List<Person>();
+			foreach (Attendance at in attendances)
+				persons.Add(at.Person);
+			
+			return persons;
 		}
 #endregion
 		

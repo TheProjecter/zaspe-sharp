@@ -17,6 +17,7 @@
 */
 
 using System;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using Glade;
@@ -63,6 +64,7 @@ namespace ZaspeSharp.GUI
 		private Menu menuPersonActions;
 		private Menu menuEventActions;
 		
+		private ImageMenuItem imiWhoHadAttended;
 		private ImageMenuItem imiModifyPerson;
 		private ImageMenuItem imiRemovePerson;
 		private ImageMenuItem imiModifyEvent;
@@ -86,6 +88,7 @@ namespace ZaspeSharp.GUI
 			
 			Glade.XML gxml_event = new Glade.XML("main_window.glade", "menuEventActions", null);
 			gxml_event.Autoconnect(this);
+			this.imiWhoHadAttended = (ImageMenuItem)gxml_event.GetWidget("imiWhoHadAttended");
 			this.imiModifyEvent = (ImageMenuItem)gxml_event.GetWidget("imiModifyEvent");
 			this.imiRemoveEvent = (ImageMenuItem)gxml_event.GetWidget("imiRemoveEvent");
 			
@@ -343,10 +346,14 @@ namespace ZaspeSharp.GUI
 			TreePath[] selection = this.tvEvents.Selection.GetSelectedRows();
 			
 			// if more than one row was selected, disable modify button
-			if (selection.Length > 1)
+			if (selection.Length > 1) {
+				this.imiWhoHadAttended.Sensitive = false;
 				this.imiModifyEvent.Sensitive = false;
-			else
+			}
+			else {
+				this.imiWhoHadAttended.Sensitive = true;
 				this.imiModifyEvent.Sensitive = true;
+			}
 			
 			// Clear selected events
 			this.selectedEvents.Clear();
@@ -433,6 +440,31 @@ namespace ZaspeSharp.GUI
 				}
 			}
 			
+			md.Destroy();
+		}
+		
+		public void OnMenuItemWhoHadAttendedActivate(object o, EventArgs args)
+		{
+			StringBuilder sb = new StringBuilder();
+			
+			List<Person> personsThatAttended =
+				AttendancesManager.Instance.WhoHadAttended(this.selectedEvents[0]);
+			
+			if (personsThatAttended.Count == 0)
+				sb.Append("Ninguna persona asistió al evento '" +
+				          this.selectedEvents[0].Name + "'");
+			else {
+				sb.Append("Asistieron al evento '" + this.selectedEvents[0].Name + "':\n\n");
+				foreach (Person p in personsThatAttended)
+					sb.Append(p.Name + " " + p.Surname + "\n");
+			}
+			
+			MessageDialog md = new MessageDialog(this.mainWindow, DialogFlags.Modal,
+			                                     MessageType.Info, ButtonsType.Ok,
+			                                     sb.ToString());
+			md.Title = "Personas que asistieron al evento";
+			
+			md.Run();
 			md.Destroy();
 		}
 		

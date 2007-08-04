@@ -129,7 +129,7 @@ namespace ZaspeSharp.Events
 		}
 		#endregion
 		
-		#region Otros métodos
+		#region Other methods
 		[Conditional("DEBUG")]
 		public void LimpiarCache()
 		{
