@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.2.0 on Thu Jul 19 11:25:21 2007 by miltondp@wasabi-->
+<!--Generated with glade3 3.2.0 on Sat Aug  4 19:34:51 2007 by miltondp@wasabi-->
 <glade-interface>
   <widget class="GtkWindow" id="mainWindow">
     <property name="width_request">600</property>
@@ -63,7 +63,6 @@
                         <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                         <property name="label" translatable="yes">Lista de _personas</property>
                         <property name="use_underline">True</property>
-                        <property name="group">miShowEventsList</property>
                         <signal name="toggled" handler="OnPersonsListToggle"/>
                       </widget>
                     </child>
@@ -159,6 +158,7 @@
               <widget class="GtkToolButton" id="tbReload">
                 <property name="visible">True</property>
                 <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="tooltip" translatable="yes">Actualiza las columnas (eventos) al tiempo actual.</property>
                 <property name="stock_id">gtk-refresh</property>
                 <signal name="clicked" handler="OnToolButtonReloadClicked"/>
               </widget>
@@ -312,6 +312,28 @@ along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</pro
   <widget class="GtkMenu" id="menuEventActions">
     <property name="visible">True</property>
     <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+    <child>
+      <widget class="GtkImageMenuItem" id="imiWhoHadAttended">
+        <property name="visible">True</property>
+        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+        <property name="label" translatable="yes">¿Quiénes vinieron?</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="OnMenuItemWhoHadAttendedActivate"/>
+        <child internal-child="image">
+          <widget class="GtkImage" id="menu-item-image7">
+            <property name="visible">True</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <property name="stock">gtk-info</property>
+          </widget>
+        </child>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkSeparatorMenuItem" id="separatormenuitem1">
+        <property name="visible">True</property>
+        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+      </widget>
+    </child>
     <child>
       <widget class="GtkImageMenuItem" id="imiModifyEvent">
         <property name="visible">True</property>
