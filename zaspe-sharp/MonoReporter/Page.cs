@@ -18,6 +18,7 @@
 
 using System;
 using Gtk;
+using Cairo;
 
 namespace MonoReporter
 {
@@ -26,27 +27,54 @@ namespace MonoReporter
 		public Page()
 		{
 			PrintOperation printOperation = new PrintOperation();
+			printOperation.NPages = 1;
+			printOperation.Unit = Unit.Mm;
 			
 			printOperation.BeginPrint += this.BeginPrint;
 			printOperation.DrawPage += this.DrawPage;
 			printOperation.EndPrint += this.EndPrint;
 			
-			printOperation.Run(PrintOperationAction.PrintDialog, null);
+			PrintOperationResult res = printOperation.Run(PrintOperationAction.PrintDialog, null);
+			PrintSettings settings;
+			
+			if (res == PrintOperationResult.Apply) {
+				Console.WriteLine("Se apretó Apply");
+				settings = printOperation.PrintSettings;
+				
+			}
 		}
 		
 		public void BeginPrint(object o, BeginPrintArgs args)
 		{
-			
+			Console.WriteLine("BeginPrint");
 		}
 		
 		public void DrawPage(object o, DrawPageArgs args)
 		{
+			Console.WriteLine("DrawPage");
+			Context con = args.Context.CairoContext;
 			
+			// Rectangle
+			con.SetSourceRGB(1, 0, 0);
+			con.Rectangle(0, 0, args.Context.Width, 50);
+			con.Fill();
+			
+			// Draw another thing
+			con.SetSourceRGB(0, 0, 0);
+			con.MoveTo(20, 20);
+			con.LineTo(50, 50);
+			con.MoveTo(90, 75);
+			con.LineTo(60, 80);
+			con.CurveTo(40, 270, 120, 165, 70, 60);
+			con.LineJoin = LineJoin.Miter;
+			con.LineWidth = 5;
+			
+			con.Stroke();
 		}
 		
 		public void EndPrint(object o, EndPrintArgs args)
 		{
-			
+			Console.WriteLine("EndPrint");
 		}
 	}
 }
