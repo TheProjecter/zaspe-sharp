@@ -21,21 +21,31 @@ using Gtk;
 
 using MonoReporter;
 
-public partial class MainWindow: Gtk.Window
-{	
-	public MainWindow (): base (Gtk.WindowType.Toplevel)
+public class MainWindow {
+	static Gtk.Window myWindow;
+	static void Main ()
 	{
-		Build ();
+		Application.Init ();
+		myWindow = new Window ("This is a window");
+		myWindow.DeleteEvent += OnDelete;
+		myWindow.SetDefaultSize (200, 200);
+
+		//Put a button in the Window
+		Button button = new Button ("Click");
+		button.Clicked += OnButtonClicked;
+		myWindow.Add (button);
+		myWindow.ShowAll ();
+		Application.Run ();
 	}
 	
-	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
+	static void OnButtonClicked(object o, EventArgs args)
 	{
-		Application.Quit ();
-		a.RetVal = true;
+		Page page = new Page();
+		page.Run(myWindow);
 	}
 
-	protected virtual void OnButtonClicked (object sender, System.EventArgs e)
-	{
-		new Page();
-	}
+     static void OnDelete (object o, DeleteEventArgs e)
+     {
+		Application.Quit();
+     }     
 }

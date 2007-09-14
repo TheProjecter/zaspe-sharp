@@ -20,8 +20,6 @@ using System;
 
 namespace MonoReporter
 {
-	
-	
 	public class Report
 	{
 		
