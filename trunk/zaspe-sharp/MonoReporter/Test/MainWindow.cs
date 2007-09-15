@@ -31,7 +31,7 @@ public class MainWindow {
 		myWindow.SetDefaultSize (200, 200);
 
 		//Put a button in the Window
-		Button button = new Button ("Click");
+		Button button = new Button ("Imprimir");
 		button.Clicked += OnButtonClicked;
 		myWindow.Add (button);
 		myWindow.ShowAll ();

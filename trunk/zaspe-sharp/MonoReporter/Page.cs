@@ -30,6 +30,8 @@ namespace MonoReporter
 		
 		public Page()
 		{
+			// All this is only a test.
+			
 			Console.WriteLine("uno");
 			this.printOperation = new PrintOperation();
 			
