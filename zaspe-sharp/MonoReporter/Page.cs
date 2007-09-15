@@ -63,36 +63,39 @@ namespace MonoReporter
 			// Rectangle
 			con.Rectangle(0, 0, width, HEADER_HEIGHT);
 			con.Color = new Cairo.Color(0.8, 0.8, 0.8);
-			con.Fill();
+			con.FillPreserve();
 			
 			// Draw another thing
 			con.Color = new Cairo.Color(0, 0, 0);
-//			con.CurveTo(40, 270, 120, 165, 70, 60);
-//			con.LineJoin = LineJoin.Miter;
 			con.LineWidth = 1;
-			
-//			con.Color = new Cairo.Color(189, 12, 23);
-//			con.MoveTo(90, 75);
-//			con.LineTo(60, 80);
-//			con.Fill();
-			
 			con.Stroke();
 			
-//			layout = args.Context.CreatePangoLayout();
-//			layout.SetText("Prueba con Pango");
-//			desc = FontDescription.FromString("sans 14");
-//			layout.FontDescription = desc;
-//			
-//			layout.GetPixelSize(out textWidth, out textHeight);
-//			
-//			if (textWidth > width) {
-//				layout.Width = (int)width;
-//				layout.Ellipsize = EllipsizeMode.Start;
-//				layout.GetPixelSize(out textWidth, out textHeight);
-//			}
-//			
-//			con.MoveTo((width - textWidth)/2, (HEADER_HEIGHT - textHeight)/2);
-//			Pango.CairoHelper.ShowLayout(con, layout);
+			con.Color = new Cairo.Color(0, 0, 0);
+			con.MoveTo(20, 200);
+			con.CurveTo(40, 270, 120, 165, 70, 60);
+			con.LineJoin = LineJoin.Bevel;
+			con.Stroke();
+			
+			con.MoveTo(30, 275);
+			con.LineTo(60, 80);
+			con.Stroke();
+			
+			con.Color = new Cairo.Color(0, 0, 0);
+			layout = args.Context.CreatePangoLayout();
+			layout.SetText("Prueba con Pango");
+			desc = FontDescription.FromString("sans 14");
+			layout.FontDescription = desc;
+			
+			layout.GetPixelSize(out textWidth, out textHeight);
+			
+			if (textWidth > width) {
+				layout.Width = (int)width;
+				layout.Ellipsize = EllipsizeMode.Start;
+				layout.GetPixelSize(out textWidth, out textHeight);
+			}
+			
+			con.MoveTo((width - textWidth)/2, (HEADER_HEIGHT - textHeight)/2);
+			Pango.CairoHelper.ShowLayout(con, layout);
 		}
 		
 		public void EndPrint(object o, EndPrintArgs args)
@@ -103,7 +106,7 @@ namespace MonoReporter
 		public void Run(Gtk.Window win)
 		{
 			Console.WriteLine("tres");
-			printOperation.Run(PrintOperationAction.Preview, win);
+			printOperation.Run(PrintOperationAction.PrintDialog, win);
 			
 //			if (res == PrintOperationResult.Apply) {
 //				Console.WriteLine("Se apretó Apply");
