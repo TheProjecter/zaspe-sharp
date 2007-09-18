@@ -35,20 +35,24 @@ namespace MonoReporter
 			Console.WriteLine("uno");
 			this.printOperation = new PrintOperation();
 			
+			printOperation.NPages = 1;
+			printOperation.Unit = Unit.Mm;
+			printOperation.JobName = "PruebaConCairo";
+			
+//			PrintSettings settings = new PrintSettings();
+//			settings.UseColor = true;
+//			printOperation.PrintSettings = settings;
+			
 			Console.WriteLine("dos");
-			printOperation.BeginPrint += this.BeginPrint;
+//			printOperation.BeginPrint += this.BeginPrint;
 			printOperation.DrawPage += this.DrawPage;
 			printOperation.EndPrint += this.EndPrint;
 		}
 		
-		public void BeginPrint(object o, BeginPrintArgs args)
-		{
-			Console.WriteLine("BeginPrint");
-			
-			PrintOperation printOperation = (PrintOperation)o;
-			printOperation.NPages = 1;
-			printOperation.Unit = Unit.Mm;
-		}
+//		public void BeginPrint(object o, BeginPrintArgs args)
+//		{
+//			Console.WriteLine("BeginPrint");
+//		}
 		
 		public void DrawPage(object o, DrawPageArgs args)
 		{
@@ -64,7 +68,7 @@ namespace MonoReporter
 			
 			// Rectangle
 			con.Rectangle(0, 0, width, HEADER_HEIGHT);
-			con.Color = new Cairo.Color(0.8, 0.8, 0.8);
+			con.Color = new Cairo.Color(1, 0.2, 0.2, 0.6);
 			con.FillPreserve();
 			
 			// Draw another thing
@@ -75,17 +79,16 @@ namespace MonoReporter
 			con.Color = new Cairo.Color(0, 0, 0);
 			con.MoveTo(20, 200);
 			con.CurveTo(40, 270, 120, 165, 70, 60);
-			con.LineJoin = LineJoin.Bevel;
 			con.Stroke();
 			
-			con.MoveTo(30, 275);
+			con.MoveTo(30, 100);
 			con.LineTo(60, 80);
 			con.Stroke();
 			
 			con.Color = new Cairo.Color(0, 0, 0);
 			layout = args.Context.CreatePangoLayout();
 			layout.SetText("Prueba con Pango");
-			desc = FontDescription.FromString("sans 14");
+			desc = FontDescription.FromString("arial 14");
 			layout.FontDescription = desc;
 			
 			layout.GetPixelSize(out textWidth, out textHeight);
@@ -103,6 +106,11 @@ namespace MonoReporter
 		public void EndPrint(object o, EndPrintArgs args)
 		{
 			Console.WriteLine("EndPrint");
+		}
+		
+		public void Dispose()
+		{
+			printOperation.Dispose();
 		}
 		
 		public void Run(Gtk.Window win)
