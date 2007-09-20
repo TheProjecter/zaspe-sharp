@@ -18,6 +18,7 @@
 
 using System;
 using Gtk;
+using Gdk;
 using Pango;
 using Cairo;
 

@@ -40,8 +40,8 @@ public class MainWindow {
 	
 	static void OnButtonClicked(object o, EventArgs args)
 	{
-		Page page = new Page();
-		page.Run(myWindow);
+		Report report = new Report();
+		report.Run(myWindow);
 	}
 
      static void OnDelete (object o, DeleteEventArgs e)
