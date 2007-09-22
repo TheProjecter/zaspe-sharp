@@ -18,6 +18,7 @@
 
 using System;
 using Gtk;
+using SvgReader;
 
 using MonoReporter;
 
@@ -40,8 +41,21 @@ public class MainWindow {
 	
 	static void OnButtonClicked(object o, EventArgs args)
 	{
-		Report report = new Report();
+//		Page report = new Page();
+//		report.Run(myWindow);
+		
+		Report report = new Report("test.svg");
 		report.Run(myWindow);
+		
+//		SvgDocument s = new SvgDocument("test.svg");
+//		Console.WriteLine(s.PageWidth.ToString());
+//		Console.WriteLine(s.PageHeight.ToString());
+//		
+//		Console.WriteLine("Rectangulos");
+//		foreach (Rectangle r in s.Rectangles)
+//		{
+//			Console.WriteLine(r.Id);
+//		}
 	}
 
      static void OnDelete (object o, DeleteEventArgs e)

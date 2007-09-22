@@ -18,49 +18,52 @@
 
 using System;
 using Gtk;
+using SvgReader;
 
 namespace MonoReporter
 {
 	public class Report
 	{
 		PrintOperation printOperation;
+		SvgDocument svgDocument;
 		
-		public Report()
+		public Report(string svgFile)
 		{
-			// All this is only a test.
+			this.svgDocument = new SvgDocument(svgFile);
 			
-			Console.WriteLine("uno");
 			this.printOperation = new PrintOperation();
+			this.printOperation.NPages = 1;
+			this.printOperation.Unit = Unit.Pixel;
+			this.printOperation.JobName = "ImagenesEnGtkPrint";
 			
-			this.printOperation.ShowProgress = true;
-			printOperation.NPages = 1;
-			printOperation.Unit = Unit.Mm;
-			printOperation.JobName = "ImagenesEnGtkPrint";
+			PrintSettings psettings = new PrintSettings();
+			psettings.SetPaperHeight(this.svgDocument.PageHeight, Unit.Mm);
+			psettings.SetPaperWidth(this.svgDocument.PageWidth, Unit.Mm);
 			
-//			PrintSettings settings = new PrintSettings();
-//			settings.UseColor = true;
-//			printOperation.PrintSettings = settings;
+			this.printOperation.PrintSettings = psettings;
 			
-			Console.WriteLine("dos");
 			printOperation.DrawPage += this.DrawPage;
 		}
 		
 		public void DrawPage(object o, DrawPageArgs args)
 		{
 			Cairo.Context con = args.Context.CairoContext;
-			con.Antialias = Cairo.Antialias.Subpixel;
+			con.LineWidth = 1;
 			
-			// Cargo una imagen
-			Console.WriteLine("cuatro");
-			Gdk.Pixbuf imagen = Rsvg.Pixbuf.FromFileAtSize("prueba.svg", (int)args.Context.Width, (int)args.Context.Height);
+			Rectangle[] rectangles = this.svgDocument.Rectangles;
 			
-			Gdk.CairoHelper.SetSourcePixbuf(con, imagen, 0, 0);
-			con.Paint();
+			foreach (Rectangle r in rectangles) {
+				Cairo.Rectangle cr = new Cairo.Rectangle(new Cairo.Point((int)r.X, (int)r.Y),
+			                                      r.Width,
+			                                      r.Height);
+			
+				con.Rectangle(cr);
+				con.Stroke();
+			}
 		}
 		
 		public void Run(Gtk.Window win)
 		{
-			Console.WriteLine("tres");
 			printOperation.Run(PrintOperationAction.PrintDialog, win);
 			
 //			if (res == PrintOperationResult.Apply) {
