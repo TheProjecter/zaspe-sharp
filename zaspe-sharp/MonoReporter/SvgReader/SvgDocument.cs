@@ -51,16 +51,17 @@ namespace SvgReader
 				string attributeValue = this.GetAttributeValueFromNode(svgNode, "width");
 				
 				string widthValue;
-				if (attributeValue.EndsWith("mm"))
+				if (attributeValue.EndsWith("mm")) {
 					widthValue = attributeValue.Substring(0, attributeValue.Length - 2);
+					this.pageWidth = Utils.DoubleParse(widthValue);
+				}
 				else {
 					double tmp = Double.Parse(attributeValue);
-					tmp = tmp * 0.282258065;
+					tmp = Utils.PixelToMm(tmp);
 					
-					widthValue = tmp.ToString();
+					this.pageWidth = tmp;
 				}
 				
-				this.pageWidth = Double.Parse(widthValue, NumberStyles.AllowDecimalPoint);
 				return this.pageWidth;
 			}
 		}
@@ -75,17 +76,17 @@ namespace SvgReader
 				string attributeValue = this.GetAttributeValueFromNode(svgNode, "height");
 				
 				string heightValue;
-				if (attributeValue.EndsWith("mm"))
+				if (attributeValue.EndsWith("mm")) {
 				    heightValue = attributeValue.Substring(0, attributeValue.Length - 2);
-				else {
-					double tmp = Double.Parse(attributeValue);
-					tmp = tmp * 0.282258065;
-					
-					heightValue = tmp.ToString();
+					this.pageHeight = Utils.DoubleParse(heightValue);
 				}
-				    
-				Console.WriteLine(heightValue);
-				this.pageHeight = Double.Parse(heightValue, NumberStyles.AllowDecimalPoint);
+				else {
+					double tmp = Utils.DoubleParse(attributeValue);
+					tmp = Utils.PixelToMm(tmp);
+					
+					this.pageHeight = tmp;
+				}
+				
 				return this.pageHeight;
 			}
 		}
@@ -99,11 +100,17 @@ namespace SvgReader
 				Rectangle aRectangle;
 				foreach (XmlNode rectNode in rectanglesList)
 				{
-					aRectangle = new Rectangle(this.GetAttributeValueFromNode(rectNode, "id"),
-					                           this.GetAttributeValueFromNode(rectNode, "width"),
-					                           this.GetAttributeValueFromNode(rectNode, "height"),
-					                           this.GetAttributeValueFromNode(rectNode, "x"),
-					                           this.GetAttributeValueFromNode(rectNode, "y"));
+					string id = this.GetAttributeValueFromNode(rectNode, "id");
+					string width = this.GetAttributeValueFromNode(rectNode, "width");
+					string height = this.GetAttributeValueFromNode(rectNode, "height");
+					string x = this.GetAttributeValueFromNode(rectNode, "x");
+					string y = this.GetAttributeValueFromNode(rectNode, "y");
+					
+					aRectangle = new Rectangle(id,
+					                           Utils.PixelToMm(Utils.DoubleParse(width)),
+					                           Utils.PixelToMm(Utils.DoubleParse(height)),
+					                           Utils.PixelToMm(Utils.DoubleParse(x)),
+					                           Utils.PixelToMm(Utils.DoubleParse(y)));
 					
 					rectangles.Add(aRectangle);
 				}

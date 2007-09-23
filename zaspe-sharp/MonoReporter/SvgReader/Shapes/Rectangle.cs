@@ -37,15 +37,6 @@ namespace SvgReader
 			this.y = y;
 		}
 		
-		public Rectangle(string id, string width, string height, string x, string y)
-			: this(id,
-			       Double.Parse(width, NumberStyles.AllowDecimalPoint),
-			       Double.Parse(height, NumberStyles.AllowDecimalPoint),
-			       Double.Parse(x, NumberStyles.AllowDecimalPoint),
-			       Double.Parse(y, NumberStyles.AllowDecimalPoint))
-		{
-		}
-		
 		public string Id
 		{
 			get { return this.id; }
