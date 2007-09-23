@@ -37,9 +37,11 @@ namespace MonoReporter
 			this.printOperation.JobName = "ImagenesEnGtkPrint";
 			
 			PrintSettings psettings = new PrintSettings();
+			Console.WriteLine("PageHeight: " + this.svgDocument.PageHeight.ToString());
+			Console.WriteLine("PageWidth: " + this.svgDocument.PageWidth.ToString());
+			Console.WriteLine();
 			psettings.SetPaperHeight(this.svgDocument.PageHeight, Unit.Mm);
 			psettings.SetPaperWidth(this.svgDocument.PageWidth, Unit.Mm);
-			
 			this.printOperation.PrintSettings = psettings;
 			
 			printOperation.DrawPage += this.DrawPage;
@@ -53,6 +55,7 @@ namespace MonoReporter
 			Rectangle[] rectangles = this.svgDocument.Rectangles;
 			
 			foreach (Rectangle r in rectangles) {
+				Console.WriteLine("X: " + r.X + "  Y: " + r.Y + "  Width: " + r.Width + "  Height: " + r.Height);
 				Cairo.Rectangle cr = new Cairo.Rectangle(new Cairo.Point((int)r.X, (int)r.Y),
 			                                      r.Width,
 			                                      r.Height);

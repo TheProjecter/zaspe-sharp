@@ -16,6 +16,7 @@
 //    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Globalization;
 
 namespace SvgReader
 {
@@ -37,7 +38,11 @@ namespace SvgReader
 		}
 		
 		public Rectangle(string id, string width, string height, string x, string y)
-			: this(id, Convert.ToDouble(width), Convert.ToDouble(height), Convert.ToDouble(x), Convert.ToDouble(y))
+			: this(id,
+			       Double.Parse(width, NumberStyles.AllowDecimalPoint),
+			       Double.Parse(height, NumberStyles.AllowDecimalPoint),
+			       Double.Parse(x, NumberStyles.AllowDecimalPoint),
+			       Double.Parse(y, NumberStyles.AllowDecimalPoint))
 		{
 		}
 		
