@@ -8,16 +8,16 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="765"
-   height="1260"
+   width="744.09448"
+   height="1052.3622"
    id="svg2"
    sodipodi:version="0.32"
    inkscape:version="0.45"
    sodipodi:docname="test.svg"
-   sodipodi:docbase="/home/miltondp/Projects/zaspe-sharp/MonoReporter/Test/bin/Debug"
+   sodipodi:docbase="/home/miltondp/Projects/zaspe-sharp/MonoReporter/Test"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   sodipodi:modified="true"
-   version="1.0">
+   version="1.0"
+   sodipodi:modified="true">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -34,10 +34,10 @@
      inkscape:current-layer="layer1"
      inkscape:window-width="1280"
      inkscape:window-height="949"
-     inkscape:window-x="0"
-     inkscape:window-y="25"
-     width="215.90001mm"
-     height="355.60001mm"
+     inkscape:window-x="157"
+     inkscape:window-y="52"
+     width="210mm"
+     height="297mm"
      units="mm" />
   <metadata
      id="metadata7">
