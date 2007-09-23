@@ -33,7 +33,7 @@ namespace MonoReporter
 			
 			this.printOperation = new PrintOperation();
 			this.printOperation.NPages = 1;
-			this.printOperation.Unit = Unit.Pixel;
+			this.printOperation.Unit = Unit.Mm;
 			this.printOperation.JobName = "ImagenesEnGtkPrint";
 			
 			PrintSettings psettings = new PrintSettings();
