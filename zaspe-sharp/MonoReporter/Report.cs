@@ -35,13 +35,14 @@ namespace MonoReporter
 			this.printOperation.NPages = 1;
 			this.printOperation.Unit = Unit.Mm;
 			this.printOperation.JobName = "ImagenesEnGtkPrint";
+			printOperation.ExportFilename = "test.pdf";
 			
 			PrintSettings psettings = new PrintSettings();
+			PaperSize paperSize = new PaperSize("customPaperSize", "cps", this.svgDocument.PageWidth, this.svgDocument.PageHeight, Unit.Mm);
+			psettings.PaperSize = paperSize;
 			Console.WriteLine("PageHeight: " + this.svgDocument.PageHeight.ToString());
 			Console.WriteLine("PageWidth: " + this.svgDocument.PageWidth.ToString());
 			Console.WriteLine();
-			psettings.SetPaperHeight(this.svgDocument.PageHeight, Unit.Mm);
-			psettings.SetPaperWidth(this.svgDocument.PageWidth, Unit.Mm);
 			this.printOperation.PrintSettings = psettings;
 			
 			printOperation.DrawPage += this.DrawPage;
@@ -59,7 +60,7 @@ namespace MonoReporter
 				Cairo.Rectangle cr = new Cairo.Rectangle(new Cairo.Point((int)r.X, (int)r.Y),
 			                                      r.Width,
 			                                      r.Height);
-			
+				
 				con.Rectangle(cr);
 				con.Stroke();
 			}
@@ -67,7 +68,7 @@ namespace MonoReporter
 		
 		public void Run(Gtk.Window win)
 		{
-			printOperation.Run(PrintOperationAction.PrintDialog, win);
+			printOperation.Run(PrintOperationAction.Export, win);
 			
 //			if (res == PrintOperationResult.Apply) {
 //				Console.WriteLine("Se apretó Apply");
