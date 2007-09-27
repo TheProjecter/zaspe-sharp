@@ -56,7 +56,7 @@ namespace SvgReader
 					this.pageWidth = Utils.DoubleParse(widthValue);
 				}
 				else {
-					double tmp = Double.Parse(attributeValue);
+					double tmp = Utils.DoubleParse(attributeValue);
 					tmp = Utils.PixelToMm(tmp);
 					
 					this.pageWidth = tmp;
@@ -105,6 +105,7 @@ namespace SvgReader
 					string height = this.GetAttributeValueFromNode(rectNode, "height");
 					string x = this.GetAttributeValueFromNode(rectNode, "x");
 					string y = this.GetAttributeValueFromNode(rectNode, "y");
+					string lineWidth = this.GetAttributeValueFromNode(rectNode, "style");
 					
 					aRectangle = new Rectangle(id,
 					                           Utils.PixelToMm(Utils.DoubleParse(width)),
@@ -129,6 +130,11 @@ namespace SvgReader
 			}
 			
 			throw new Exception("'" + attributeName + "'" + " attribute not found.");
+		}
+		
+		private string GetValueFromMultiValuatedAttribute(XmlNode node, string attributeName, string subOption)
+		{
+			return null;
 		}
 	}
 }
