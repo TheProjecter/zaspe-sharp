@@ -222,6 +222,11 @@ namespace ZaspeSharp.GUI
 		}
 		
 #region Event handlers
+		public void OnMenuItemShowStats(object o, EventArgs args)
+		{
+			new AttendancesReport(this.mainWindow);
+		}
+		
 		public void OnToolButtonReloadClicked(object o, EventArgs args)
 		{
 			this.LoadAttendancesListData();
@@ -229,6 +234,7 @@ namespace ZaspeSharp.GUI
 		
 		private void DisableEventActionsButtons()
 		{
+			this.imiWhoHadAttended.Sensitive = false;
 			this.imiModifyEvent.Sensitive = false;
 			this.imiRemoveEvent.Sensitive = false;
 		}
@@ -340,6 +346,7 @@ namespace ZaspeSharp.GUI
 		
 		public void OnEventsListSelectionChanged(object o, EventArgs args)
 		{
+			this.imiWhoHadAttended.Sensitive = true;
 			this.imiModifyEvent.Sensitive = true;
 			this.imiRemoveEvent.Sensitive = true;
 			
