@@ -18,7 +18,7 @@ namespace ZaspeSharp.GUI
 		{
 			this.attendancesReportAssistant = new Assistant();
 			
-			this.attendancesReportAssistant.Parent = parent;
+			this.attendancesReportAssistant.TransientFor = parent;
 			
 			this.attendancesReportAssistant.ShowAll();
 		}
