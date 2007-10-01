@@ -8,8 +8,8 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="744.09448"
-   height="1052.3622"
+   width="765"
+   height="1260"
    id="svg2"
    sodipodi:version="0.32"
    inkscape:version="0.45"
@@ -31,14 +31,14 @@
      inkscape:cx="350"
      inkscape:cy="552.78085"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="svg2"
      inkscape:window-width="1280"
      inkscape:window-height="949"
      inkscape:window-x="157"
      inkscape:window-y="47"
-     width="8.2677165in"
-     height="11.692913in"
-     units="in" />
+     width="765px"
+     height="1260px"
+     units="px" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -55,7 +55,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#ff5555;fill-opacity:0;stroke:#000000;stroke-opacity:1;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#ff5555;fill-opacity:0;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect2160"
        width="651.42859"
        height="102.85714"
