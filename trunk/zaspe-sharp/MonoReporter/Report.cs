@@ -20,7 +20,9 @@
 
 using System;
 using Gtk;
+
 using SvgReader;
+using SvgReader.Shapes;
 
 namespace MonoReporter
 {
@@ -58,15 +60,13 @@ namespace MonoReporter
 			Rectangle[] rectangles = this.svgDocument.Rectangles;
 			
 			foreach (Rectangle r in rectangles) {
-				Console.WriteLine("X: " + r.X + "  Y: " + r.Y + "  Width: " + r.Width + "  Height: " + r.Height);
-				Cairo.Rectangle cr = new Cairo.Rectangle(new Cairo.Point((int)r.X, (int)r.Y),
-			                                      r.Width,
-			                                      r.Height);
-				
-				con.Rectangle(cr);
-				con.LineWidth = r.LineWidth;
-				Console.WriteLine("LineWidth: " + r.LineWidth.ToString());
-				con.Stroke();
+				Console.WriteLine("Rect ID: " + r.Id);
+				Console.WriteLine("  X: " + r.X + "  Y: " + r.Y + "  Width: " + r.Width + "  Height: " + r.Height);
+				Console.WriteLine("  FillColor -> R: " + r.FillColor[0] + " - G: " + r.FillColor[1] + " - B: " + r.FillColor[2]);
+				Console.WriteLine("  FillOpacity: " + r.FillOpacity);
+				Console.WriteLine("  StrokeColor -> R: " + r.StrokeColor[0] + " - G: " + r.StrokeColor[1] + " - B: " + r.StrokeColor[2]);
+				Console.WriteLine("  StrokeOpacity: " + r.StrokeOpacity);
+				CairoDrawingFunctions.Draw(con, r);
 			}
 		}
 		

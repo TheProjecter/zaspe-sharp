@@ -78,5 +78,30 @@ namespace SvgReader
 			
 			throw new SubOptionNotFoundException("'" + subOptionName + "'" + " sub option not found.");
 		}
+		
+		// Return RGB
+		public static double[] FromHexColorToRGBA(string hexColor)
+		{
+			double[] result = new double[3];
+			
+			if (hexColor.Length != 7)
+				throw new FormatException("'" + hexColor + "' is not hex color");
+			
+			string red, green, blue;
+			red = hexColor.Substring(1, 2);
+			green = hexColor.Substring(3, 2);
+			blue = hexColor.Substring(5, 2);
+			
+			result[0] = Utils.FromHexToDecimal(red);
+			result[1] = Utils.FromHexToDecimal(green);
+			result[2] = Utils.FromHexToDecimal(blue);
+			
+			return result;
+		}
+		
+		private static uint FromHexToDecimal(string hex)
+		{
+			return Convert.ToUInt32(hex, 16);
+		}
 	}
 }
