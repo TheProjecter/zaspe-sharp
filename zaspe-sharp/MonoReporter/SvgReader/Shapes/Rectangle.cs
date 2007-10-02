@@ -22,7 +22,7 @@ using System;
 using System.Xml;
 using System.Globalization;
 
-namespace SvgReader
+namespace SvgReader.Shapes
 {
 	public class Rectangle
 	{
@@ -32,6 +32,12 @@ namespace SvgReader
 		private double x;
 		private double y;
 		private double lineWidth;
+		
+		private double[] fillColor;
+		private double fillOpacity;
+		
+		private double[] strokeColor;
+		private double strokeOpacity;
 		
 		public Rectangle(XmlNode rectNode)
 		{
@@ -47,6 +53,38 @@ namespace SvgReader
 			}
 			catch (SubOptionNotFoundException) {
 				this.lineWidth = Utils.PixelToMm(1.0);
+			}
+			
+			try {
+				string fillColor = Utils.GetValueFromMultiValuatedAttribute(rectNode, "style", "fill");
+				this.fillColor = Utils.FromHexColorToRGBA(fillColor);
+			}
+			catch (SubOptionNotFoundException) {
+				this.fillColor = new double[] {0, 0, 0};
+			}
+			
+			try {
+				string fillOpacity = Utils.GetValueFromMultiValuatedAttribute(rectNode, "style", "fill-opacity");
+				this.fillOpacity = Utils.DoubleParse(fillOpacity);
+			}
+			catch (SubOptionNotFoundException) {
+				this.fillOpacity = 1.0;
+			}
+			
+			try {
+				string strokeColor = Utils.GetValueFromMultiValuatedAttribute(rectNode, "style", "stroke");
+				this.strokeColor = Utils.FromHexColorToRGBA(strokeColor);
+			}
+			catch (SubOptionNotFoundException) {
+				this.strokeColor = new double[] {0, 0, 0};
+			}
+			
+			try {
+				string strokeOpacity = Utils.GetValueFromMultiValuatedAttribute(rectNode, "style", "stroke-opacity");
+				this.strokeOpacity = Utils.DoubleParse(strokeOpacity);
+			}
+			catch (SubOptionNotFoundException) {
+				this.strokeOpacity = 1.0;
 			}
 			
 			this.id = Utils.GetAttributeValueFromNode(rectNode, "id");
@@ -90,6 +128,30 @@ namespace SvgReader
 		{
 			get { return this.lineWidth; }
 			set { this.lineWidth = value; }
+		}
+		
+		public double[] FillColor
+		{
+			get { return this.fillColor; }
+			set { this.fillColor = value; }
+		}
+		
+		public double FillOpacity
+		{
+			get { return this.fillOpacity; }
+			set { this.fillOpacity = value; }
+		}
+		
+		public double[] StrokeColor
+		{
+			get { return this.strokeColor; }
+			set { this.strokeColor = value; }
+		}
+		
+		public double StrokeOpacity
+		{
+			get { return this.strokeOpacity; }
+			set { this.strokeOpacity = value; }
 		}
 	}
 }

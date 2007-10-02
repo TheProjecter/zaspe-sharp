@@ -23,6 +23,8 @@ using System.Globalization;
 using System.Collections.Generic;
 using System.Xml;
 
+using SvgReader.Shapes;
+
 namespace SvgReader
 {
 	public class SvgDocument
