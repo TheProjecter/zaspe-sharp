@@ -29,7 +29,7 @@ namespace SvgReader
 	{
 		public static NumberFormatInfo numberFormat;
 		
-		public const double pxToMmConversion = 0.282258065;
+		public const double pxToMmConversion = 0.282222222;
 		private const char subOptionsSeparator = ';';
 		private const char subOptionFromValueSeparator = ':';
 		
@@ -55,6 +55,44 @@ namespace SvgReader
 			return Utils.PixelToMm(d);
 		}
 		
+		/// <summary>
+		/// Normalize pixels
+		/// </summary>
+		/// <param name="x">
+		/// A <see cref="System.Double"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Double"/>
+		/// </returns>
+		public static double NormalizeX(double x)
+		{
+			return (x - 22);
+		}
+		
+		public static double NormalizeX(string x)
+		{
+			return (Utils.DoubleParse(x) - 22);
+		}
+		
+		/// <summary>
+		/// Normalize pixels
+		/// </summary>
+		/// <param name="y">
+		/// A <see cref="System.Double"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Double"/>
+		/// </returns>
+		public static double NormalizeY(double y)
+		{
+			return (y - 20);
+		}
+		
+		public static double NormalizeY(string y)
+		{
+			return (Utils.DoubleParse(y) - 20);
+		}
+		
 		public static string GetAttributeValueFromNode(XmlNode node, string attributeName)
 		{
 			foreach (XmlAttribute anAttribute in node.Attributes) {
@@ -62,7 +100,7 @@ namespace SvgReader
 					return anAttribute.Value;
 			}
 			
-			throw new Exception("'" + attributeName + "'" + " attribute not found.");
+			throw new AttributeNotFoundException("'" + attributeName + "'" + " attribute not found.");
 		}
 		
 		public static string GetValueFromMultiValuatedAttribute(XmlNode node, string attributeName, string subOptionName)
@@ -84,6 +122,9 @@ namespace SvgReader
 		{
 			double[] result = new double[3];
 			
+			if (hexColor.Equals("none"))
+				// FIXME: It should be transparent
+				return new double[] {255, 255, 255};
 			if (hexColor.Length != 7)
 				throw new FormatException("'" + hexColor + "' is not hex color");
 			

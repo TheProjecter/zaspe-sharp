@@ -39,11 +39,12 @@ namespace MonoReporter
 			this.printOperation.NPages = 1;
 			this.printOperation.Unit = Unit.Mm;
 			this.printOperation.JobName = reportName;
-			printOperation.ExportFilename = "test.pdf";
+			this.printOperation.ExportFilename = "test.pdf";
 			
 			PrintSettings psettings = new PrintSettings();
 			PaperSize paperSize = new PaperSize("customPaperSize", "cps", this.svgDocument.PageWidth, this.svgDocument.PageHeight, Unit.Mm);
 			psettings.PaperSize = paperSize;
+			
 			Console.WriteLine("PageHeight: " + this.svgDocument.PageHeight.ToString());
 			Console.WriteLine("PageWidth: " + this.svgDocument.PageWidth.ToString());
 			Console.WriteLine();
@@ -55,10 +56,9 @@ namespace MonoReporter
 		public void DrawPage(object o, DrawPageArgs args)
 		{
 			Cairo.Context con = args.Context.CairoContext;
-			con.LineWidth = 1;
 			
+			// Draw rectangles
 			Rectangle[] rectangles = this.svgDocument.Rectangles;
-			
 			foreach (Rectangle r in rectangles) {
 				Console.WriteLine("Rect ID: " + r.Id);
 				Console.WriteLine("  X: " + r.X + "  Y: " + r.Y + "  Width: " + r.Width + "  Height: " + r.Height);
@@ -67,6 +67,20 @@ namespace MonoReporter
 				Console.WriteLine("  StrokeColor -> R: " + r.StrokeColor[0] + " - G: " + r.StrokeColor[1] + " - B: " + r.StrokeColor[2]);
 				Console.WriteLine("  StrokeOpacity: " + r.StrokeOpacity);
 				CairoDrawingFunctions.Draw(con, r);
+			}
+			
+			// Draw text
+			Text[] texts = this.svgDocument.Texts;
+			foreach(Text t in texts) {
+				Console.WriteLine("Text ID: " + t.Id);
+				Console.WriteLine("  TextValue: " + t.TextValue);
+				Console.WriteLine("  FontDescription: " + t.FontDescription);
+				Console.WriteLine("  X: " + t.X + "  Y: " + t.Y);
+				Console.WriteLine("  Color -> R: " + t.Color[0] + " - G: " + t.Color[1] + " - B: " + t.Color[2]);
+				Console.WriteLine("  Opacity: " + t.Opacity);
+//				Console.WriteLine("  StrokeColor -> R: " + r.StrokeColor[0] + " - G: " + r.StrokeColor[1] + " - B: " + r.StrokeColor[2]);
+//				Console.WriteLine("  StrokeOpacity: " + r.StrokeOpacity);
+				CairoDrawingFunctions.Draw(con, args.Context.CreatePangoLayout(), t);
 			}
 		}
 		

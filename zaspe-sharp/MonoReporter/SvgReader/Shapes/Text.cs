@@ -19,14 +19,145 @@
 */
 
 using System;
+using System.Xml;
 
 namespace SvgReader.Shapes
 {
 	public class Text
 	{
+		public const double X_FIX = 0.25;
+		public const double Y_FIX = 0.86;
 		
-		public Text()
+		private string id;
+		
+		private string textValue;
+		private double size;
+		private string style;
+		private string family;
+		
+		private double x;
+		private double y;
+		
+		private double[] color;
+		private double opacity;
+		
+		public Text(XmlNode textNode)
 		{
+			// textNode.FirstChild is tspan node
+			
+			this.id = Utils.GetAttributeValueFromNode(textNode, "id");
+			this.textValue = textNode.FirstChild.FirstChild.Value;
+			
+			string x = Utils.GetAttributeValueFromNode(textNode, "x");
+			this.x = Utils.DoubleParseAndPixelToMm(x);
+			
+			string y = Utils.GetAttributeValueFromNode(textNode, "y");
+			this.y = Utils.DoubleParseAndPixelToMm(y);
+			
+			try {
+				// Look for "font-size" in tspan
+				string size = Utils.GetValueFromMultiValuatedAttribute(textNode.FirstChild, "style", "font-size");
+				this.size = Utils.DoubleParse(size.Substring(0, size.Length - 2));
+			}
+			catch (AttributeNotFoundException) {
+				// If it failed, look for it in text
+				string size = Utils.GetValueFromMultiValuatedAttribute(textNode, "style", "font-size");
+				this.size = Utils.DoubleParse(size.Substring(0, size.Length - 2));
+			}
+			catch (SubOptionNotFoundException) {
+				this.size = 14.0;
+			}
+			
+			try {
+				this.style = Utils.GetValueFromMultiValuatedAttribute(textNode, "style", "font-style");
+			}
+			catch (SubOptionNotFoundException) {
+				this.style = "normal";
+			}
+			
+			try {
+				this.family = Utils.GetValueFromMultiValuatedAttribute(textNode, "style", "font-family");
+			}
+			catch (SubOptionNotFoundException) {
+				this.family = "Times New Roman";
+			}
+			
+			try {
+				string color = Utils.GetValueFromMultiValuatedAttribute(textNode, "style", "fill");
+				this.color = Utils.FromHexColorToRGBA(color);
+			}
+			catch (SubOptionNotFoundException) {
+				this.color = new double[] {0, 0, 0};
+			}
+			
+			try {
+				string opacity = Utils.GetValueFromMultiValuatedAttribute(textNode, "style", "fill-opacity");
+				this.opacity = Utils.DoubleParse(opacity);
+			}
+			catch (SubOptionNotFoundException) {
+				this.opacity = 1.0;
+			}
+		}
+		
+		public string Id
+		{
+			get { return this.id; }
+			set { this.id = value; }
+		}
+		
+		public string TextValue
+		{
+			get { return this.textValue; }
+			set { this.textValue = value; }
+		}
+		
+		public double Size
+		{
+			get { return this.size; }
+			set { this.size = value; }
+		}
+		
+		public string Style
+		{
+			get { return this.style; }
+			set { this.style = value; }
+		}
+		
+		public string Family
+		{
+			get { return this.family; }
+			set { this.family = value; }
+		}
+		
+		public string FontDescription
+		{
+			get {
+				return (this.family + " " + this.size.ToString());
+			}
+		}
+		
+		public double[] Color
+		{
+			get { return this.color; }
+			set { this.color = value; }
+		}
+		
+		public double Opacity
+		{
+			get { return this.opacity; }
+			set { this.opacity = value; }
+		}
+		
+		public double X
+		{
+			get { return this.x; }
+			set { this.x = value; }
+		}
+		
+		public double Y
+		{
+			get { return this.y; }
+			set { this.y = value; }
 		}
 	}
 }

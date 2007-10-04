@@ -20,13 +20,14 @@
 
 using System;
 using Gtk;
+using Pango;
 using SvgReader.Shapes;
 
 namespace MonoReporter
 {
 	public static class CairoDrawingFunctions
 	{
-		public static void Draw(Cairo.Context con, Rectangle rectangle)
+		public static void Draw(Cairo.Context con, SvgReader.Shapes.Rectangle rectangle)
 		{
 			Cairo.Rectangle cairoRectangle = new Cairo.Rectangle(new Cairo.Point((int)rectangle.X, (int)rectangle.Y),
 			                                         rectangle.Width,
@@ -39,6 +40,30 @@ namespace MonoReporter
 			con.LineWidth = rectangle.LineWidth;
 			con.Color = new Cairo.Color(rectangle.StrokeColor[0], rectangle.StrokeColor[1], rectangle.StrokeColor[2], rectangle.StrokeOpacity);
 			con.Stroke();
+		}
+		
+		public static void Draw(Cairo.Context con, Pango.Layout layout, Text text)
+		{
+			layout.SetText(text.TextValue);
+			layout.FontDescription = FontDescription.FromString(text.FontDescription);
+			
+			int pixel_size_width, pixel_size_height;
+			layout.GetPixelSize(out pixel_size_width, out pixel_size_height);
+			
+			Console.WriteLine("   Pixel size width: " + pixel_size_width);
+			Console.WriteLine("   Pixel size height: " + pixel_size_height);
+			Console.WriteLine("   Text X position: " + text.X);
+			Console.WriteLine("   Text Y position: " + text.Y);
+			
+			double x_offset = 0*(pixel_size_width * Text.X_FIX - text.Size/10);
+			double y_offset = 0*pixel_size_height;// * Text.Y_FIX - text.Size/15;
+			
+			con.MoveTo(text.X - x_offset, text.Y - y_offset);
+			Pango.CairoHelper.ShowLayout(con, layout);
+			
+//			con.MoveTo(text.X, text.Y);
+//			con.LineTo(text.X + 100, text.Y);
+//			con.Stroke();
 		}
 	}
 }

@@ -41,10 +41,17 @@ namespace SvgReader.Shapes
 		
 		public Rectangle(XmlNode rectNode)
 		{
+			this.id = Utils.GetAttributeValueFromNode(rectNode, "id");
+			
 			string width = Utils.GetAttributeValueFromNode(rectNode, "width");
 			string height = Utils.GetAttributeValueFromNode(rectNode, "height");
 			string x = Utils.GetAttributeValueFromNode(rectNode, "x");
 			string y = Utils.GetAttributeValueFromNode(rectNode, "y");
+			
+			this.width = Utils.DoubleParseAndPixelToMm(width);
+			this.height = Utils.DoubleParseAndPixelToMm(height);
+			this.x = Utils.PixelToMm(Utils.NormalizeX(x));
+			this.y = Utils.PixelToMm(Utils.NormalizeY(y));
 			
 			// Read style, and get interesting properties from it
 			try {
@@ -86,12 +93,6 @@ namespace SvgReader.Shapes
 			catch (SubOptionNotFoundException) {
 				this.strokeOpacity = 1.0;
 			}
-			
-			this.id = Utils.GetAttributeValueFromNode(rectNode, "id");
-			this.width = Utils.DoubleParseAndPixelToMm(width);
-			this.height = Utils.DoubleParseAndPixelToMm(height);
-			this.x = Utils.DoubleParseAndPixelToMm(x);
-			this.y = Utils.DoubleParseAndPixelToMm(y);
 		}
 		
 		public string Id

@@ -108,5 +108,18 @@ namespace SvgReader
 				return rectangles.ToArray();
 			}
 		}
+		
+		public Text[] Texts
+		{
+			get {
+				List<Text> texts = new List<Text>();
+				XmlNodeList textsList = this.xmlDocument.GetElementsByTagName("text");
+				
+				foreach (XmlNode textNode in textsList)
+					texts.Add(new Text(textNode));
+				
+				return texts.ToArray();
+			}
+		}
 	}
 }
