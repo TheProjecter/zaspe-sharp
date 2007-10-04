@@ -22,6 +22,13 @@ using System;
 
 namespace SvgReader
 {
+	public class AttributeNotFoundException : System.Exception
+	{
+		public AttributeNotFoundException(string msg) : base(msg)
+		{
+		}
+	}
+	
 	public class SubOptionNotFoundException : System.Exception
 	{
 		public SubOptionNotFoundException(string msg) : base(msg)
