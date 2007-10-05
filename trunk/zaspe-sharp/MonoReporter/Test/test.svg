@@ -26,9 +26,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6"
-     inkscape:cx="67.229978"
-     inkscape:cy="991.21831"
+     inkscape:zoom="2.8"
+     inkscape:cx="141.6209"
+     inkscape:cy="984.46232"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:window-width="1280"
@@ -65,24 +65,24 @@
        y="47.438751" />
     <text
        xml:space="preserve"
-       style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="27.289062"
-       y="56.482494"
+       style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="144.56049"
+       y="136.19656"
        id="text3128"
        sodipodi:linespacing="100%"><tspan
          sodipodi:role="line"
          id="tspan3130"
-         x="27.289062"
-         y="56.482494">Hola hola</tspan></text>
+         x="144.56049"
+         y="136.19656">Hola hola</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="112.42226"
-       y="147.00504"
+       x="275.25156"
+       y="136.19656"
        id="text3132"><tspan
          sodipodi:role="line"
          id="tspan3134"
-         x="112.42226"
-         y="147.00504">Milton</tspan></text>
+         x="275.25156"
+         y="136.19656">Milton</tspan></text>
   </g>
 </svg>

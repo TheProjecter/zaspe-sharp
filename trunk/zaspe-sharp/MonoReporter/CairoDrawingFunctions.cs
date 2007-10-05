@@ -56,14 +56,20 @@ namespace MonoReporter
 			Console.WriteLine("   Text Y position: " + text.Y);
 			
 			double x_offset = 0*(pixel_size_width * Text.X_FIX - text.Size/10);
-			double y_offset = 0*pixel_size_height;// * Text.Y_FIX - text.Size/15;
+			double y_offset = pixel_size_height*0.85;// * Text.Y_FIX - text.Size/15;
+			
+			Console.WriteLine("Aver aver. Y: " + (text.Y - y_offset));
 			
 			con.MoveTo(text.X - x_offset, text.Y - y_offset);
 			Pango.CairoHelper.ShowLayout(con, layout);
 			
-//			con.MoveTo(text.X, text.Y);
-//			con.LineTo(text.X + 100, text.Y);
-//			con.Stroke();
+			con.MoveTo(text.X, text.Y - y_offset);
+			con.LineTo(text.X + 100, text.Y - y_offset);
+			con.Stroke();
+			                  
+			con.MoveTo(text.X, 38.4376957919563);
+			con.LineTo(text.X + 100, 38.4376957919563);
+			con.Stroke();
 		}
 	}
 }
