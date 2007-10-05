@@ -50,8 +50,8 @@ namespace SvgReader.Shapes
 			
 			this.width = Utils.DoubleParseAndPixelToMm(width);
 			this.height = Utils.DoubleParseAndPixelToMm(height);
-			this.x = Utils.PixelToMm(Utils.NormalizeX(x));
-			this.y = Utils.PixelToMm(Utils.NormalizeY(y));
+			this.x = Utils.PixelToMm(Utils.NormalizeShapeX(x));
+			this.y = Utils.PixelToMm(Utils.NormalizeShapeY(y));
 			
 			// Read style, and get interesting properties from it
 			try {

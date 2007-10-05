@@ -64,12 +64,12 @@ namespace SvgReader
 		/// <returns>
 		/// A <see cref="System.Double"/>
 		/// </returns>
-		public static double NormalizeX(double x)
+		public static double NormalizeShapeX(double x)
 		{
 			return (x - 22);
 		}
 		
-		public static double NormalizeX(string x)
+		public static double NormalizeShapeX(string x)
 		{
 			return (Utils.DoubleParse(x) - 22);
 		}
@@ -83,12 +83,12 @@ namespace SvgReader
 		/// <returns>
 		/// A <see cref="System.Double"/>
 		/// </returns>
-		public static double NormalizeY(double y)
+		public static double NormalizeShapeY(double y)
 		{
 			return (y - 20);
 		}
 		
-		public static double NormalizeY(string y)
+		public static double NormalizeShapeY(string y)
 		{
 			return (Utils.DoubleParse(y) - 20);
 		}
