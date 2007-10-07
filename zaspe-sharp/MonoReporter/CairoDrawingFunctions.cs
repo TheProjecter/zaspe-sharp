@@ -61,6 +61,15 @@ namespace MonoReporter
 			Console.WriteLine("width: " + x_offset);
 			Console.WriteLine("height: " + y_offset);
 			
+			/// Alignment
+			/// If text.Alignment == "center", then x coordinate is indicating
+			/// the center, not the left side. That's way we add pixelSizeWidth/2
+			/// to x_offset
+			if (text.Alignment.Equals("center")) {
+				layout.Alignment = Pango.Alignment.Center;
+				x_offset += pixelSizeWidth/2;
+			}
+			
 			con.MoveTo(text.X - x_offset, text.Y - y_offset);
 			Pango.CairoHelper.ShowLayout(con, layout);
 			

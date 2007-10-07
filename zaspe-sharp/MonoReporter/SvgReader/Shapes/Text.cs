@@ -34,6 +34,7 @@ namespace SvgReader.Shapes
 		private double size;
 		private string style;
 		private string family;
+		private string alignment;
 		
 		private double x;
 		private double y;
@@ -83,6 +84,13 @@ namespace SvgReader.Shapes
 			}
 			
 			try {
+				this.alignment = Utils.GetValueFromMultiValuatedAttribute(textNode, "style", "text-align");
+			}
+			catch (SubOptionNotFoundException) {
+				this.alignment = "start";
+			}
+			
+			try {
 				string color = Utils.GetValueFromMultiValuatedAttribute(textNode, "style", "fill");
 				this.color = Utils.FromHexColorToRGBA(color);
 			}
@@ -127,6 +135,12 @@ namespace SvgReader.Shapes
 		{
 			get { return this.family; }
 			set { this.family = value; }
+		}
+		
+		public string Alignment
+		{
+			get { return this.alignment; }
+			set { this.alignment = value; }
 		}
 		
 		public string FontDescription

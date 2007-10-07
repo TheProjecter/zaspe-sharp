@@ -28,8 +28,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.5938836"
-     inkscape:cx="372.04724"
-     inkscape:cy="905.69902"
+     inkscape:cx="338.64937"
+     inkscape:cy="880.60308"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:window-width="1280"
@@ -69,14 +69,14 @@
     <text
        xml:space="preserve"
        style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="379.3031"
-       y="369.49066"
+       x="316.56326"
+       y="334.59656"
        id="text3128"
        sodipodi:linespacing="100%"><tspan
          sodipodi:role="line"
          id="tspan3130"
-         x="379.3031"
-         y="369.49066">Hola hola</tspan></text>
+         x="316.56326"
+         y="334.59656">Hola hola</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
@@ -100,15 +100,15 @@
          y="341.96219">X</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:72px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="159.4375"
-       y="128.58562"
+       style="font-size:72px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="371.06287"
+       y="130.5992"
        id="titulo"
        sodipodi:linespacing="100%"
        inkscape:label="#text2194"><tspan
          sodipodi:role="line"
-         id="tspan2200"
-         x="159.4375"
-         y="128.58562">Alguna cosa</tspan></text>
+         id="tspan2168"
+         x="371.06287"
+         y="130.5992">Algasdf</tspan></text>
   </g>
 </svg>
