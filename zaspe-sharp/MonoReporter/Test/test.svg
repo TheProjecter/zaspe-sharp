@@ -26,9 +26,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8"
-     inkscape:cx="141.6209"
-     inkscape:cy="927.31946"
+     inkscape:zoom="1.4"
+     inkscape:cx="337.51288"
+     inkscape:cy="755.89089"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:window-width="1280"
@@ -66,23 +66,45 @@
     <text
        xml:space="preserve"
        style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="144.56049"
-       y="136.19656"
+       x="576.93359"
+       y="68.339432"
        id="text3128"
        sodipodi:linespacing="100%"><tspan
          sodipodi:role="line"
          id="tspan3130"
-         x="144.56049"
-         y="136.19656">Hola hola</tspan></text>
+         x="576.93359"
+         y="68.339432">Hola hola</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="275.25156"
-       y="136.36649"
+       x="530.96844"
+       y="59.222244"
        id="text3132"><tspan
          sodipodi:role="line"
          id="tspan3134"
-         x="275.25156"
-         y="136.36649">Milton</tspan></text>
+         x="530.96844"
+         y="59.222244">Milton</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:144px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="51.428574"
+       y="233.79076"
+       id="text2190"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2198"
+         x="51.428574"
+         y="233.79076">X</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:72px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="50.971542"
+       y="113.76821"
+       id="text2194"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan2196"
+         x="50.971542"
+         y="113.76821">Sofia Pereson</tspan></text>
   </g>
 </svg>
