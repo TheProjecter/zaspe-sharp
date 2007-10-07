@@ -47,16 +47,16 @@ namespace MonoReporter
 			layout.SetText(text.TextValue);
 			layout.FontDescription = FontDescription.FromString(text.FontDescription);
 			
-			int pixel_size_width, pixel_size_height;
-			layout.GetPixelSize(out pixel_size_width, out pixel_size_height);
+			int pixelSizeWidth, pixelSizeHeight;
+			layout.GetPixelSize(out pixelSizeWidth, out pixelSizeHeight);
 			
-			Console.WriteLine("   Pixel size width: " + pixel_size_width);
-			Console.WriteLine("   Pixel size height: " + pixel_size_height);
+			Console.WriteLine("   Pixel size width: " + pixelSizeWidth);
+			Console.WriteLine("   Pixel size height: " + pixelSizeHeight);
 			Console.WriteLine("   Text X position: " + text.X);
 			Console.WriteLine("   Text Y position: " + text.Y);
 			
-			double x_offset = pixel_size_width*0; // Disabled
-			double y_offset = pixel_size_height * 1.15;
+			double x_offset = pixelSizeWidth*0; // Disabled
+			double y_offset = pixelSizeHeight * 0.83;
 			
 			Console.WriteLine("width: " + x_offset);
 			Console.WriteLine("height: " + y_offset);
