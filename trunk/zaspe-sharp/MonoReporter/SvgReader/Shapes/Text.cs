@@ -49,10 +49,10 @@ namespace SvgReader.Shapes
 			this.textValue = textNode.FirstChild.FirstChild.Value;
 			
 			string x = Utils.GetAttributeValueFromNode(textNode, "x");
-			this.x = Utils.DoubleParseAndPixelToMm(x);
+			this.x = Utils.PixelToMm(Utils.NormalizeShapeX(x));
 			
 			string y = Utils.GetAttributeValueFromNode(textNode, "y");
-			this.y = Utils.DoubleParseAndPixelToMm(y);
+			this.y = Utils.PixelToMm(Utils.NormalizeShapeY(y));
 			
 			try {
 				// Look for "font-size" in tspan

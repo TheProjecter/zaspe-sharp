@@ -55,11 +55,8 @@ namespace MonoReporter
 			Console.WriteLine("   Text X position: " + text.X);
 			Console.WriteLine("   Text Y position: " + text.Y);
 			
-			//double x_offset = 0*(pixel_size_width * Text.X_FIX - text.Size/10);
-//			double x_offset = pixel_size_width;
-//			double y_offset = pixel_size_height;// * Text.Y_FIX - text.Size/15;
-			double x_offset = pixel_size_width*0;
-			double y_offset = pixel_size_height;
+			double x_offset = pixel_size_width*0; // Disabled
+			double y_offset = pixel_size_height * 1.15;
 			
 			Console.WriteLine("width: " + x_offset);
 			Console.WriteLine("height: " + y_offset);
