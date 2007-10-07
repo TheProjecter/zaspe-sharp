@@ -69,45 +69,46 @@
     <text
        xml:space="preserve"
        style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="576.93359"
-       y="68.339432"
+       x="379.3031"
+       y="369.49066"
        id="text3128"
        sodipodi:linespacing="100%"><tspan
          sodipodi:role="line"
          id="tspan3130"
-         x="576.93359"
-         y="68.339432">Hola hola</tspan></text>
+         x="379.3031"
+         y="369.49066">Hola hola</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="530.96844"
-       y="59.222244"
+       x="265.57892"
+       y="323.98438"
        id="text3132"><tspan
          sodipodi:role="line"
          id="tspan3134"
-         x="530.96844"
-         y="59.222244">Milton</tspan></text>
+         x="265.57892"
+         y="323.98438">Milton</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:144px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="51.428574"
-       y="233.79076"
+       x="72.510941"
+       y="341.96219"
        id="text2190"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan2198"
-         x="51.428574"
-         y="233.79076">X</tspan></text>
+         x="72.510941"
+         y="341.96219">X</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:72px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="50.971542"
-       y="113.76821"
-       id="text2194"
-       sodipodi:linespacing="100%"><tspan
+       x="159.4375"
+       y="128.58562"
+       id="titulo"
+       sodipodi:linespacing="100%"
+       inkscape:label="#text2194"><tspan
          sodipodi:role="line"
          id="tspan2200"
-         x="50.971542"
-         y="113.76821">Alguna cosa</tspan></text>
+         x="159.4375"
+         y="128.58562">Alguna cosa</tspan></text>
   </g>
 </svg>

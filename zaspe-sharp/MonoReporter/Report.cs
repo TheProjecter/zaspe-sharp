@@ -19,6 +19,7 @@
 */
 
 using System;
+using System.Collections;
 using Gtk;
 
 using SvgReader;
@@ -28,15 +29,21 @@ namespace MonoReporter
 {
 	public class Report
 	{
-		PrintOperation printOperation;
-		SvgDocument svgDocument;
+		private PrintOperation printOperation;
+		private SvgDocument svgDocument;
+		
+		private PrintOperationAction action;
+		
+		private Hashtable data;
 		
 		public Report(string reportName, string svgFile)
 		{
+			// Load svg file
 			this.svgDocument = new SvgDocument(svgFile);
 			
+			// Create PrintOperation object
 			this.printOperation = new PrintOperation();
-			this.printOperation.NPages = 1;
+			this.printOperation.NPages = 1; // FIXME: Correct number of pages must be calculated
 			this.printOperation.Unit = Unit.Mm;
 			this.printOperation.JobName = reportName;
 			this.printOperation.ExportFilename = "test.pdf";
@@ -51,9 +58,27 @@ namespace MonoReporter
 			this.printOperation.PrintSettings = psettings;
 			
 			printOperation.DrawPage += this.DrawPage;
+			
+			// Set default action
+			this.action = PrintOperationAction.Export;
+			
+			// Data
+			this.data = new Hashtable();
 		}
 		
-		public void DrawPage(object o, DrawPageArgs args)
+		public PrintOperationAction Action
+		{
+			get { return this.action; }
+			set { this.action = value; }
+		}
+		
+		public Hashtable Data
+		{
+			get { return this.data; }
+			set { this.data = value; }
+		}
+		
+		private void DrawPage(object o, DrawPageArgs args)
 		{
 			Cairo.Context con = args.Context.CairoContext;
 			
@@ -80,19 +105,19 @@ namespace MonoReporter
 				Console.WriteLine("  Opacity: " + t.Opacity);
 //				Console.WriteLine("  StrokeColor -> R: " + r.StrokeColor[0] + " - G: " + r.StrokeColor[1] + " - B: " + r.StrokeColor[2]);
 //				Console.WriteLine("  StrokeOpacity: " + r.StrokeOpacity);
+				
+				if (this.data.ContainsKey(t.Id)) {
+					t.TextValue = this.data[t.Id].ToString();
+					Console.WriteLine("Data setted. Text id: " + t.Id + ". Value: " + t.TextValue);
+				}
+				
 				CairoDrawingFunctions.Draw(con, args.Context.CreatePangoLayout(), t);
 			}
 		}
 		
 		public void Run(Gtk.Window win)
 		{
-			printOperation.Run(PrintOperationAction.Export, win);
-			
-//			if (res == PrintOperationResult.Apply) {
-//				Console.WriteLine("Se apretó Apply");
-//			}
-//			else
-//				Console.WriteLine("ajajajajaj");
+			printOperation.Run(this.action, win);
 		}
 	}
 }

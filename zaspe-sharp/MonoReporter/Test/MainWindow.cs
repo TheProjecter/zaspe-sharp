@@ -47,6 +47,7 @@ public class MainWindow {
 //		report.Run(myWindow);
 		
 		Report report = new Report("PruebaMonoReporter", "test.svg");
+		report.Data["titulo"] = "Informe";
 		report.Run(myWindow);
 		
 //		SvgDocument s = new SvgDocument("test.svg");
