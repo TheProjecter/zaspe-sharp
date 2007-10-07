@@ -132,7 +132,7 @@ namespace SvgReader.Shapes
 		public string FontDescription
 		{
 			get {
-				return (this.family + " " + this.size.ToString());
+				return (this.family + " " + Convert.ToInt32(this.size * 0.8));
 			}
 		}
 		
