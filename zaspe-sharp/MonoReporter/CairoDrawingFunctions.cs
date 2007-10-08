@@ -81,5 +81,16 @@ namespace MonoReporter
 //			con.LineTo(text.X + 100, 38.4376957919563);
 //			con.Stroke();
 		}
+		
+		public static void Draw(Cairo.Context con, SvgReader.Shapes.Line line)
+		{
+			con.LineWidth = line.StrokeWidth;
+			con.Color = new Cairo.Color(line.StrokeColor[0], line.StrokeColor[1], line.StrokeColor[2], line.StrokeOpacity);
+			
+			con.MoveTo(line.X1, line.Y1);
+			con.LineTo(line.X2, line.Y2);
+			
+			con.Stroke();
+		}
 	}
 }
