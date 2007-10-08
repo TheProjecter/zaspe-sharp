@@ -113,6 +113,10 @@ namespace MonoReporter
 				
 				CairoDrawingFunctions.Draw(con, args.Context.CreatePangoLayout(), t);
 			}
+			
+			foreach(Line l in this.svgDocument.Lines) {
+				CairoDrawingFunctions.Draw(con, l);
+			}
 		}
 		
 		public void Run(Gtk.Window win)

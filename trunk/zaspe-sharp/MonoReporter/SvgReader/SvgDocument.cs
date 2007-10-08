@@ -121,5 +121,19 @@ namespace SvgReader
 				return texts.ToArray();
 			}
 		}
+		
+		public Line[] Lines
+		{
+			get {
+				List<Line> lines = new List<Line>();
+				XmlNodeList linesList = this.xmlDocument.GetElementsByTagName("path");
+				
+				// FIXME: Some lines are not supported lines. They must be recognized
+				foreach (XmlNode lineNode in linesList)
+					lines.Add(new Line(lineNode));
+				
+				return lines.ToArray();
+			}
+		}
 	}
 }

@@ -28,8 +28,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.5938836"
-     inkscape:cx="338.64937"
-     inkscape:cy="880.60308"
+     inkscape:cx="368.11808"
+     inkscape:cy="903.59563"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:window-width="1280"
@@ -59,56 +59,21 @@
      inkscape:label="Capa 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <rect
-       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect2222"
-       width="643.19891"
-       height="957.48468"
-       x="50.447784"
-       y="47.438751" />
-    <text
-       xml:space="preserve"
-       style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="316.56326"
-       y="334.59656"
-       id="text3128"
-       sodipodi:linespacing="100%"><tspan
-         sodipodi:role="line"
-         id="tspan3130"
-         x="316.56326"
-         y="334.59656">Hola hola</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="265.57892"
-       y="323.98438"
-       id="text3132"><tspan
-         sodipodi:role="line"
-         id="tspan3134"
-         x="265.57892"
-         y="323.98438">Milton</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:144px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="72.510941"
-       y="341.96219"
-       id="text2190"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan2198"
-         x="72.510941"
-         y="341.96219">X</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:72px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
        x="371.06287"
-       y="130.5992"
+       y="94.599197"
        id="titulo"
        sodipodi:linespacing="100%"
        inkscape:label="#text2194"><tspan
          sodipodi:role="line"
          id="tspan2168"
          x="371.06287"
-         y="130.5992">Algasdf</tspan></text>
+         y="94.599197">Algasdf</tspan></text>
+    <path
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.7;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 238.41139,116.28379 L 498.78172,116.28379"
+       id="path2166" />
   </g>
 </svg>
