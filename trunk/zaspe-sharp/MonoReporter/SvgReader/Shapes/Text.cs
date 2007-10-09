@@ -23,7 +23,7 @@ using System.Xml;
 
 namespace SvgReader.Shapes
 {
-	public class Text
+	public class Text : ICloneable
 	{
 		public const double X_FIX = 0.25;
 		public const double Y_FIX = 0.86;
@@ -41,6 +41,10 @@ namespace SvgReader.Shapes
 		
 		private double[] color;
 		private double opacity;
+		
+		private Text()
+		{
+		}
 		
 		public Text(XmlNode textNode)
 		{
@@ -173,5 +177,26 @@ namespace SvgReader.Shapes
 			get { return this.y; }
 			set { this.y = value; }
 		}
+		
+		public object Clone ()
+		{
+			Text newText = new Text();
+			
+			newText.id = this.id;
+			newText.textValue = this.textValue;
+			newText.size = this.size;
+			newText.style = this.style;
+			newText.family = this.family;
+			newText.alignment = this.alignment;
+			
+			newText.x = this.x;
+			newText.y = this.y;
+			
+			newText.color = (double[])this.color.Clone();
+			newText.opacity = this.opacity;
+			
+			return newText;
+		}
+
 	}
 }

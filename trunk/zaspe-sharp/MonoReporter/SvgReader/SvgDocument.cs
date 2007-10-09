@@ -100,10 +100,12 @@ namespace SvgReader
 		{
 			get {
 				List<Rectangle> rectangles = new List<Rectangle>();
-				XmlNodeList rectanglesList = this.xmlDocument.GetElementsByTagName("rect");
+				XmlNode svgNode = this.xmlDocument.GetElementsByTagName("svg")[0];
 				
-				foreach (XmlNode rectNode in rectanglesList)
-					rectangles.Add(new Rectangle(rectNode));
+				foreach (XmlNode xmlNode in svgNode.ChildNodes) {
+					if (xmlNode.LocalName.Equals("rect"))
+						rectangles.Add(new Rectangle(xmlNode));
+				}
 				
 				return rectangles.ToArray();
 			}
@@ -113,10 +115,12 @@ namespace SvgReader
 		{
 			get {
 				List<Text> texts = new List<Text>();
-				XmlNodeList textsList = this.xmlDocument.GetElementsByTagName("text");
+				XmlNode svgNode = this.xmlDocument.GetElementsByTagName("svg")[0];
 				
-				foreach (XmlNode textNode in textsList)
-					texts.Add(new Text(textNode));
+				foreach (XmlNode xmlNode in svgNode.ChildNodes) {
+					if (xmlNode.LocalName.Equals("text"))
+						texts.Add(new Text(xmlNode));
+				}
 				
 				return texts.ToArray();
 			}
@@ -126,14 +130,76 @@ namespace SvgReader
 		{
 			get {
 				List<Line> lines = new List<Line>();
-				XmlNodeList linesList = this.xmlDocument.GetElementsByTagName("path");
+				XmlNode svgNode = this.xmlDocument.GetElementsByTagName("svg")[0];
 				
-				// FIXME: Some lines are not supported lines. They must be recognized
-				foreach (XmlNode lineNode in linesList)
-					lines.Add(new Line(lineNode));
+				foreach (XmlNode xmlNode in svgNode.ChildNodes) {
+					if (xmlNode.LocalName.Equals("path"))
+						lines.Add(new Line(xmlNode));
+				}
 				
 				return lines.ToArray();
 			}
+		}
+		
+		public Table[] Tables
+		{
+			get {
+				List<Table> tables = new List<Table>();
+				XmlNode svgNode = this.xmlDocument.GetElementsByTagName("svg")[0];
+				
+				foreach (XmlNode xmlNode in svgNode.ChildNodes) {
+					/// Check if node is a "g" node, and if only contains "text" nodes, because
+					/// a Table only consists of "text" nodes.
+					if (xmlNode.LocalName.Equals("g") && this.NodeContainsOnlyNode(xmlNode, "text"))
+						tables.Add(new Table(xmlNode));
+				}
+				
+				return tables.ToArray();
+			}
+		}
+		
+		/// <summary>
+		/// Look for a node inside 'node' called nodeInside
+		/// </summary>
+		/// <param name="node">
+		/// A <see cref="XmlNode"/>
+		/// </param>
+		/// <param name="nodeInside">
+		/// A <see cref="System.String"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
+		private bool NodeContainsNode(XmlNode node, string nodeInside)
+		{
+			foreach (XmlNode childNode in node.ChildNodes) {
+				if (childNode.LocalName.Equals(nodeInside))
+					return true;
+			}
+			
+			return false;
+		}
+		
+		/// <summary>
+		/// Check if a node contains only nodes of the given type 'nodeInside'.
+		/// </summary>
+		/// <param name="node">
+		/// A <see cref="XmlNode"/>
+		/// </param>
+		/// <param name="nodeInside">
+		/// A <see cref="System.String"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
+		private bool NodeContainsOnlyNode(XmlNode node, string nodeInside)
+		{
+			foreach (XmlNode childNode in node.ChildNodes) {
+				if (!childNode.LocalName.Equals(nodeInside))
+					return false;
+			}
+			
+			return true;
 		}
 	}
 }

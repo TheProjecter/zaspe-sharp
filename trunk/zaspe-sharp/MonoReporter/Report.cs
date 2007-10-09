@@ -19,6 +19,7 @@
 */
 
 using System;
+using System.Data;
 using System.Collections;
 using Gtk;
 
@@ -35,6 +36,7 @@ namespace MonoReporter
 		private PrintOperationAction action;
 		
 		private Hashtable data;
+		private Hashtable dataTables;
 		
 		public Report(string reportName, string svgFile)
 		{
@@ -64,6 +66,7 @@ namespace MonoReporter
 			
 			// Data
 			this.data = new Hashtable();
+			this.dataTables = new Hashtable();
 		}
 		
 		public PrintOperationAction Action
@@ -76,6 +79,12 @@ namespace MonoReporter
 		{
 			get { return this.data; }
 			set { this.data = value; }
+		}
+		
+		public Hashtable DataTables
+		{
+			get { return this.dataTables; }
+			set { this.dataTables = value; }
 		}
 		
 		private void DrawPage(object o, DrawPageArgs args)
@@ -114,8 +123,23 @@ namespace MonoReporter
 				CairoDrawingFunctions.Draw(con, args.Context.CreatePangoLayout(), t);
 			}
 			
+			// Draw lines
 			foreach(Line l in this.svgDocument.Lines) {
 				CairoDrawingFunctions.Draw(con, l);
+			}
+			
+			// Draw tables
+			foreach (SvgReader.Shapes.Table aTable in this.svgDocument.Tables) {
+				if (!this.dataTables.ContainsKey(aTable.Id))
+					continue;
+				
+				DataTable dataTable = this.dataTables[aTable.Id];
+				
+				foreach (DataRow dataRow in dataTable.Rows) {
+					foreach (Text aText in aTable.Rows) {
+						
+					}
+				}
 			}
 		}
 		
