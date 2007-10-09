@@ -19,6 +19,7 @@
 */
 
 using System;
+using System.Data;
 using Gtk;
 using SvgReader;
 
@@ -48,6 +49,25 @@ public class MainWindow {
 		
 		Report report = new Report("PruebaMonoReporter", "test.svg");
 		report.Data["titulo"] = "Informe Ventas";
+
+		DataTable personsTable = new DataTable();
+		
+		DataColumn[] columns = new DataColumn[4];
+		columns[0] = new DataColumn("nombre");
+		columns[1] = new DataColumn("apellido");
+		columns[2] = new DataColumn("dni");
+		columns[3] = new DataColumn("direccion");
+		personsTable.Columns.AddRange(columns);
+		
+		DataRow d1 = personsTable.NewRow();
+		d1["nombre"] = "Milton";
+		d1["apellido"] = "Pividori";
+		d1["dni"] = "31.486.846";
+		d1["direccion"] = "Calle 16 Nro. 145";
+		personsTable.Rows.Add(d1);
+		
+		report.DataTables["personas"] = personsTable;
+		
 		report.Run(myWindow);
 		
 //		SvgDocument s = new SvgDocument("test.svg");
