@@ -19,6 +19,7 @@
 */
 
 using System;
+using System.Collections;
 using Gtk;
 using Pango;
 using SvgReader.Shapes;
@@ -91,6 +92,25 @@ namespace MonoReporter
 			con.LineTo(line.X2, line.Y2);
 			
 			con.Stroke();
+		}
+		
+		public static void Draw(PrintContext con, SvgReader.Shapes.Table table)
+		{
+			foreach (Hashtable aRow in table.Rows) {
+				foreach (Text aField in aRow.Values)
+					Draw(con.CairoContext, con.CreatePangoLayout(), aField);
+			}
+		}
+		
+		public static int GetPixelHeightSize(Text aText, Pango.Layout layout)
+		{
+			layout.SetText(aText.TextValue);
+			layout.FontDescription = FontDescription.FromString(aText.FontDescription);
+			
+			int pixelSizeWidth, pixelSizeHeight;
+			layout.GetPixelSize(out pixelSizeWidth, out pixelSizeHeight);
+			
+			return pixelSizeHeight;
 		}
 	}
 }

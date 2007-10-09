@@ -32,8 +32,8 @@
      inkscape:cy="830.47143"
      inkscape:document-units="px"
      inkscape:current-layer="svg2214"
-     inkscape:window-width="1280"
-     inkscape:window-height="949"
+     inkscape:window-width="1680"
+     inkscape:window-height="975"
      inkscape:window-x="0"
      inkscape:window-y="25"
      showgrid="true"
@@ -119,7 +119,8 @@
        x="542.48022"
        y="142.50568">Dirección</tspan></text>
   <g
-     id="g2248">
+     id="personas"
+     inkscape:label="#g2248">
     <text
        sodipodi:linespacing="125%"
        inkscape:label="#text5130"
