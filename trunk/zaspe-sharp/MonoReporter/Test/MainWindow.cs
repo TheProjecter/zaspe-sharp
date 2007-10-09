@@ -62,8 +62,22 @@ public class MainWindow {
 		DataRow d1 = personsTable.NewRow();
 		d1["nombre"] = "Milton";
 		d1["apellido"] = "Pividori";
-		d1["dni"] = "31.486.846";
-		d1["direccion"] = "Calle 16 Nro. 145";
+		d1["dni"] = "noTeLoVoyADecir";
+		d1["direccion"] = "tampocoTeLoVoyADecir";
+		personsTable.Rows.Add(d1);
+		
+		d1 = personsTable.NewRow();
+		d1["nombre"] = "Gisela";
+		d1["apellido"] = "Pividori";
+		d1["dni"] = "1";
+		d1["direccion"] = "2";
+		personsTable.Rows.Add(d1);
+		
+		d1 = personsTable.NewRow();
+		d1["nombre"] = "Pepe";
+		d1["apellido"] = "Sanchez";
+		d1["dni"] = "3";
+		d1["direccion"] = "4";
 		personsTable.Rows.Add(d1);
 		
 		report.DataTables["personas"] = personsTable;

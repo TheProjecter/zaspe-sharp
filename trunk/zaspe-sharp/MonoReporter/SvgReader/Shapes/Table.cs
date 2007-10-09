@@ -19,7 +19,7 @@
 */
 
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Xml;
 
 namespace SvgReader.Shapes
@@ -28,7 +28,10 @@ namespace SvgReader.Shapes
 	{
 		private string id;
 		private int numberOfColumns = 0;
-		private List<Dictionary<string, Text>> rows;
+		private ArrayList rows;
+		
+		private Hashtable lastRowAdded;
+		private bool firstTextAlreadyAdded = false;
 		
 		// tableNode is the "g" node in the svg file
 		public Table(XmlNode tableNode)
@@ -38,14 +41,14 @@ namespace SvgReader.Shapes
 			
 			this.id = Utils.GetAttributeValueFromNode(tableNode, "id");
 			
-			this.rows = new List<Dictionary<string, Text>>();
-			Dictionary<string, Text> firstRow = new Dictionary<string,Text>();
-			this.rows.Add(firstRow);
+			this.rows = new ArrayList();
+			this.lastRowAdded = new Hashtable();
+			this.rows.Add(this.lastRowAdded);
 			
 			foreach (XmlNode childNode in tableNode.ChildNodes) {
 				if (childNode.LocalName.Equals("text")) {
 					Text aText = new Text(childNode);
-					firstRow[aText.Id] = aText;
+					this.lastRowAdded[aText.Id] = aText;
 					
 					this.numberOfColumns++;
 				}
@@ -57,27 +60,57 @@ namespace SvgReader.Shapes
 			get { return this.id; }
 		}
 		
-//		public Text[] Rows
-//		{
-//			get { return this.rows.ToArray(); }
-//			
-//			set {
-//				this.rows.Clear();
-//				//this.rows.AddRange(value);
-//			}
-//		}
+		public int NumberOfColumns
+		{
+			get { return this.numberOfColumns; }
+		}
 		
-		public void AddRow(params Text[] texts)
+		public ArrayList Rows
+		{
+			get { return this.rows; }
+		}
+		
+		public void AddRow(Text[] texts)
 		{
 			if (texts.Length != this.numberOfColumns)
 				throw new Exception("Number of columns wrong");
 			
-			Dictionary<string, Text> newRow = new Dictionary<string,Text>();
+			/// If this is the first row added, we replace the actual one, because
+			/// it's only the definition of the colums
+			if (!this.firstTextAlreadyAdded) {
+				foreach (Text t in texts) {
+					t.Y = ((Text)((Hashtable)this.rows[0])[t.Id]).Y;
+				}
+				
+				this.rows.Clear();
+				this.firstTextAlreadyAdded = true;
+			}
+			
+			Hashtable newRow = new Hashtable();
 			
 			foreach (Text aText in texts)
 				newRow[aText.Id] = aText;
 			
 			this.rows.Add(newRow);
+		}
+		
+		public void AddRow(ArrayList texts)
+		{
+			Text[] array = (Text[])texts.ToArray(typeof(Text));
+			this.AddRow(array);
+		}
+		
+		public Text[] LastRowAdded
+		{
+			get {
+				Hashtable lastRow = (Hashtable)this.rows[this.rows.Count - 1];
+				ArrayList result = new ArrayList();
+				
+				foreach (Text aText in lastRow.Values)
+					result.Add(aText);
+				
+				return (Text[])result.ToArray(typeof(Text));
+			}
 		}
 	}
 }

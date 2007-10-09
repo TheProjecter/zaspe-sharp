@@ -130,16 +130,35 @@ namespace MonoReporter
 			
 			// Draw tables
 			foreach (SvgReader.Shapes.Table aTable in this.svgDocument.Tables) {
+				Console.WriteLine("Table id: " + aTable.Id);
+				
 				if (!this.dataTables.ContainsKey(aTable.Id))
 					continue;
 				
-				DataTable dataTable = this.dataTables[aTable.Id];
+				Console.WriteLine("Procesando un DataTable...");
+				
+				DataTable dataTable = (DataTable)this.dataTables[aTable.Id];
+				Text textTemp;
+				ArrayList textRow = new ArrayList(aTable.NumberOfColumns);
 				
 				foreach (DataRow dataRow in dataTable.Rows) {
-					foreach (Text aText in aTable.Rows) {
+					foreach (Text aText in aTable.LastRowAdded) {
+						Console.WriteLine("   Text: " + aText.TextValue);
 						
+						textTemp = (Text)aText.Clone();
+						textTemp.TextValue = dataRow[textTemp.Id].ToString();
+						textTemp.Y = textTemp.Y +
+							CairoDrawingFunctions.GetPixelHeightSize(textTemp,
+							                                         args.Context.CreatePangoLayout());
+						
+						textRow.Add(textTemp);
 					}
+					
+					aTable.AddRow(textRow);
+					textRow.Clear();
 				}
+				
+				CairoDrawingFunctions.Draw(args.Context, aTable);
 			}
 		}
 		
