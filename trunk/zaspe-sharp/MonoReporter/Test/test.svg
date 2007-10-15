@@ -29,11 +29,11 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.5938836"
      inkscape:cx="368.11808"
-     inkscape:cy="830.47143"
+     inkscape:cy="151.36222"
      inkscape:document-units="px"
-     inkscape:current-layer="svg2214"
-     inkscape:window-width="1680"
-     inkscape:window-height="975"
+     inkscape:current-layer="layer4"
+     inkscape:window-width="1280"
+     inkscape:window-height="949"
      inkscape:window-x="0"
      inkscape:window-y="25"
      showgrid="true"
@@ -55,119 +55,177 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <text
-     xml:space="preserve"
-     style="font-size:72px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-     x="370.8981"
-     y="72.503044"
-     id="titulo"
-     sodipodi:linespacing="100%"
-     inkscape:label="#text2194"><tspan
-       sodipodi:role="line"
-       id="tspan2168"
-       x="370.8981"
-       y="72.503044">Algasdf</tspan></text>
-  <path
-     style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.70000005;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     d="M 238.24662,94.187633 L 498.61695,94.187633"
-     id="path2166" />
-  <rect
-     style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline"
-     id="rect4143"
-     width="680.09985"
-     height="25.723333"
-     x="35.596935"
-     y="124.93015" />
-  <text
-     xml:space="preserve"
-     style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
-     x="43.457493"
-     y="142.26544"
-     id="text5114"><tspan
-       sodipodi:role="line"
-       id="tspan5116"
-       x="43.457493"
-       y="142.26544">Nombre</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
-     x="209.05496"
-     y="141.10236"
-     id="text5118"><tspan
-       sodipodi:role="line"
-       id="tspan5120"
-       x="209.05496"
-       y="141.10236">Apellido</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
-     x="387.51279"
-     y="142.16583"
-     id="text5122"><tspan
-       sodipodi:role="line"
-       id="tspan5124"
-       x="387.51279"
-       y="142.16583">DNI</tspan></text>
-  <text
-     xml:space="preserve"
-     style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
-     x="542.48022"
-     y="142.50568"
-     id="text5126"><tspan
-       sodipodi:role="line"
-       id="tspan5128"
-       x="542.48022"
-       y="142.50568">Dirección</tspan></text>
   <g
-     id="personas"
-     inkscape:label="#g2248">
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="ReportFooter" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="PageFooter"
+     style="display:inline">
     <text
-       sodipodi:linespacing="125%"
-       inkscape:label="#text5130"
-       id="nombre"
-       y="174.10526"
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="318.43359"
+       y="1013.0762"
+       id="text2244"><tspan
+         sodipodi:role="line"
+         id="tspan2246"
+         x="318.43359"
+         y="1013.0762">Página</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="389.25018"
+       y="1013.9991"
+       id="text2248"><tspan
+         sodipodi:role="line"
+         id="tspan2250"
+         x="389.25018"
+         y="1013.9991">de</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="369.68301"
+       y="1013.8995"
+       id="PageNumber"
+       inkscape:label="#text2252"><tspan
+         sodipodi:role="line"
+         id="tspan2254"
+         x="369.68301"
+         y="1013.8995">X</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="417.12967"
+       y="1013.8995"
+       id="NumberOfPages"
+       inkscape:label="#text2256"><tspan
+         sodipodi:role="line"
+         id="tspan2258"
+         x="417.12967"
+         y="1013.8995">Y</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="PageHeader">
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;display:inline"
+       id="rect4143"
+       width="680.09985"
+       height="25.723333"
+       x="35.596935"
+       y="124.93015" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
        x="43.457493"
-       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
-       xml:space="preserve"><tspan
+       y="142.26544"
+       id="text5114"><tspan
+         sodipodi:role="line"
+         id="tspan5116"
+         x="43.457493"
+         y="142.26544">Nombre</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
+       x="209.05496"
+       y="141.10236"
+       id="text5118"><tspan
+         sodipodi:role="line"
+         id="tspan5120"
+         x="209.05496"
+         y="141.10236">Apellido</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
+       x="387.51279"
+       y="142.16583"
+       id="text5122"><tspan
+         sodipodi:role="line"
+         id="tspan5124"
+         x="387.51279"
+         y="142.16583">DNI</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
+       x="542.48022"
+       y="142.50568"
+       id="text5126"><tspan
+         sodipodi:role="line"
+         id="tspan5128"
+         x="542.48022"
+         y="142.50568">Dirección</tspan></text>
+    <g
+       id="personas"
+       inkscape:label="#g2248">
+      <text
+         sodipodi:linespacing="125%"
+         inkscape:label="#text5130"
+         id="nombre"
          y="174.10526"
          x="43.457493"
-         id="tspan5132"
-         sodipodi:role="line">Nombre</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       inkscape:label="#text5134"
-       id="apellido"
-       y="172.94217"
-       x="209.05496"
-       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
-       xml:space="preserve"><tspan
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="174.10526"
+           x="43.457493"
+           id="tspan5132"
+           sodipodi:role="line">Nombre</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         inkscape:label="#text5134"
+         id="apellido"
          y="172.94217"
          x="209.05496"
-         id="tspan5136"
-         sodipodi:role="line">Apellido</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       inkscape:label="#text5138"
-       id="dni"
-       y="174.00565"
-       x="387.51279"
-       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
-       xml:space="preserve"><tspan
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="172.94217"
+           x="209.05496"
+           id="tspan5136"
+           sodipodi:role="line">Apellido</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         inkscape:label="#text5138"
+         id="dni"
          y="174.00565"
          x="387.51279"
-         id="tspan5140"
-         sodipodi:role="line">DNI</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       inkscape:label="#text5142"
-       id="direccion"
-       y="174.34549"
-       x="542.48016"
-       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
-       xml:space="preserve"><tspan
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="174.00565"
+           x="387.51279"
+           id="tspan5140"
+           sodipodi:role="line">DNI</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         inkscape:label="#text5142"
+         id="direccion"
          y="174.34549"
          x="542.48016"
-         id="tspan5144"
-         sodipodi:role="line">Dirección</tspan></text>
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;font-family:Bitstream Vera Sans"
+         xml:space="preserve"><tspan
+           y="174.34549"
+           x="542.48016"
+           id="tspan5144"
+           sodipodi:role="line">Dirección</tspan></text>
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="ReportHeader">
+    <text
+       xml:space="preserve"
+       style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="370.8981"
+       y="72.503044"
+       id="titulo"
+       sodipodi:linespacing="100%"
+       inkscape:label="#text2194"><tspan
+         sodipodi:role="line"
+         id="tspan2168"
+         x="370.8981"
+         y="72.503044">Algasdf</tspan></text>
   </g>
 </svg>

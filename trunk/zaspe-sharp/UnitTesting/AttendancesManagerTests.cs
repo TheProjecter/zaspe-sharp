@@ -18,23 +18,15 @@
 
 using System;
 
-namespace ZaspeSharp.Persons
+namespace UnitTesting
 {
-	public class PersonException : SystemException
-	{
-		public PersonException() : base("Hubo un error con alguna Persona") {}
-		public PersonException(string strErr) : base(strErr) {}
-	}
 	
-	public class PersonExistsException : PersonException
-	{
-		public PersonExistsException() : base("Ya existe una persona con ese DNI") {}
-		public PersonExistsException(string strErr) : base(strErr) {}
-	}
 	
-	public class PersonDoesNotExistException : PersonException
+	public class AttendancesManagerTests
 	{
-		public PersonDoesNotExistException() : base("No existe una persona con ese DNI") {}
-		public PersonDoesNotExistException(string strErr) : base(strErr) {}
+		
+		public AttendancesManagerTests()
+		{
+		}
 	}
 }
