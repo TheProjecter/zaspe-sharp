@@ -67,6 +67,8 @@ namespace MonoReporter
 			// Data
 			this.data = new Hashtable();
 			this.dataTables = new Hashtable();
+			
+			// Load ReportHeader, RepotFooter, PageHeader and PageFooter
 		}
 		
 		public PrintOperationAction Action
