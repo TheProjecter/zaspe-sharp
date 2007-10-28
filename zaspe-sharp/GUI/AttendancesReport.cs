@@ -18,21 +18,52 @@
 
 using System;
 using Gtk;
-using Glade;
 
 namespace ZaspeSharp.GUI
 {
 	public class AttendancesReport
 	{
-		Assistant attendancesReportAssistant;
+		private Assistant attendancesReportAssistant;
 		
 		public AttendancesReport(Gtk.Window parent)
 		{
 			this.attendancesReportAssistant = new Assistant();
 			
 			this.attendancesReportAssistant.TransientFor = parent;
+			this.attendancesReportAssistant.WindowPosition = WindowPosition.CenterOnParent;
+			this.attendancesReportAssistant.Modal = true;
+			this.attendancesReportAssistant.SkipTaskbarHint = true;
+			this.attendancesReportAssistant.Title = "Asistente para informe sobre asistencias";
+			this.attendancesReportAssistant.SetSizeRequest(450, 300);
+			
+			// ####### Pages
+			
+			// First page - Introduction
+			Label label1_page1 = new Label();
+			label1_page1.Wrap = true;
+			label1_page1.Text = "Este asistente lo guiará para generar un reporte sobre las asistencias " +
+				"de las personas.";
+			
+			this.attendancesReportAssistant.AppendPage(label1_page1);
+			this.attendancesReportAssistant.SetPageTitle(label1_page1, "Introducción");
+			this.attendancesReportAssistant.SetPageType(label1_page1, AssistantPageType.Confirm);
+			this.attendancesReportAssistant.SetPageComplete(label1_page1, true);
+			
+			this.attendancesReportAssistant.Cancel += this.OnAttendancesReportAssistantCancel;
+			this.attendancesReportAssistant.Close += this.OnAttendancesReportAssistantClose;
 			
 			this.attendancesReportAssistant.ShowAll();
+		}
+		
+		private void OnAttendancesReportAssistantCancel(object o, EventArgs args)
+		{
+			this.attendancesReportAssistant.Destroy();
+		}
+		
+		private void OnAttendancesReportAssistantClose(object o, EventArgs args)
+		{
+			// TODO: Add code to generate and show report.
+			this.attendancesReportAssistant.Destroy();
 		}
 	}
 }
