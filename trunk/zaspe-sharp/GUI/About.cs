@@ -43,7 +43,8 @@ namespace ZaspeSharp.GUI
 			this.adAbout.Version = assemblyVersion.Major + "." +
 				assemblyVersion.Minor + "." + assemblyVersion.Build;
 			
-			this.adAbout.ShowAll();
+			this.adAbout.Run();
+			this.adAbout.Destroy();
 		}
 	}
 }
