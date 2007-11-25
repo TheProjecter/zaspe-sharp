@@ -315,7 +315,7 @@ namespace ZaspeSharp.GUI
 		public void OnPersonsListPopupMenu(object o, PopupMenuArgs args)
 		{
 			this.menuPersonActions.ShowAll();
-			this.menuEventActions.Popup();
+			this.menuPersonActions.Popup();
 			//this.menuPersonActions.Popup(null, null, null, 0, 0);
 		}
 		
