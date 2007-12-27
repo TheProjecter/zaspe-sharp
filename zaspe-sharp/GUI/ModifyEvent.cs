@@ -37,11 +37,16 @@ namespace ZaspeSharp.GUI
 		Gtk.HButtonBox dialogButtons;
 		
 		private Event anEvent;
+		private TreeIter eventIter;
 		
 		protected string errorMessageTitle = "Error al modificar el evento";
 		
-		public ModifyEvent(Gtk.Window parent, Event anEvent) : base(parent, false)
+		public ModifyEvent(Gtk.Window parent, ListStore eventsModel,
+		                   Event anEvent, TreeIter eventIter)
+			: base(parent, eventsModel)
 		{
+			this.eventIter = eventIter;
+			
 			this.dlgAddEvent.Title = "Modificar evento";
 			
 			this.dialogButtons.Remove(this.btnOkClose);
@@ -61,8 +66,6 @@ namespace ZaspeSharp.GUI
 			this.textviewObservations.Buffer.Text = anEvent.Observations;
 			
 			this.anEvent = anEvent;
-			
-			this.dlgAddEvent.ShowAll();
 		}
 		
 		// This is, in fact, the Save button
@@ -98,9 +101,9 @@ namespace ZaspeSharp.GUI
 			// Save changes to database
 			this.anEvent.Persist();
 			
-			MainWindow.mainWindowInstance.EventChanged();
+			this.eventsModel.SetValue(this.eventIter, 0, this.anEvent);
 			
-			this.dlgAddEvent.Destroy();
+			this.dlgAddEvent.Respond(ResponseType.Close);
 		}
 	}
 }

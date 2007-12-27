@@ -58,8 +58,10 @@ namespace ZaspeSharp.GUI
 		
 		protected string lastGeneratedEventName = "";
 		
+		protected ListStore eventsModel;
+		
 		// Constructor for subclasses of this class
-		protected AddEvent(Window parent, bool showDialog)
+		public AddEvent(Window parent, ListStore eventsModel)
 		{
 			Glade.XML gxml = new Glade.XML ("add_event.glade", "dlgAddEvent", null);
 			gxml.Autoconnect(this);
@@ -83,12 +85,19 @@ namespace ZaspeSharp.GUI
 				this.cmbEventTypes.AppendText(anEventType.Name);
 			}
 			
-			if (showDialog)
-				this.dlgAddEvent.ShowAll();
+			this.eventsModel = eventsModel;
 		}
 		
-		// Constructor for users of this class
-		public AddEvent(Window parent) : this(parent, true) {}
+//		public AddEvent(Window parent, ListStore events) : this(parent, events)
+//		{
+//		}
+		
+		public void Run()
+		{
+			while (this.dlgAddEvent.Run() != (int)ResponseType.Close);
+			
+			this.dlgAddEvent.Destroy();
+		}
 		
 		protected bool EventNameCanBeChanged()
 		{
@@ -139,7 +148,7 @@ namespace ZaspeSharp.GUI
 		
 		public void OnCancelClicked(object o, EventArgs args)
 		{
-			this.dlgAddEvent.Destroy();
+			this.dlgAddEvent.Respond(ResponseType.Close);
 		}
 		
 		public void OnOkCloseClicked(object o, EventArgs args)
@@ -154,7 +163,7 @@ namespace ZaspeSharp.GUI
 				return;
 			}
 			
-			this.dlgAddEvent.Destroy();
+			this.dlgAddEvent.Respond(ResponseType.Close);
 		}
 		
 		public void OnOkAddClicked(object o, EventArgs args)
@@ -216,9 +225,11 @@ namespace ZaspeSharp.GUI
 			if (this.cmbEventTypes.Active < 0)
 				throw new Exception("Se debe escoger el tipo del evento.");
 			
-			EventType eventTypeSelected = EventTypesManager.Instance.Retrieve(this.cmbEventTypes.ActiveText);
+			EventType eventTypeSelected = EventTypesManager
+				.Instance.Retrieve(this.cmbEventTypes.ActiveText);
 			
-			anEvent = em.AddEvent(date, this.entryName.Text.Trim(), eventTypeSelected,
+			anEvent = em.AddEvent(date, this.entryName.Text.Trim(),
+			                      eventTypeSelected,
 			                      this.textviewGoals.Buffer.Text.Trim(),
 			                      this.textviewObservations.Buffer.Text.Trim());
 			

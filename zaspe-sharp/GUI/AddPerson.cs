@@ -77,25 +77,37 @@ namespace ZaspeSharp.GUI
 		protected ComboBox cmbMonth;
 		#endregion
 		
+		protected ListStore personsModel;
+		
 		// Constructor for subclasses of this class
-		protected AddPerson(Gtk.Window parent, bool showDialog)
+		public AddPerson(Window parent, ListStore personsModel)
 		{
-			Glade.XML gxml = new Glade.XML ("add_person.glade", "dlgAddPerson", null);
+			Glade.XML gxml = new Glade.XML ("add_person.glade", "dlgAddPerson",
+			                                null);
 			gxml.Autoconnect(this);
 			
 			this.dlgAddPerson.TransientFor = parent;
 			this.cmbSex.Active = 0;
 			
-			if (showDialog)
-				this.dlgAddPerson.ShowAll();
+			this.personsModel = personsModel;
 		}
 		
 		// Constructor for users of this class
-		public AddPerson(Gtk.Window parent) : this(parent, true) {}
+//		public AddPerson(Gtk.Window parent, ListStore personsModel)
+//			: this(parent, personsModel)
+//		{
+//		}
+		
+		public void Run()
+		{
+			while (this.dlgAddPerson.Run() != (int)ResponseType.Close);
+			
+			this.dlgAddPerson.Destroy();
+		}
 		
 		public void OnCancelClicked(object o, EventArgs args)
 		{
-			this.dlgAddPerson.Destroy();
+			this.dlgAddPerson.Respond(ResponseType.Close);
 		}
 		
 		public void OnOkAddClicked(object o, EventArgs args)
@@ -152,7 +164,7 @@ namespace ZaspeSharp.GUI
 				return;
 			}
 			
-			this.dlgAddPerson.Destroy();
+			this.dlgAddPerson.Respond(ResponseType.Close);
 		}
 		
 		private void Add()

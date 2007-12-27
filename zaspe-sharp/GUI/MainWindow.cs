@@ -70,9 +70,9 @@ namespace ZaspeSharp.GUI
 		private ImageMenuItem imiModifyEvent;
 		private ImageMenuItem imiRemoveEvent;
 		
-		private List<Person> selectedPersons;
-		private List<Event> selectedEvents;
-		private List<TreeIter> selectedTreeIters;
+//		private List<Person> selectedPersons;
+//		private List<Event> selectedEvents;
+//		private List<TreeIter> selectedTreeIters;
 		
 		private Dictionary<Person, TreeIter> treeItersOnAttendancesList;
 		private List<Event> lastEventsOnAttendancesList;
@@ -98,9 +98,9 @@ namespace ZaspeSharp.GUI
 			this.menuPersonActions = (Menu)gxml_person.GetWidget("menuPersonActions");
 			this.menuEventActions = (Menu)gxml_event.GetWidget("menuEventActions");
 			
-			this.selectedPersons = new List<Person>();
-			this.selectedEvents = new List<Event>();
-			this.selectedTreeIters = new List<Gtk.TreeIter>();
+//			this.selectedPersons = new List<Person>();
+//			this.selectedEvents = new List<Event>();
+//			this.selectedTreeIters = new List<Gtk.TreeIter>();
 			this.lastEventsOnAttendancesList = new List<Event>();
 			this.treeItersOnAttendancesList = new Dictionary<Person,TreeIter>();
 			
@@ -114,7 +114,7 @@ namespace ZaspeSharp.GUI
 			this.tvPersons = new TreeView();
 			this.tvPersons.HeadersVisible = true;
 			this.tvPersons.Selection.Mode = SelectionMode.Multiple;
-				
+			
 			TreeViewColumn surname = new TreeViewColumn();
 			surname.Title = "Apellido";
 			CellRendererText surnameText = new CellRendererText();
@@ -140,14 +140,16 @@ namespace ZaspeSharp.GUI
 			this.tvPersons.AppendColumn(email);
 			this.tvPersons.AppendColumn(birthday);
 			
-			surname.AddAttribute(surnameText, "text", 0);
-			name.AddAttribute(nameText, "text", 1);
-			email.AddAttribute(emailText, "text", 2);
-			birthday.AddAttribute(birthdayText, "text", 3);
+			surname.SetCellDataFunc(surnameText,
+			                        new TreeCellDataFunc(this.RenderSurname));
+			name.SetCellDataFunc(nameText,
+			                     new TreeCellDataFunc(this.RenderName));
+			email.SetCellDataFunc(emailText,
+			                      new TreeCellDataFunc(this.RenderEmail));
+			birthday.SetCellDataFunc(birthdayText,
+			                         new TreeCellDataFunc(this.RenderBirthday));
 			
-			this.persons = new ListStore(typeof(string), typeof(string),
-			                             typeof(string), typeof(string),
-			                             typeof(Person));
+			this.persons = new ListStore(typeof(Person));
 			
 			this.persons.RowDeleted += new RowDeletedHandler(this.OnPersonsListRowDeleted);
 			
@@ -184,10 +186,14 @@ namespace ZaspeSharp.GUI
 			this.tvEvents.AppendColumn(eventName);
 			this.tvEvents.AppendColumn(eventDate);
 			
-			eventName.AddAttribute(eventNameText, "text", 0);
-			eventDate.AddAttribute(eventDateText, "text", 1);
+			eventName
+				.SetCellDataFunc(eventNameText,
+				                 new TreeCellDataFunc(this.RenderEventName));
+			eventDate
+				.SetCellDataFunc(eventDateText,
+			                     new TreeCellDataFunc(this.RenderEventDate));
 			
-			this.events = new ListStore(typeof(string), typeof(string), typeof(Event));
+			this.events = new ListStore(typeof(Event));
 			
 			this.events.RowDeleted += new RowDeletedHandler(this.OnEventsListRowDeleted);
 			
@@ -336,12 +342,36 @@ namespace ZaspeSharp.GUI
 		
 		public void OnEventsListRowActivated(object o, EventArgs args)
 		{
-			new ModifyEvent(this.mainWindow, this.selectedEvents[0]);
+			this.ModifyEvent();
 		}
 		
 		public void OnPersonsListRowActivated(object o, EventArgs args)
 		{
-			new ModifyPerson(this.mainWindow, this.selectedPersons[0]);
+			this.ModifyPerson();
+		}
+		
+		private void ModifyPerson()
+		{
+			TreeIter iter = this.SelectedItersFromPersons[0];
+			Person p = this.GetPersonFromIter(iter);
+			
+			ModifyPerson mp =
+				new ModifyPerson(this.mainWindow, this.persons, p, iter);
+			mp.Run();
+			
+			this.LoadAttendancesListData();
+		}
+		
+		private void ModifyEvent()
+		{
+			TreeIter iter = this.SelectedItersFromEvents[0];
+			Event e = this.GetEventFromIter(iter);
+			
+			ModifyEvent me =
+				new ModifyEvent(this.mainWindow, this.events, e, iter);
+			me.Run();
+			
+			this.LoadAttendancesListData();
 		}
 		
 		public void OnEventsListSelectionChanged(object o, EventArgs args)
@@ -362,18 +392,18 @@ namespace ZaspeSharp.GUI
 				this.imiModifyEvent.Sensitive = true;
 			}
 			
-			// Clear selected events
-			this.selectedEvents.Clear();
-			this.selectedTreeIters.Clear();
-			
-			// Add selected events to list
-			TreeIter iter;
-			for (int i=0; i<selection.Length; i++) {
-				this.events.GetIter(out iter, selection[i]);
-				
-				this.selectedTreeIters.Add(iter);
-				this.selectedEvents.Add((Event)this.events.GetValue(iter, 2));
-			}
+//			// Clear selected events
+//			this.selectedEvents.Clear();
+//			this.selectedTreeIters.Clear();
+//			
+//			// Add selected events to list
+//			TreeIter iter;
+//			for (int i=0; i<selection.Length; i++) {
+//				this.events.GetIter(out iter, selection[i]);
+//				
+//				this.selectedTreeIters.Add(iter);
+//				this.selectedEvents.Add((Event)this.events.GetValue(iter, 2));
+//			}
 		}
 		
 		public void OnPersonsListSelectionChanged(object o, EventArgs args)
@@ -389,29 +419,45 @@ namespace ZaspeSharp.GUI
 			else
 				this.imiModifyPerson.Sensitive = true;
 			
-			// Clear selected persons
-			this.selectedPersons.Clear();
-			this.selectedTreeIters.Clear();
-			
-			// Add selected persons to list
-			TreeIter iter;
-			for (int i=0; i<selection.Length; i++) {
-				this.persons.GetIter(out iter, selection[i]);
-				
-				this.selectedTreeIters.Add(iter);
-				this.selectedPersons.Add((Person)this.persons.GetValue(iter, 4));
-			}
+//			// Clear selected persons
+//			this.selectedPersons.Clear();
+//			this.selectedTreeIters.Clear();
+//			
+//			// Add selected persons to list
+//			TreeIter iter;
+//			for (int i=0; i<selection.Length; i++) {
+//				this.persons.GetIter(out iter, selection[i]);
+//				
+//				this.selectedTreeIters.Add(iter);
+//				this.selectedPersons.Add((Person)this.persons.GetValue(iter, 4));
+//			}
 		}
 		
 		public void OnMenuItemModifyPersonActivate(object o, EventArgs args)
 		{
-			new ModifyPerson(this.mainWindow, this.selectedPersons[0]);
+			this.ModifyPerson();
 		}
 		
 		public void OnMenuItemRemovePersonActivate(object o, EventArgs args)
 		{
+			TreeIter iter;
+			TreeModel model;
+			TreePath[] selection = this.tvPersons
+				.Selection.GetSelectedRows(out model);
+			
+			List<Person> personList = new List<Person>();
+			List<TreeIter> iterList = new List<TreeIter>();
+			
+			foreach(TreePath tp in selection) {
+				model.GetIter(out iter, tp);
+				Person p = (Person)model.GetValue(iter, 0);
+				
+				iterList.Add(iter);
+				personList.Add(p);
+			}
+			
 			string msg;
-			if (this.selectedPersons.Count > 1)
+			if (selection.Length > 1)
 				msg = "¿Seguro que desea eliminar las personas seleccionadas?";
 			else
 				msg = "¿Seguro que desea eliminar la persona seleccionada?";
@@ -423,26 +469,26 @@ namespace ZaspeSharp.GUI
 			
 			ResponseType response = (ResponseType)md.Run();
 			
-			TreeIter iter;
 			if (response == ResponseType.Yes) {
-				Person[] personsToRemove = this.selectedPersons.ToArray();
-				TreeIter[] itersToRemove = this.selectedTreeIters.ToArray();
+//				Person[] personsToRemove = this.selectedPersons.ToArray();
+//				TreeIter[] itersToRemove = this.selectedTreeIters.ToArray();
 				
-				for (int i=0; i<personsToRemove.Length; i++) {
+				for (int i=0; i<personList.Count; i++) {
 					// Remove all attendances of the person and the person itself
-					AttendancesManager.Instance.RemoveAllAttendancesOfPerson(personsToRemove[i]);
-					personsToRemove[i].Remove();
+					AttendancesManager
+						.Instance.RemoveAllAttendancesOfPerson(personList[i]);
+					personList[i].Remove();
 					
 					// Remove treeiters from persons list
-					iter = itersToRemove[i];
+					iter = iterList[i];
 					this.persons.Remove(ref iter);
 					
 					/* Remove treeiters from attendances list, but only if that list
 					 * is enabled (if there are events added as columns, it's enabled) */
 					if (this.lastEventsOnAttendancesList.Count > 0) {
-						iter = this.treeItersOnAttendancesList[personsToRemove[i]];
+						iter = this.treeItersOnAttendancesList[personList[i]];
 						this.attendances.Remove(ref iter);
-						this.treeItersOnAttendancesList.Remove(personsToRemove[i]);
+						this.treeItersOnAttendancesList.Remove(personList[i]);
 					}
 				}
 			}
@@ -450,18 +496,131 @@ namespace ZaspeSharp.GUI
 			md.Destroy();
 		}
 		
+		private List<Event> SelectedEvents
+		{
+			get {
+				TreeIter iter;
+				TreeModel model;
+				
+				// I get the selected events
+				TreePath[] selection = this.tvEvents.Selection
+					.GetSelectedRows(out model);
+				
+				List<Event> eventList = new List<Event>();
+				
+				// Get every selected event and add it to the list
+				foreach (TreePath tp in selection) {
+					model.GetIter(out iter, tp);
+					
+					Event e = (Event)model.GetValue(iter, 0);
+					
+					eventList.Add(e);
+				}
+				
+				return eventList;
+			}
+		}
+		
+		private List<Person> SelectedPersons
+		{
+			get {
+				TreeIter iter;
+				TreeModel model;
+				
+				// I get the selected events
+				TreePath[] selection = this.tvPersons.Selection
+					.GetSelectedRows(out model);
+				
+				List<Person> personList = new List<Person>();
+				
+				// Get every selected event and add it to the list
+				foreach (TreePath tp in selection) {
+					model.GetIter(out iter, tp);
+					
+					Person p = (Person)model.GetValue(iter, 0);
+					
+					personList.Add(p);
+				}
+				
+				return personList;
+			}
+		}
+		
+		private List<TreeIter> SelectedItersFromPersons
+		{
+			get {
+				TreeIter iter;
+				TreeModel model;
+				
+				// I get the selected events
+				TreePath[] selection = this.tvPersons.Selection
+					.GetSelectedRows(out model);
+				
+				List<TreeIter> itersList = new List<TreeIter>();
+				
+				// Get every selected event and add it to the list
+				foreach (TreePath tp in selection) {
+					model.GetIter(out iter, tp);
+					
+					itersList.Add(iter);
+				}
+				
+				return itersList;
+			}
+		}
+		
+		private List<TreeIter> SelectedItersFromEvents
+		{
+			get {
+				TreeIter iter;
+				TreeModel model;
+				
+				// I get the selected events
+				TreePath[] selection = this.tvEvents.Selection
+					.GetSelectedRows(out model);
+				
+				List<TreeIter> itersList = new List<TreeIter>();
+				
+				// Get every selected event and add it to the list
+				foreach (TreePath tp in selection) {
+					model.GetIter(out iter, tp);
+					
+					itersList.Add(iter);
+				}
+				
+				return itersList;
+			}
+		}
+		
+		private Event GetEventFromIter(TreeIter iter)
+		{
+			Event e = (Event)this.tvEvents.Model.GetValue(iter, 0);
+			
+			return e;
+		}
+		
+		private Person GetPersonFromIter(TreeIter iter)
+		{
+			Person p = (Person)this.tvPersons.Model.GetValue(iter, 0);
+			
+			return p;
+		}
+		
 		public void OnMenuItemWhoHadAttendedActivate(object o, EventArgs args)
 		{
 			StringBuilder sb = new StringBuilder();
 			
+			Event selectedEvent = this.SelectedEvents[0];
+			
 			List<Person> personsThatAttended =
-				AttendancesManager.Instance.WhoHadAttended(this.selectedEvents[0]);
+				AttendancesManager
+					.Instance.WhoHadAttended(selectedEvent);
 			
 			if (personsThatAttended.Count == 0)
 				sb.Append("Ninguna persona asistió al evento '" +
-				          this.selectedEvents[0].Name + "'");
+				          selectedEvent.Name + "'");
 			else {
-				sb.Append("Asistieron al evento '" + this.selectedEvents[0].Name + "':\n\n");
+				sb.Append("Asistieron al evento '" + selectedEvent.Name + "':\n\n");
 				foreach (Person p in personsThatAttended)
 					sb.Append(p.Name + " " + p.Surname + "\n");
 			}
@@ -477,13 +636,13 @@ namespace ZaspeSharp.GUI
 		
 		public void OnMenuItemModifyEventActivate(object o, EventArgs args)
 		{
-			new ModifyEvent(this.mainWindow, this.selectedEvents[0]);
+			this.ModifyEvent();
 		}
 		
 		public void OnMenuItemRemoveEventActivate(object o, EventArgs args)
 		{
 			string msg;
-			if (this.selectedEvents.Count > 1)
+			if (this.SelectedEvents.Count > 1)
 				msg = "¿Seguro que desea eliminar los eventos seleccionados?";
 			else
 				msg = "¿Seguro que desea eliminar el evento seleccionado?";
@@ -498,20 +657,23 @@ namespace ZaspeSharp.GUI
 			TreeIter iter;
 			CustomTreeViewColumn tvc;
 			if (response == ResponseType.Yes) {
-				Event[] eventsToRemove = this.selectedEvents.ToArray();
-				TreeIter[] itersToRemove = this.selectedTreeIters.ToArray();
-				
-				for (int i=0; i<eventsToRemove.Length; i++) {
-					// Remove all attendances with that event, and the event itself.
-					AttendancesManager.Instance.RemoveAllAttendancesOfEvent(eventsToRemove[i]);
-					eventsToRemove[i].Remove();
+				foreach(TreeIter iterToRemove in this.SelectedItersFromEvents) {
+					/* I get the event corresponding to the iter to remove */
+					Event eventToRemove = this.GetEventFromIter(iterToRemove);
+					
+					/* Remove all attendances with that event, and the event
+					 * itself. */
+					AttendancesManager.Instance
+						.RemoveAllAttendancesOfEvent(eventToRemove);
+					eventToRemove.Remove();
 					
 					// Remove row in the events list
-					iter = itersToRemove[i];
-					this.events.Remove(ref iter);
+					TreeIter iterCopied =
+						iterToRemove.Copy();// I need to copy the iter to remove
+					this.events.Remove(ref iterCopied);
 					
 					// Remove column in the attendances list
-					tvc = this.GetAttendancesListColumnByEvent(eventsToRemove[i]);
+					tvc = this.GetAttendancesListColumnByEvent(eventToRemove);
 					this.tvAttendances.RemoveColumn(tvc);
 				}
 			}
@@ -552,7 +714,7 @@ namespace ZaspeSharp.GUI
 			this.attendances.SetValue(iter, cellRendererEvent.ColumnNumber, !oldValue);
 			
 			// Depending on newValue, we add or remove the attendance
-			Person person = this.GetPerson(iter);
+			Person person = this.GetPersonFromAttendancesIter(iter);
 			
 			if (newValue == true)
 				AttendancesManager.Instance.AddAttendance(person, cellRendererEvent.Event);
@@ -562,12 +724,14 @@ namespace ZaspeSharp.GUI
 		
 		public void OnAddPersonClicked(object o, EventArgs args)
 		{
-			new AddPerson(this.mainWindow);
+			AddPerson ap = new AddPerson(this.mainWindow, this.persons);
+			ap.Run();
 		}
 		
 		public void OnAddEventClicked(object o, EventArgs args)
 		{
-			new AddEvent(this.mainWindow);
+			AddEvent ae = new AddEvent(this.mainWindow, this.events);
+			ae.Run();
 		}
 		
 		public void OnWindowDeleteEvent(object o, DeleteEventArgs args)
@@ -584,6 +748,66 @@ namespace ZaspeSharp.GUI
 		public void OnImageMenuItemAboutActivate(object o, EventArgs args)
 		{
 			new About(this.mainWindow);
+		}
+#endregion
+		
+#region Renderer Methods
+		private void RenderSurname(TreeViewColumn column, CellRenderer cell,
+		                           TreeModel model, TreeIter iter)
+		{
+			Person p = (Person)model.GetValue(iter, 0);
+			(cell as CellRendererText).Text = p.Surname;
+		}
+		
+		private void RenderName(TreeViewColumn column, CellRenderer cell,
+		                        TreeModel model, TreeIter iter)
+		{
+			Person p = (Person)model.GetValue(iter, 0);
+			(cell as CellRendererText).Text = p.Name;
+		}
+		
+		private void RenderNameAndSurname(TreeViewColumn column,
+		                                  CellRenderer cell, TreeModel model,
+		                                  TreeIter iter)
+		{
+			Person p = (Person)model.GetValue(iter, 0);
+			(cell as CellRendererText).Text = p.Name + " " + p.Surname;
+		}
+		
+		private void RenderEmail(TreeViewColumn column, CellRenderer cell,
+		                         TreeModel model, TreeIter iter)
+		{
+			Person p = (Person)model.GetValue(iter, 0);
+			(cell as CellRendererText).Text = p.EMail;
+		}
+		
+		private void RenderBirthday(TreeViewColumn column, CellRenderer cell,
+		                            TreeModel model, TreeIter iter)
+		{
+			Person p = (Person)model.GetValue(iter, 0);
+			
+			// If birthday was not set, show nothing
+			if (!p.BirthdayDate.Equals(DateTime.MinValue))
+				(cell as CellRendererText).Text =
+					this.FormatBirthdayDateTime(p.BirthdayDate);
+			else
+				(cell as CellRendererText).Text = "";
+		}
+		
+		private void RenderEventName(TreeViewColumn column, CellRenderer cell,
+		                             TreeModel model, TreeIter iter)
+		{
+			Event e = (Event)model.GetValue(iter, 0);
+			(cell as CellRendererText).Text = e.Name;
+		}
+		
+		private void RenderEventDate(TreeViewColumn column, CellRenderer cell,
+		                             TreeModel model, TreeIter iter)
+		{
+			Event e = (Event)model.GetValue(iter, 0);
+			
+			(cell as CellRendererText).Text =
+				this.FormatEventDateTime(e.Date);
 		}
 #endregion
 		
@@ -620,7 +844,6 @@ namespace ZaspeSharp.GUI
 			return (anEvent.Name + "\n(" + this.FormatEventDateTime(anEvent.Date) + ")");
 		}
 		
-		// Returns true if persons were readded. False otherwise.
 		private void LoadAttendancesListData()
 		{
 			// Add to attendances list.
@@ -670,7 +893,7 @@ namespace ZaspeSharp.GUI
 			// We'll need to update the model, so we save the new types
 			List<Type> columnTypes = new List<Type>();
 			// Types to create ListStore. First type is string (name of persons)
-			columnTypes.Add(typeof(string));
+			columnTypes.Add(typeof(Person));
 			
 			// Add column of persons
 			CustomTreeViewColumn persons = new CustomTreeViewColumn();
@@ -678,7 +901,9 @@ namespace ZaspeSharp.GUI
 			
 			CellRendererText personCell = new CellRendererText();
 			persons.PackStart(personCell, true);
-			persons.AddAttribute(personCell, "text", 0);
+			persons
+				.SetCellDataFunc(personCell,
+				                 new TreeCellDataFunc(this.RenderNameAndSurname));
 			
 			this.tvAttendances.AppendColumn(persons);
 			
@@ -718,7 +943,7 @@ namespace ZaspeSharp.GUI
 			this.tvAttendances.AppendColumn(eventColumn);
 			
 			// Last type is Person
-			columnTypes.Add(typeof(Person));
+//			columnTypes.Add(typeof(Person));
 			
 			this.attendances = new ListStore(columnTypes.ToArray());
 			this.tvAttendances.Model = this.attendances;
@@ -735,14 +960,14 @@ namespace ZaspeSharp.GUI
 				data.Clear();
 				
 				// Person's data
-				data.Add(p.Name + " " + p.Surname);
-				
+				data.Add(p);
+				Console.WriteLine("Agregado " + p.Name);
 				// Events
 				foreach (Event anEvent in this.lastEventsOnAttendancesList)
 					data.Add(am.Attended(p, anEvent));
 				
 				// ... and the person object itself. We'll need it.
-				data.Add(p);
+//				data.Add(p);
 				
 				iter = this.attendances.AppendValues(data.ToArray());
 				
@@ -753,36 +978,36 @@ namespace ZaspeSharp.GUI
 			return;
 		}
 		
-		public void EventChanged()
-		{
-			// Update events list
-			this.events.SetValue(this.selectedTreeIters[0], 0, this.selectedEvents[0].Name);
-			this.events.SetValue(this.selectedTreeIters[0], 1, this.FormatEventDateTime(this.selectedEvents[0].Date));
-			
-			// Update attendances list
-			this.LoadAttendancesListData();
-		}
-		
-		public void PersonChanged()
-		{
-			// Update persons list
-			this.persons.SetValue(this.selectedTreeIters[0], 0, this.selectedPersons[0].Surname);
-			this.persons.SetValue(this.selectedTreeIters[0], 1, this.selectedPersons[0].Name);
-			this.persons.SetValue(this.selectedTreeIters[0], 2, this.selectedPersons[0].EMail);
-			
-			// This is to avoid print birthday if it was not set
-			if (!this.selectedPersons[0].BirthdayDate.Equals(DateTime.MinValue))
-				this.persons.SetValue(this.selectedTreeIters[0], 3, this.FormatBirthdayDateTime(this.selectedPersons[0].BirthdayDate));
-			
-			// Update attendances list
-			// First see if the attendances list is enabled (there are last events)
-			if (this.lastEventsOnAttendancesList.Count == 0)
-				return;
-			
-			this.attendances.SetValue(this.treeItersOnAttendancesList[this.selectedPersons[0]],
-			                          0,
-			                          this.selectedPersons[0].Name + " " + this.selectedPersons[0].Surname);
-		}
+//		public void EventChanged()
+//		{
+//			// Update events list
+//			this.events.SetValue(this.selectedTreeIters[0], 0, this.selectedEvents[0].Name);
+//			this.events.SetValue(this.selectedTreeIters[0], 1, this.FormatEventDateTime(this.selectedEvents[0].Date));
+//			
+//			// Update attendances list
+//			this.LoadAttendancesListData();
+//		}
+//		
+//		public void PersonChanged()
+//		{
+//			// Update persons list
+//			this.persons.SetValue(this.selectedTreeIters[0], 0, this.selectedPersons[0].Surname);
+//			this.persons.SetValue(this.selectedTreeIters[0], 1, this.selectedPersons[0].Name);
+//			this.persons.SetValue(this.selectedTreeIters[0], 2, this.selectedPersons[0].EMail);
+//			
+//			// This is to avoid print birthday if it was not set
+//			if (!this.selectedPersons[0].BirthdayDate.Equals(DateTime.MinValue))
+//				this.persons.SetValue(this.selectedTreeIters[0], 3, this.FormatBirthdayDateTime(this.selectedPersons[0].BirthdayDate));
+//			
+//			// Update attendances list
+//			// First see if the attendances list is enabled (there are last events)
+//			if (this.lastEventsOnAttendancesList.Count == 0)
+//				return;
+//			
+//			this.attendances.SetValue(this.treeItersOnAttendancesList[this.selectedPersons[0]],
+//			                          0,
+//			                          this.selectedPersons[0].Name + " " + this.selectedPersons[0].Surname);
+//		}
 		
 		private string FormatEventDateTime(DateTime dt)
 		{
@@ -795,26 +1020,21 @@ namespace ZaspeSharp.GUI
 		}
 		
 		// Only valid if tvAttendances is visible
-		public Person GetPerson(TreeIter iter)
+		public Person GetPersonFromAttendancesIter(TreeIter iter)
 		{
-			return ((Person)this.attendances.GetValue(iter, 1+this.lastEventsOnAttendancesList.Count));
+			Person p = (Person)this.attendances.GetValue(iter, 0);
+			return p;
 		}
 		
 		public void AddPersonToList(Person p)
 		{
-			string birthday = this.FormatBirthdayDateTime(p.BirthdayDate);
-			
-			if (p.BirthdayDate.Equals(DateTime.MinValue))
-			    birthday = "";
-			
 			// Add to persons list
-			this.persons.AppendValues(p.Surname, p.Name, p.EMail, birthday, p);
+			this.persons.AppendValues(p);
 			
-			// Add to attendances list
-			
-			/* First load last events. If this fuction returns true, it means that an update
-			 * to the last events was necessary, and the persons have been added, so it's not
-			 * necessary to add this person again. */
+			/* First load last events. If this fuction returns true, it means
+			 * that an update to the last events was necessary, and the persons
+			 * have been added, so it's not necessary to add this person
+			 * again. */
 			this.LoadAttendancesListData();
 			
 			// If persons in attendances list is updated, quit
@@ -829,14 +1049,14 @@ namespace ZaspeSharp.GUI
 			ArrayList data = new ArrayList();
 			
 			// Person's data
-			data.Add(p.Name + " " + p.Surname);
+			data.Add(p);
 			
 			// Events
 			foreach (Event anEvent in this.lastEventsOnAttendancesList)
 				data.Add(am.Attended(p, anEvent));
 			
 			// ... and the person object itself. We'll need it.
-			data.Add(p);
+//			data.Add(p);
 			
 			TreeIter iter = this.attendances.AppendValues(data.ToArray());
 			
@@ -847,7 +1067,7 @@ namespace ZaspeSharp.GUI
 		public void AddEventToList(Event e)
 		{
 			// Add to events list
-			this.events.AppendValues(e.Name, this.FormatEventDateTime(e.Date), e);
+			this.events.AppendValues(e);
 			
 			// Mange attendances treeview
 			this.LoadAttendancesListData();
