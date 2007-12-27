@@ -36,9 +36,14 @@ namespace ZaspeSharp.GUI
 		Gtk.HButtonBox dialogButtons;
 		
 		private Person person;
+		private TreeIter personIter;
 		
-		public ModifyPerson(Gtk.Window parent, Person aPerson) : base (parent, false)
+		public ModifyPerson(Gtk.Window parent, ListStore personsModel,
+		                    Person aPerson, TreeIter personIter)
+			: base (parent, personsModel)
 		{
+			this.personIter = personIter;
+			
 			this.dlgAddPerson.Title = "Modificar persona";
 			
 			this.dialogButtons.Remove(this.btnOkClose);
@@ -68,8 +73,6 @@ namespace ZaspeSharp.GUI
 			this.chkIsDataComplete.Active = aPerson.IsDataComplete;
 			
 			this.person = aPerson;
-			
-			this.dlgAddPerson.ShowAll();
 		}
 		
 		// This is, in fact, the Save button
@@ -116,9 +119,9 @@ namespace ZaspeSharp.GUI
 			// Save data to database
 			this.person.Persist();
 			
-			MainWindow.mainWindowInstance.PersonChanged();
+//			MainWindow.mainWindowInstance.PersonChanged();
 			
-			this.dlgAddPerson.Destroy();
+			this.dlgAddPerson.Respond(ResponseType.Close);
 		}
 	}
 }
