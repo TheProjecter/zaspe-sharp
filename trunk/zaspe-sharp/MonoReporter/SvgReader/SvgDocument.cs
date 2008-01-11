@@ -22,7 +22,7 @@ using System;
 using System.Globalization;
 using System.Collections.Generic;
 using System.Xml;
-using Shapes;
+using SvgReader.Shapes;
 
 namespace SvgReader
 {

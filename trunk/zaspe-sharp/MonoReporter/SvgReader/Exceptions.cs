@@ -19,24 +19,27 @@
 */
 
 using System;
-using System.Xml;
 
-namespace Shapes
+namespace SvgReader
 {
-	// TODO
-	public class UnderlinedText : IShape
+	public class AttributeNotFoundException : System.Exception
 	{
-		private Text text;
-		private Line line;
-		
-		public UnderlinedText(XmlNode gNode)
+		public AttributeNotFoundException(string msg) : base(msg)
 		{
-			
 		}
-		
-		public void Draw (Gtk.PrintContext context)
+	}
+	
+	public class SubOptionNotFoundException : System.Exception
+	{
+		public SubOptionNotFoundException(string msg) : base(msg)
 		{
-			throw new NotImplementedException();
+		}
+	}
+	
+	public class SectionNotFoundException : System.Exception
+	{
+		public SectionNotFoundException(string msg) : base(msg)
+		{
 		}
 	}
 }

@@ -1,6 +1,6 @@
 using System;
 
-namespace Shapes
+namespace SvgReader.Shapes
 {
 	public interface IShape
 	{

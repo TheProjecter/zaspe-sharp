@@ -22,7 +22,7 @@ using System;
 using System.Xml;
 using System.Globalization;
 
-namespace Shapes
+namespace SvgReader.Shapes
 {
 	public class Rectangle : IShape
 	{

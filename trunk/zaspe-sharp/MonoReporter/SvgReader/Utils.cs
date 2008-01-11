@@ -22,8 +22,9 @@ using System;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Globalization;
+using SvgReader.Shapes;
 
-namespace Shapes
+namespace SvgReader
 {
 	public static class Utils
 	{

@@ -21,7 +21,7 @@
 using System;
 using System.Xml;
 
-namespace Shapes
+namespace SvgReader.Shapes
 {
 	public class Text : ICloneable, IShape
 	{
