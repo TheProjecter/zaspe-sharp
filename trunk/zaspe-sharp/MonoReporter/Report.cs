@@ -21,10 +21,11 @@
 using System;
 using System.Data;
 using System.Collections;
+using System.Collections.Generic;
 using Gtk;
 
 using SvgReader;
-using SvgReader.Shapes;
+using Shapes;
 
 namespace MonoReporter
 {
@@ -35,8 +36,8 @@ namespace MonoReporter
 		
 		private PrintOperationAction action;
 		
-		private Hashtable data;
-		private Hashtable dataTables;
+		private Dictionary<string,string> data;
+		private Dictionary<string,DataTable> dataTables;
 		
 		public Report(string reportName, string svgFile)
 		{
@@ -51,7 +52,10 @@ namespace MonoReporter
 			this.printOperation.ExportFilename = "test.pdf";
 			
 			PrintSettings psettings = new PrintSettings();
-			PaperSize paperSize = new PaperSize("customPaperSize", "cps", this.svgDocument.PageWidth, this.svgDocument.PageHeight, Unit.Mm);
+			PaperSize paperSize = new PaperSize("customPaperSize", "cps",
+			                                    this.svgDocument.PageWidth,
+			                                    this.svgDocument.PageHeight,
+			                                    Unit.Mm);
 			psettings.PaperSize = paperSize;
 			
 			Console.WriteLine("PageHeight: " + this.svgDocument.PageHeight.ToString());
@@ -65,8 +69,8 @@ namespace MonoReporter
 			this.action = PrintOperationAction.Export;
 			
 			// Data
-			this.data = new Hashtable();
-			this.dataTables = new Hashtable();
+			this.data = new Dictionary<string, string>();
+			this.dataTables = new Dictionary<string, DataTable>();
 			
 			// Load ReportHeader, RepotFooter, PageHeader and PageFooter
 		}
@@ -77,13 +81,13 @@ namespace MonoReporter
 			set { this.action = value; }
 		}
 		
-		public Hashtable Data
+		public Dictionary<string, string> Data
 		{
 			get { return this.data; }
 			set { this.data = value; }
 		}
 		
-		public Hashtable DataTables
+		public Dictionary<string, DataTable> DataTables
 		{
 			get { return this.dataTables; }
 			set { this.dataTables = value; }
@@ -91,77 +95,94 @@ namespace MonoReporter
 		
 		private void DrawPage(object o, DrawPageArgs args)
 		{
-			Cairo.Context con = args.Context.CairoContext;
+			/* Print shapes in the ReporteHeader section if we are drawing
+			 * the first page */
+			//if (this.printOperation.CurrentPage == 1)
+			Console.WriteLine("$$$$$$$$$$$$$$ REPORT HEADER");
+			this.svgDocument.ReportHeaderSection.Draw(args.Context,
+			                                          this.data,
+			                                          this.dataTables);
 			
-			// Draw rectangles
-			Rectangle[] rectangles = this.svgDocument.Rectangles;
-			foreach (Rectangle r in rectangles) {
-				Console.WriteLine("Rect ID: " + r.Id);
-				Console.WriteLine("  X: " + r.X + "  Y: " + r.Y + "  Width: " + r.Width + "  Height: " + r.Height);
-				Console.WriteLine("  FillColor -> R: " + r.FillColor[0] + " - G: " + r.FillColor[1] + " - B: " + r.FillColor[2]);
-				Console.WriteLine("  FillOpacity: " + r.FillOpacity);
-				Console.WriteLine("  StrokeColor -> R: " + r.StrokeColor[0] + " - G: " + r.StrokeColor[1] + " - B: " + r.StrokeColor[2]);
-				Console.WriteLine("  StrokeOpacity: " + r.StrokeOpacity);
-				CairoDrawingFunctions.Draw(con, r);
-			}
+			// Print shapes in the PageDetail section
+			Console.WriteLine("$$$$$$$$$$$$$$ Page Detail");
+			this.svgDocument.PageDetailSection.Draw(args.Context,
+			                                        this.data,
+			                                        this.dataTables);
 			
-			// Draw text
-			Text[] texts = this.svgDocument.Texts;
-			foreach(Text t in texts) {
-				Console.WriteLine("Text ID: " + t.Id);
-				Console.WriteLine("  TextValue: " + t.TextValue);
-				Console.WriteLine("  FontDescription: " + t.FontDescription);
-				Console.WriteLine("  X: " + t.X + "  Y: " + t.Y);
-				Console.WriteLine("  Color -> R: " + t.Color[0] + " - G: " + t.Color[1] + " - B: " + t.Color[2]);
-				Console.WriteLine("  Opacity: " + t.Opacity);
+			/* Print shapes in the ReportFooter section if we are draing the
+			 * last page (TODO) */
+			
+//			Cairo.Context con = args.Context.CairoContext;
+//			
+//			// Draw rectangles
+//			Rectangle[] rectangles = this.svgDocument.Rectangles;
+//			foreach (Rectangle r in rectangles) {
+//				Console.WriteLine("Rect ID: " + r.Id);
+//				Console.WriteLine("  X: " + r.X + "  Y: " + r.Y + "  Width: " + r.Width + "  Height: " + r.Height);
+//				Console.WriteLine("  FillColor -> R: " + r.FillColor[0] + " - G: " + r.FillColor[1] + " - B: " + r.FillColor[2]);
+//				Console.WriteLine("  FillOpacity: " + r.FillOpacity);
 //				Console.WriteLine("  StrokeColor -> R: " + r.StrokeColor[0] + " - G: " + r.StrokeColor[1] + " - B: " + r.StrokeColor[2]);
 //				Console.WriteLine("  StrokeOpacity: " + r.StrokeOpacity);
-				
-				if (this.data.ContainsKey(t.Id)) {
-					t.TextValue = this.data[t.Id].ToString();
-					Console.WriteLine("Data setted. Text id: " + t.Id + ". Value: " + t.TextValue);
-				}
-				
-				CairoDrawingFunctions.Draw(con, args.Context.CreatePangoLayout(), t);
-			}
-			
-			// Draw lines
-			foreach(Line l in this.svgDocument.Lines) {
-				CairoDrawingFunctions.Draw(con, l);
-			}
-			
-			// Draw tables
-			foreach (SvgReader.Shapes.Table aTable in this.svgDocument.Tables) {
-				Console.WriteLine("Table id: " + aTable.Id);
-				
-				if (!this.dataTables.ContainsKey(aTable.Id))
-					continue;
-				
-				Console.WriteLine("Procesando un DataTable...");
-				
-				DataTable dataTable = (DataTable)this.dataTables[aTable.Id];
-				Text textTemp;
-				ArrayList textRow = new ArrayList(aTable.NumberOfColumns);
-				
-				foreach (DataRow dataRow in dataTable.Rows) {
-					foreach (Text aText in aTable.LastRowAdded) {
-						Console.WriteLine("   Text: " + aText.TextValue);
-						
-						textTemp = (Text)aText.Clone();
-						textTemp.TextValue = dataRow[textTemp.Id].ToString();
-						textTemp.Y = textTemp.Y +
-							CairoDrawingFunctions.GetPixelHeightSize(textTemp,
-							                                         args.Context.CreatePangoLayout());
-						
-						textRow.Add(textTemp);
-					}
-					
-					aTable.AddRow(textRow);
-					textRow.Clear();
-				}
-				
-				CairoDrawingFunctions.Draw(args.Context, aTable);
-			}
+//				CairoDrawingFunctions.Draw(con, r);
+//			}
+//			
+//			// Draw text
+//			Text[] texts = this.svgDocument.Texts;
+//			foreach(Text t in texts) {
+//				Console.WriteLine("Text ID: " + t.Id);
+//				Console.WriteLine("  TextValue: " + t.TextValue);
+//				Console.WriteLine("  FontDescription: " + t.FontDescription);
+//				Console.WriteLine("  X: " + t.X + "  Y: " + t.Y);
+//				Console.WriteLine("  Color -> R: " + t.Color[0] + " - G: " + t.Color[1] + " - B: " + t.Color[2]);
+//				Console.WriteLine("  Opacity: " + t.Opacity);
+////				Console.WriteLine("  StrokeColor -> R: " + r.StrokeColor[0] + " - G: " + r.StrokeColor[1] + " - B: " + r.StrokeColor[2]);
+////				Console.WriteLine("  StrokeOpacity: " + r.StrokeOpacity);
+//				
+//				if (this.data.ContainsKey(t.Id)) {
+//					t.TextValue = this.data[t.Id].ToString();
+//					Console.WriteLine("Data setted. Text id: " + t.Id + ". Value: " + t.TextValue);
+//				}
+//				
+//				CairoDrawingFunctions.Draw(con, args.Context.CreatePangoLayout(), t);
+//			}
+//			
+//			// Draw lines
+//			foreach(Line l in this.svgDocument.Lines) {
+//				CairoDrawingFunctions.Draw(con, l);
+//			}
+//			
+//			// Draw tables
+//			foreach (SvgReader.Shapes.Table aTable in this.svgDocument.Tables) {
+//				Console.WriteLine("Table id: " + aTable.Id);
+//				
+//				if (!this.dataTables.ContainsKey(aTable.Id))
+//					continue;
+//				
+//				Console.WriteLine("Procesando un DataTable...");
+//				
+//				DataTable dataTable = (DataTable)this.dataTables[aTable.Id];
+//				Text textTemp;
+//				ArrayList textRow = new ArrayList(aTable.NumberOfColumns);
+//				
+//				foreach (DataRow dataRow in dataTable.Rows) {
+//					foreach (Text aText in aTable.LastRowAdded) {
+//						Console.WriteLine("   Text: " + aText.TextValue);
+//						
+//						textTemp = (Text)aText.Clone();
+//						textTemp.TextValue = dataRow[textTemp.Id].ToString();
+//						textTemp.Y = textTemp.Y +
+//							CairoDrawingFunctions.GetPixelHeightSize(textTemp,
+//							                                         args.Context.CreatePangoLayout());
+//						
+//						textRow.Add(textTemp);
+//					}
+//					
+//					aTable.AddRow(textRow);
+//					textRow.Clear();
+//				}
+//				
+//				CairoDrawingFunctions.Draw(args.Context, aTable);
+//			}
 		}
 		
 		public void Run(Gtk.Window win)

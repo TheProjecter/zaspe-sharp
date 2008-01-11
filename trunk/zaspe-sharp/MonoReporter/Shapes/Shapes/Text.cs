@@ -21,9 +21,9 @@
 using System;
 using System.Xml;
 
-namespace SvgReader.Shapes
+namespace Shapes
 {
-	public class Text : ICloneable
+	public class Text : ICloneable, IShape
 	{
 		public const double X_FIX = 0.25;
 		public const double Y_FIX = 0.86;
@@ -122,57 +122,57 @@ namespace SvgReader.Shapes
 			get { return this.textValue; }
 			set { this.textValue = value; }
 		}
+//		
+//		public double Size
+//		{
+//			get { return this.size; }
+//			set { this.size = value; }
+//		}
 		
-		public double Size
-		{
-			get { return this.size; }
-			set { this.size = value; }
-		}
+//		public string Style
+//		{
+//			get { return this.style; }
+//			set { this.style = value; }
+//		}
+//		
+//		public string Family
+//		{
+//			get { return this.family; }
+//			set { this.family = value; }
+//		}
+//		
+//		public string Alignment
+//		{
+//			get { return this.alignment; }
+//			set { this.alignment = value; }
+//		}
 		
-		public string Style
-		{
-			get { return this.style; }
-			set { this.style = value; }
-		}
-		
-		public string Family
-		{
-			get { return this.family; }
-			set { this.family = value; }
-		}
-		
-		public string Alignment
-		{
-			get { return this.alignment; }
-			set { this.alignment = value; }
-		}
-		
-		public string FontDescription
+		internal string FontDescription
 		{
 			get {
 				return (this.family + " " + Convert.ToInt32(this.size * 0.8));
 			}
 		}
 		
-		public double[] Color
-		{
-			get { return this.color; }
-			set { this.color = value; }
-		}
+//		public double[] Color
+//		{
+//			get { return this.color; }
+//			set { this.color = value; }
+//		}
+//		
+//		public double Opacity
+//		{
+//			get { return this.opacity; }
+//			set { this.opacity = value; }
+//		}
 		
-		public double Opacity
-		{
-			get { return this.opacity; }
-			set { this.opacity = value; }
-		}
-		
-		public double X
+		internal double X
 		{
 			get { return this.x; }
 			set { this.x = value; }
 		}
 		
-		public double Y
+		internal double Y
 		{
 			get { return this.y; }
 			set { this.y = value; }
@@ -197,6 +197,54 @@ namespace SvgReader.Shapes
 			
 			return newText;
 		}
-
+		
+		public void Draw (Gtk.PrintContext context)
+		{
+			Cairo.Context con = context.CairoContext;
+			Pango.Layout layout = context.CreatePangoLayout();
+			
+			layout.SetText(this.textValue);
+			layout.FontDescription = Pango.FontDescription.FromString(this.FontDescription);
+			
+			int pixelSizeWidth, pixelSizeHeight;
+			layout.GetPixelSize(out pixelSizeWidth, out pixelSizeHeight);
+			
+			Console.WriteLine("   Text value: " + this.textValue);
+			Console.WriteLine("   Pixel size width: " + pixelSizeWidth);
+			Console.WriteLine("   Pixel size height: " + pixelSizeHeight);
+			Console.WriteLine("   Text X position: " + this.x);
+			Console.WriteLine("   Text Y position: " + this.y);
+			
+			double x_offset = pixelSizeWidth*0; // Disabled
+			double y_offset = pixelSizeHeight * 0.83;
+			
+			Console.WriteLine("width: " + x_offset);
+			Console.WriteLine("height: " + y_offset);
+			
+			/// Alignment
+			/// If text.Alignment == "center", then x coordinate is indicating
+			/// the center, not the left side. That's way we add pixelSizeWidth/2
+			/// to x_offset
+			if (this.alignment.Equals("center")) {
+				layout.Alignment = Pango.Alignment.Center;
+				x_offset += pixelSizeWidth/2;
+			}
+			
+			con.MoveTo(this.x - x_offset, this.y - y_offset);
+			Pango.CairoHelper.ShowLayout(con, layout);
+			
+//			con.MoveTo(text.X, text.Y - y_offset);
+//			con.LineTo(text.X + 100, text.Y - y_offset);
+//			con.Stroke();
+//			                  
+//			con.MoveTo(text.X, 38.4376957919563);
+//			con.LineTo(text.X + 100, 38.4376957919563);
+//			con.Stroke();
+		}
+		
+		public static bool IsText(XmlNode node)
+		{
+			return node.LocalName.Equals("text");
+		}
 	}
 }

@@ -20,17 +20,18 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Xml;
 
-namespace SvgReader.Shapes
+namespace Shapes
 {
-	public class Table
+	public class Table : IShape
 	{
 		private string id;
 		private int numberOfColumns = 0;
-		private ArrayList rows;
+		private List<Dictionary<string, Text>> rows;
 		
-		private Hashtable lastRowAdded;
+		private Dictionary<string, Text> lastRowAdded;
 		private bool firstTextAlreadyAdded = false;
 		
 		// tableNode is the "g" node in the svg file
@@ -41,8 +42,8 @@ namespace SvgReader.Shapes
 			
 			this.id = Utils.GetAttributeValueFromNode(tableNode, "id");
 			
-			this.rows = new ArrayList();
-			this.lastRowAdded = new Hashtable();
+			this.rows = new List<Dictionary<string, Text>>();
+			this.lastRowAdded = new Dictionary<string, Text>();
 			this.rows.Add(this.lastRowAdded);
 			
 			foreach (XmlNode childNode in tableNode.ChildNodes) {
@@ -65,28 +66,28 @@ namespace SvgReader.Shapes
 			get { return this.numberOfColumns; }
 		}
 		
-		public ArrayList Rows
-		{
-			get { return this.rows; }
-		}
+//		public ArrayList Rows
+//		{
+//			get { return this.rows; }
+//		}
 		
-		public void AddRow(Text[] texts)
+		public void AddRow(List<Text> texts)
 		{
-			if (texts.Length != this.numberOfColumns)
+			if (texts.Count != this.numberOfColumns)
 				throw new Exception("Number of columns wrong");
 			
 			/// If this is the first row added, we replace the actual one, because
 			/// it's only the definition of the colums
 			if (!this.firstTextAlreadyAdded) {
 				foreach (Text t in texts) {
-					t.Y = ((Text)((Hashtable)this.rows[0])[t.Id]).Y;
+					t.Y = this.rows[0][t.Id].Y;
 				}
 				
 				this.rows.Clear();
 				this.firstTextAlreadyAdded = true;
 			}
 			
-			Hashtable newRow = new Hashtable();
+			Dictionary<string, Text> newRow = new Dictionary<string, Text>();
 			
 			foreach (Text aText in texts)
 				newRow[aText.Id] = aText;
@@ -94,23 +95,38 @@ namespace SvgReader.Shapes
 			this.rows.Add(newRow);
 		}
 		
-		public void AddRow(ArrayList texts)
-		{
-			Text[] array = (Text[])texts.ToArray(typeof(Text));
-			this.AddRow(array);
-		}
+//		public void AddRow(List<Text> texts)
+//		{
+//			Text[] array = (Text[])texts.ToArray(typeof(Text));
+//			this.AddRow(array);
+//		}
 		
-		public Text[] LastRowAdded
+		public IList<Text> LastRowAdded
 		{
 			get {
-				Hashtable lastRow = (Hashtable)this.rows[this.rows.Count - 1];
-				ArrayList result = new ArrayList();
+				Dictionary<string, Text> lastRow =
+					this.rows[this.rows.Count - 1];
+				List<Text> result = new List<Text>();
 				
 				foreach (Text aText in lastRow.Values)
 					result.Add(aText);
 				
-				return (Text[])result.ToArray(typeof(Text));
+				return result;
 			}
+		}
+		
+		public void Draw (Gtk.PrintContext context)
+		{
+			foreach (Dictionary<string, Text> aRow in this.rows) {
+				foreach (Text aField in aRow.Values)
+					aField.Draw(context);
+			}
+		}
+		
+		public static bool IsTable(XmlNode node)
+		{
+			return (node.LocalName.Equals("g") &&
+			        Utils.NodeContainsOnlyNode(node, "text"));
 		}
 	}
 }

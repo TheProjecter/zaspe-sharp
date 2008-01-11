@@ -21,10 +21,11 @@
 using System;
 using System.Xml;
 using System.Text.RegularExpressions;
+using Cairo;
 
-namespace SvgReader.Shapes
+namespace Shapes
 {
-	public class Line
+	public class Line : IShape
 	{
 		private string id;
 		
@@ -95,46 +96,67 @@ namespace SvgReader.Shapes
 			get { return this.id; }
 		}
 		
-		public double X1
+//		public double X1
+//		{
+//			get { return this.x1; }
+//			set { this.x1 = value; }
+//		}
+//		
+//		public double Y1
+//		{
+//			get { return this.y1; }
+//			set { this.y1 = value; }
+//		}
+//		
+//		public double X2
+//		{
+//			get { return this.x2; }
+//			set { this.x2 = value; }
+//		}
+//		
+//		public double Y2
+//		{
+//			get { return this.y2; }
+//			set { this.y2 = value; }
+//		}
+		
+//		public double[] StrokeColor
+//		{
+//			get { return this.strokeColor; }
+//			set { this.strokeColor = value; }
+//		}
+		
+//		public double StrokeOpacity
+//		{
+//			get { return this.strokeOpacity; }
+//			set { this.strokeOpacity = value; }
+//		}
+		
+//		public double StrokeWidth
+//		{
+//			get { return this.strokeWidth; }
+//			set { this.strokeWidth = value; }
+//		}
+		
+		public void Draw (Gtk.PrintContext context)
 		{
-			get { return this.x1; }
-			set { this.x1 = value; }
+			Cairo.Context con = context.CairoContext; 
+			
+			con.LineWidth = this.strokeWidth;
+			con.Color = new Cairo.Color(this.strokeColor[0],
+			                            this.strokeColor[1],
+			                            this.strokeColor[2],
+			                            this.strokeOpacity);
+			
+			con.MoveTo(this.x1, this.y1);
+			con.LineTo(this.x2, this.y2);
+			
+			con.Stroke();
 		}
 		
-		public double Y1
+		public static bool IsLine(XmlNode node)
 		{
-			get { return this.y1; }
-			set { this.y1 = value; }
-		}
-		
-		public double X2
-		{
-			get { return this.x2; }
-			set { this.x2 = value; }
-		}
-		
-		public double Y2
-		{
-			get { return this.y2; }
-			set { this.y2 = value; }
-		}
-		
-		public double[] StrokeColor
-		{
-			get { return this.strokeColor; }
-			set { this.strokeColor = value; }
-		}
-		
-		public double StrokeOpacity
-		{
-			get { return this.strokeOpacity; }
-			set { this.strokeOpacity = value; }
-		}
-		
-		public double StrokeWidth
-		{
-			get { return this.strokeWidth; }
-			set { this.strokeWidth = value; }
+			return node.LocalName.Equals("path");
 		}
 	}
 }

@@ -1,13 +1,13 @@
-<Project name="MonoReporter" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="Shapes" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="bin/Debug" assemblyKeyFile="." assembly="MonoReporter" />
+      <Output directory="bin/Debug" assembly="Shapes" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
-      <Output directory="bin/Release" assembly="MonoReporter" />
+      <Output directory="bin/Release" assembly="Shapes" />
       <Build debugmode="False" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
@@ -15,18 +15,23 @@
   </Configurations>
   <Contents>
     <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="Page.cs" subtype="Code" buildaction="Compile" />
-    <File name="Report.cs" subtype="Code" buildaction="Compile" />
-    <File name="Basic" subtype="Directory" buildaction="Compile" />
+    <File name="Utils.cs" subtype="Code" buildaction="Compile" />
+    <File name="Exceptions.cs" subtype="Code" buildaction="Compile" />
+    <File name="Shapes" subtype="Directory" buildaction="Compile" />
+    <File name="Shapes/IShape.cs" subtype="Code" buildaction="Compile" />
+    <File name="Shapes/Line.cs" subtype="Code" buildaction="Compile" />
+    <File name="Shapes/Rectangle.cs" subtype="Code" buildaction="Compile" />
+    <File name="Shapes/Section.cs" subtype="Code" buildaction="Compile" />
+    <File name="Shapes/Table.cs" subtype="Code" buildaction="Compile" />
+    <File name="Shapes/Text.cs" subtype="Code" buildaction="Compile" />
+    <File name="Shapes/UnderlinedText.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
+    <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="Mono.Cairo, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <ProjectReference type="Project" localcopy="True" refto="SvgReader" />
-    <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-    <ProjectReference type="Gac" localcopy="True" refto="Mono.Cairo, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
-    <ProjectReference type="Project" localcopy="True" refto="Shapes" />
   </References>
 </Project>

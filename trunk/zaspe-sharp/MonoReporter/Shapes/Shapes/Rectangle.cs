@@ -22,9 +22,9 @@ using System;
 using System.Xml;
 using System.Globalization;
 
-namespace SvgReader.Shapes
+namespace Shapes
 {
-	public class Rectangle
+	public class Rectangle : IShape
 	{
 		private string id;
 		private double width;
@@ -101,58 +101,88 @@ namespace SvgReader.Shapes
 			set { this.id = value; }
 		}
 		
-		public double Width
+//		public double Width
+//		{
+//			get { return this.width; }
+//			set { this.width = value; }
+//		}
+//		
+//		public double Height
+//		{
+//			get { return this.height; }
+//			set { this.height = value; }
+//		}
+//		
+//		public double X
+//		{
+//			get { return this.x; }
+//			set { this.x = value; }
+//		}
+//		
+//		public double Y
+//		{
+//			get { return this.y; }
+//			set { this.y = value; }
+//		}
+//		
+//		public double LineWidth
+//		{
+//			get { return this.lineWidth; }
+//			set { this.lineWidth = value; }
+//		}
+//		
+//		public double[] FillColor
+//		{
+//			get { return this.fillColor; }
+//			set { this.fillColor = value; }
+//		}
+//		
+//		public double FillOpacity
+//		{
+//			get { return this.fillOpacity; }
+//			set { this.fillOpacity = value; }
+//		}
+//		
+//		public double[] StrokeColor
+//		{
+//			get { return this.strokeColor; }
+//			set { this.strokeColor = value; }
+//		}
+//		
+//		public double StrokeOpacity
+//		{
+//			get { return this.strokeOpacity; }
+//			set { this.strokeOpacity = value; }
+//		}
+		
+		public void Draw (Gtk.PrintContext context)
 		{
-			get { return this.width; }
-			set { this.width = value; }
+			Cairo.Context con = context.CairoContext;
+			
+			Cairo.Rectangle cairoRectangle =
+				new Cairo.Rectangle(new Cairo.Point((int)this.x,
+				                                    (int)this.y),
+				                    this.width,
+				                    this.height);
+			
+			con.Rectangle(cairoRectangle);
+			con.Color = new Cairo.Color(this.fillColor[0],
+			                            this.fillColor[1],
+			                            this.fillColor[2],
+			                            this.fillOpacity);
+			con.FillPreserve();
+			
+			con.LineWidth = this.lineWidth;
+			con.Color = new Cairo.Color(this.strokeColor[0],
+			                            this.strokeColor[1],
+			                            this.strokeColor[2],
+			                            this.strokeOpacity);
+			con.Stroke();
 		}
 		
-		public double Height
+		public static bool IsRectangle(XmlNode node)
 		{
-			get { return this.height; }
-			set { this.height = value; }
-		}
-		
-		public double X
-		{
-			get { return this.x; }
-			set { this.x = value; }
-		}
-		
-		public double Y
-		{
-			get { return this.y; }
-			set { this.y = value; }
-		}
-		
-		public double LineWidth
-		{
-			get { return this.lineWidth; }
-			set { this.lineWidth = value; }
-		}
-		
-		public double[] FillColor
-		{
-			get { return this.fillColor; }
-			set { this.fillColor = value; }
-		}
-		
-		public double FillOpacity
-		{
-			get { return this.fillOpacity; }
-			set { this.fillOpacity = value; }
-		}
-		
-		public double[] StrokeColor
-		{
-			get { return this.strokeColor; }
-			set { this.strokeColor = value; }
-		}
-		
-		public double StrokeOpacity
-		{
-			get { return this.strokeOpacity; }
-			set { this.strokeOpacity = value; }
+			return node.LocalName.Equals("rect");
 		}
 	}
 }
