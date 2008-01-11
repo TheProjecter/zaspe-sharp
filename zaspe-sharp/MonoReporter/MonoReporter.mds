@@ -1,24 +1,28 @@
-<Combine releaseversion="0.0.1" name="MonoReporter" fileversion="2.0" outputpath="./build/bin/">
+<Combine releaseversion="0.0.1" name="MonoReporter" fileversion="2.0" outputpath="build/bin/">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="MonoReporter" configuration="Debug" />
       <Entry build="True" name="Test" configuration="Debug" />
       <Entry build="True" name="SvgReader" configuration="Debug" />
+      <Entry build="True" name="Shapes" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="MonoReporter" configuration="Release" />
       <Entry build="True" name="Test" configuration="Release" />
       <Entry build="True" name="SvgReader" configuration="Release" />
+      <Entry build="True" name="Shapes" configuration="Release" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="Test" single="True">
     <Execute type="None" entry="MonoReporter" />
     <Execute type="None" entry="Test" />
     <Execute type="None" entry="SvgReader" />
+    <Execute type="None" entry="Shapes" />
   </StartMode>
   <Entries>
-    <Entry filename="./MonoReporter.mdp" />
-    <Entry filename="./Test/Test.mdp" />
-    <Entry filename="./SvgReader/SvgReader.mdp" />
+    <Entry filename="MonoReporter.mdp" />
+    <Entry filename="Test/Test.mdp" />
+    <Entry filename="SvgReader/SvgReader.mdp" />
+    <Entry filename="Shapes/Shapes.mdp" />
   </Entries>
 </Combine>

@@ -22,8 +22,7 @@ using System;
 using System.Globalization;
 using System.Collections.Generic;
 using System.Xml;
-
-using SvgReader.Shapes;
+using Shapes;
 
 namespace SvgReader
 {
@@ -96,110 +95,109 @@ namespace SvgReader
 			}
 		}
 		
-		public Rectangle[] Rectangles
+//		public Rectangle[] Rectangles
+//		{
+//			get {
+//				List<Rectangle> rectangles = new List<Rectangle>();
+//				XmlNode svgNode = this.xmlDocument.GetElementsByTagName("svg")[0];
+//				
+//				foreach (XmlNode xmlNode in svgNode.ChildNodes) {
+//					if (xmlNode.LocalName.Equals("rect"))
+//						rectangles.Add(new Rectangle(xmlNode));
+//				}
+//				
+//				return rectangles.ToArray();
+//			}
+//		}
+		
+//		public Text[] Texts
+//		{
+//			get {
+//				List<Text> texts = new List<Text>();
+//				XmlNode svgNode = this.xmlDocument.GetElementsByTagName("svg")[0];
+//				
+//				foreach (XmlNode xmlNode in svgNode.ChildNodes) {
+//					if (xmlNode.LocalName.Equals("text"))
+//						texts.Add(new Text(xmlNode));
+//				}
+//				
+//				return texts.ToArray();
+//			}
+//		}
+		
+//		public Line[] Lines
+//		{
+//			get {
+//				List<Line> lines = new List<Line>();
+//				XmlNode svgNode = this.xmlDocument.GetElementsByTagName("svg")[0];
+//				
+//				foreach (XmlNode xmlNode in svgNode.ChildNodes) {
+//					if (xmlNode.LocalName.Equals("path"))
+//						lines.Add(new Line(xmlNode));
+//				}
+//				
+//				return lines.ToArray();
+//			}
+//		}
+		
+//		public Table[] Tables
+//		{
+//			get {
+//				List<Table> tables = new List<Table>();
+//				XmlNode svgNode = this.xmlDocument.GetElementsByTagName("svg")[0];
+//				
+//				foreach (XmlNode xmlNode in svgNode.ChildNodes) {
+//					/// Check if node is a "g" node, and if only contains "text"
+//					/// nodes, because a Table only consists of "text" nodes.
+//					if (xmlNode.LocalName.Equals("g") && this.NodeContainsOnlyNode(xmlNode, "text"))
+//						tables.Add(new Table(xmlNode));
+//				}
+//				
+//				return tables.ToArray();
+//			}
+//		}
+		
+		private Section GetSection(string sectionName)
 		{
-			get {
-				List<Rectangle> rectangles = new List<Rectangle>();
-				XmlNode svgNode = this.xmlDocument.GetElementsByTagName("svg")[0];
-				
-				foreach (XmlNode xmlNode in svgNode.ChildNodes) {
-					if (xmlNode.LocalName.Equals("rect"))
-						rectangles.Add(new Rectangle(xmlNode));
+			XmlNode svgNode =
+				this.xmlDocument.GetElementsByTagName("svg")[0];
+			
+			foreach (XmlNode xmlNode in svgNode.ChildNodes) {
+				string inkscapeLabel = "";
+				try {
+					inkscapeLabel =
+						Utils.GetAttributeValueFromNode(xmlNode,
+						                                "inkscape:label");
+				}
+				catch (AttributeNotFoundException)
+				{
 				}
 				
-				return rectangles.ToArray();
-			}
-		}
-		
-		public Text[] Texts
-		{
-			get {
-				List<Text> texts = new List<Text>();
-				XmlNode svgNode = this.xmlDocument.GetElementsByTagName("svg")[0];
-				
-				foreach (XmlNode xmlNode in svgNode.ChildNodes) {
-					if (xmlNode.LocalName.Equals("text"))
-						texts.Add(new Text(xmlNode));
-				}
-				
-				return texts.ToArray();
-			}
-		}
-		
-		public Line[] Lines
-		{
-			get {
-				List<Line> lines = new List<Line>();
-				XmlNode svgNode = this.xmlDocument.GetElementsByTagName("svg")[0];
-				
-				foreach (XmlNode xmlNode in svgNode.ChildNodes) {
-					if (xmlNode.LocalName.Equals("path"))
-						lines.Add(new Line(xmlNode));
-				}
-				
-				return lines.ToArray();
-			}
-		}
-		
-		public Table[] Tables
-		{
-			get {
-				List<Table> tables = new List<Table>();
-				XmlNode svgNode = this.xmlDocument.GetElementsByTagName("svg")[0];
-				
-				foreach (XmlNode xmlNode in svgNode.ChildNodes) {
-					/// Check if node is a "g" node, and if only contains "text" nodes, because
-					/// a Table only consists of "text" nodes.
-					if (xmlNode.LocalName.Equals("g") && this.NodeContainsOnlyNode(xmlNode, "text"))
-						tables.Add(new Table(xmlNode));
-				}
-				
-				return tables.ToArray();
-			}
-		}
-		
-		/// <summary>
-		/// Look for a node inside 'node' called nodeInside
-		/// </summary>
-		/// <param name="node">
-		/// A <see cref="XmlNode"/>
-		/// </param>
-		/// <param name="nodeInside">
-		/// A <see cref="System.String"/>
-		/// </param>
-		/// <returns>
-		/// A <see cref="System.Boolean"/>
-		/// </returns>
-		private bool NodeContainsNode(XmlNode node, string nodeInside)
-		{
-			foreach (XmlNode childNode in node.ChildNodes) {
-				if (childNode.LocalName.Equals(nodeInside))
-					return true;
+				if (Section.IsSection(xmlNode) &&
+				    inkscapeLabel.Equals(sectionName))
+					return new Section(xmlNode);
 			}
 			
-			return false;
+			throw new SectionNotFoundException("Section " + sectionName +
+			                                   "not " + "found");
 		}
 		
-		/// <summary>
-		/// Check if a node contains only nodes of the given type 'nodeInside'.
-		/// </summary>
-		/// <param name="node">
-		/// A <see cref="XmlNode"/>
-		/// </param>
-		/// <param name="nodeInside">
-		/// A <see cref="System.String"/>
-		/// </param>
-		/// <returns>
-		/// A <see cref="System.Boolean"/>
-		/// </returns>
-		private bool NodeContainsOnlyNode(XmlNode node, string nodeInside)
-		{
-			foreach (XmlNode childNode in node.ChildNodes) {
-				if (!childNode.LocalName.Equals(nodeInside))
-					return false;
+		public Section ReportHeaderSection {
+			get {
+				return this.GetSection("ReportHeader");
 			}
-			
-			return true;
+		}
+		
+		public Section PageDetailSection {
+			get {
+				return this.GetSection("PageDetail");
+			}
+		}
+		
+		public Section ReportFooterSection {
+			get {
+				return this.GetSection("ReportFooter");
+			}
 		}
 	}
 }

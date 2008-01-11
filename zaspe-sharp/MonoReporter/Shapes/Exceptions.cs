@@ -19,19 +19,27 @@
 */
 
 using System;
-using System.Xml;
 
-namespace SvgReader.Shapes
+namespace Shapes
 {
-	// TODO
-	public class UnderlinedText
+	public class AttributeNotFoundException : System.Exception
 	{
-		private Text text;
-		private Line line;
-		
-		public UnderlinedText(XmlNode gNode)
+		public AttributeNotFoundException(string msg) : base(msg)
 		{
-			
+		}
+	}
+	
+	public class SubOptionNotFoundException : System.Exception
+	{
+		public SubOptionNotFoundException(string msg) : base(msg)
+		{
+		}
+	}
+	
+	public class SectionNotFoundException : System.Exception
+	{
+		public SectionNotFoundException(string msg) : base(msg)
+		{
 		}
 	}
 }

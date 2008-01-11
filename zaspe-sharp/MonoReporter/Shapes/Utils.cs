@@ -23,7 +23,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Globalization;
 
-namespace SvgReader
+namespace Shapes
 {
 	public static class Utils
 	{
@@ -143,6 +143,43 @@ namespace SvgReader
 		private static uint FromHexToDecimal(string hex)
 		{
 			return Convert.ToUInt32(hex, 16);
+		}
+		
+		/// <summary>
+		/// Check if a node contains only nodes of the given type 'nodeInside'.
+		/// </summary>
+		public static bool NodeContainsOnlyNode(XmlNode node, string nodeInside)
+		{
+			foreach (XmlNode childNode in node.ChildNodes) {
+				if (!childNode.LocalName.Equals(nodeInside))
+					return false;
+			}
+			
+			return true;
+		}
+		
+		/// <summary>
+		/// Look for a node inside 'node' called nodeInside
+		/// </summary>
+		public static bool NodeContainsNode(XmlNode node, string nodeInside)
+		{
+			foreach (XmlNode childNode in node.ChildNodes) {
+				if (childNode.LocalName.Equals(nodeInside))
+					return true;
+			}
+			
+			return false;
+		}
+		
+		public static int GetPixelHeightSize(Text aText, Pango.Layout layout)
+		{
+			layout.SetText(aText.TextValue);
+			layout.FontDescription = Pango.FontDescription.FromString(aText.FontDescription);
+			
+			int pixelSizeWidth, pixelSizeHeight;
+			layout.GetPixelSize(out pixelSizeWidth, out pixelSizeHeight);
+			
+			return pixelSizeHeight;
 		}
 	}
 }
