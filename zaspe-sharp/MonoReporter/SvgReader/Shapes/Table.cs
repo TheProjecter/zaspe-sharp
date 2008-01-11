@@ -23,7 +23,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 
-namespace Shapes
+namespace SvgReader.Shapes
 {
 	public class Table : IShape
 	{

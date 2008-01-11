@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using Gtk;
 
 using SvgReader;
-using Shapes;
+using SvgReader.Shapes;
 
 namespace MonoReporter
 {

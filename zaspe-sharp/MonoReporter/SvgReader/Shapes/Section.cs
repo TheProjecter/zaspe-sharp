@@ -23,7 +23,7 @@ using System.Data;
 using System.Collections.Generic;
 using System.Xml;
 
-namespace Shapes
+namespace SvgReader.Shapes
 {
 	public class Section
 	{

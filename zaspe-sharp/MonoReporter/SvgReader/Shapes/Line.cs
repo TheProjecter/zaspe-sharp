@@ -23,7 +23,7 @@ using System.Xml;
 using System.Text.RegularExpressions;
 using Cairo;
 
-namespace Shapes
+namespace SvgReader.Shapes
 {
 	public class Line : IShape
 	{
