@@ -38,5 +38,9 @@ namespace SvgReader.Shapes
 		{
 			throw new NotImplementedException();
 		}
+		
+		public double Y {
+			get { return 0; }
+		}
 	}
 }

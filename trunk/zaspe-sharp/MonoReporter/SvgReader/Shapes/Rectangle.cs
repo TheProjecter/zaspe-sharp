@@ -101,6 +101,10 @@ namespace SvgReader.Shapes
 			set { this.id = value; }
 		}
 		
+		public double Y {
+			get { return this.y; }
+		}
+		
 //		public double Width
 //		{
 //			get { return this.width; }

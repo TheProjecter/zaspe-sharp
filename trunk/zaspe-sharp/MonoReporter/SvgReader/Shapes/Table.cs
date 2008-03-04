@@ -34,6 +34,8 @@ namespace SvgReader.Shapes
 		private Dictionary<string, Text> lastRowAdded;
 		private bool firstTextAlreadyAdded = false;
 		
+		private double y;
+		
 		// tableNode is the "g" node in the svg file
 		public Table(XmlNode tableNode)
 		{
@@ -46,12 +48,16 @@ namespace SvgReader.Shapes
 			this.lastRowAdded = new Dictionary<string, Text>();
 			this.rows.Add(this.lastRowAdded);
 			
+			this.y = Double.MaxValue;
 			foreach (XmlNode childNode in tableNode.ChildNodes) {
 				if (childNode.LocalName.Equals("text")) {
 					Text aText = new Text(childNode);
 					this.lastRowAdded[aText.Id] = aText;
 					
 					this.numberOfColumns++;
+					
+					if (aText.Y < this.y)
+						this.y = aText.Y;
 				}
 			}
 		}
@@ -64,6 +70,10 @@ namespace SvgReader.Shapes
 		public int NumberOfColumns
 		{
 			get { return this.numberOfColumns; }
+		}
+		
+		public double Y {
+			get { return this.y; }
 		}
 		
 //		public ArrayList Rows
@@ -117,6 +127,7 @@ namespace SvgReader.Shapes
 		
 		public void Draw (Gtk.PrintContext context)
 		{
+			Console.WriteLine("Rowssssssssssss: " + this.rows.Count);
 			foreach (Dictionary<string, Text> aRow in this.rows) {
 				foreach (Text aField in aRow.Values)
 					aField.Draw(context);

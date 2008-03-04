@@ -39,6 +39,11 @@ namespace MonoReporter
 		private Dictionary<string,string> data;
 		private Dictionary<string,DataTable> dataTables;
 		
+		// Sections
+		Section pageHeader;
+		Section pageDetail;
+		Section pageFooter;
+		
 		public Report(string reportName, string svgFile)
 		{
 			// Load svg file
@@ -72,7 +77,9 @@ namespace MonoReporter
 			this.data = new Dictionary<string, string>();
 			this.dataTables = new Dictionary<string, DataTable>();
 			
-			// Load ReportHeader, RepotFooter, PageHeader and PageFooter
+			this.pageHeader = this.svgDocument.PageHeaderSection;
+			this.pageDetail = this.svgDocument.PageDetailSection;
+			this.pageFooter = this.svgDocument.PageFooterSection;
 		}
 		
 		public PrintOperationAction Action
@@ -97,17 +104,34 @@ namespace MonoReporter
 		{
 			/* Print shapes in the ReporteHeader section if we are drawing
 			 * the first page */
-			//if (this.printOperation.CurrentPage == 1)
-			Console.WriteLine("$$$$$$$$$$$$$$ REPORT HEADER");
-			this.svgDocument.ReportHeaderSection.Draw(args.Context,
-			                                          this.data,
-			                                          this.dataTables);
+//			if (args.PageNr == 0) {
+//				Console.WriteLine("$$$$$$$$$$$$$$ REPORT HEADER");
+//				this.reportHeader.Draw(args.Context,
+//				                       this.data,
+//				                       this.dataTables,
+//				                       Double.MaxValue);
+//			}
+			
+			// Print shapes in the PageHeader section
+			Console.WriteLine("$$$$$$$$$$$$$$ Page Header");
+			this.pageHeader.Draw(args.Context,
+			                     this.data,
+			                     this.dataTables,
+			                     this.svgDocument.PageDetailSection.Y);
 			
 			// Print shapes in the PageDetail section
 			Console.WriteLine("$$$$$$$$$$$$$$ Page Detail");
-			this.svgDocument.PageDetailSection.Draw(args.Context,
-			                                        this.data,
-			                                        this.dataTables);
+			this.pageDetail.Draw(args.Context,
+			                     this.data,
+			                     this.dataTables,
+			                     this.svgDocument.PageFooterSection.Y);
+			
+			// Print shapes in the PageFooter section
+			Console.WriteLine("$$$$$$$$$$$$$$ Page Footer");
+			this.pageFooter.Draw(args.Context,
+			                     this.data,
+			                     this.dataTables,
+			                     this.printOperation.PrintSettings.PaperSize.GetHeight(Unit.Mm));
 			
 			/* Print shapes in the ReportFooter section if we are draing the
 			 * last page (TODO) */
@@ -187,6 +211,11 @@ namespace MonoReporter
 		
 		public void Run(Gtk.Window win)
 		{
+			// Calculate the number of pages needed
+			double pageHeight =
+				this.printOperation.PrintSettings.PaperSize.GetHeight(Unit.Mm);
+			double sum = 0;
+			
 			printOperation.Run(this.action, win);
 		}
 	}

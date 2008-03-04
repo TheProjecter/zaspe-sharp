@@ -29,15 +29,21 @@ namespace SvgReader.Shapes
 	{
 		private string id;
 		public List<IShape> shapesInSection;
+		public List<DataRow> datarowsToDraw;
 		
-		public Section(XmlNode sectionNode)
+		internal Section()
+		{
+			this.shapesInSection = new List<IShape>();
+		}
+		
+		public Section(XmlNode sectionNode) : this()
 		{
 			if (!sectionNode.LocalName.Equals("g"))
 				throw new Exception("sectionNode is not a 'g' node");
 			
 			this.id = Utils.GetAttributeValueFromNode(sectionNode, "id");
 			
-			this.shapesInSection = new List<IShape>();
+			//this.shapesInSection = new List<IShape>();
 			IShape shape = null;
 			
 			foreach(XmlNode childNode in sectionNode.ChildNodes) {
@@ -63,7 +69,8 @@ namespace SvgReader.Shapes
 		
 		public void Draw (Gtk.PrintContext context,
 		                  Dictionary<string, string> data,
-		                  Dictionary<string, DataTable> dataTables)
+		                  Dictionary<string, DataTable> dataTables,
+		                  double maxYToDraw)
 		{
 			foreach (IShape aShape in this.shapesInSection) {
 				if (aShape is Text) {
@@ -77,16 +84,28 @@ namespace SvgReader.Shapes
 				else if (aShape is Table) {
 					Table aTable = (Table)aShape;
 					
+					/* If the table has no data, don't draw it */
 					if (!dataTables.ContainsKey(aTable.Id))
 						continue;
 					
+					// DataTable corresponding to the Table object
+					DataTable dataTable = dataTables[aTable.Id];
+					
+					if (this.datarowsToDraw == null) {
+						this.datarowsToDraw = new List<DataRow>();
+						
+						// Add all DataRows
+						foreach (DataRow dr in dataTable.Rows)
+							this.datarowsToDraw.Add(dr);
+					}
+					
 					Console.WriteLine("Procesando un DataTable...");
 					
-					DataTable dataTable = dataTables[aTable.Id];
-					Text textTemp;
+					Text textTemp = null;
 					List<Text> textRow = new List<Text>(aTable.NumberOfColumns);
+					List<DataRow> datarowsDrawn = new List<DataRow>();
 					
-					foreach (DataRow dataRow in dataTable.Rows) {
+					foreach (DataRow dataRow in this.datarowsToDraw) {
 						foreach (Text aText in aTable.LastRowAdded) {
 							Console.WriteLine("   Text: " + aText.TextValue);
 							
@@ -100,12 +119,64 @@ namespace SvgReader.Shapes
 							textRow.Add(textTemp);
 						}
 						
+						/* We stop drawing rows if we have reached the end
+						 * of the section (the start of the next one) */
+						double heightOfLastText =
+							textTemp.Y + Utils.GetPixelHeightSize(textTemp,
+							                                      context.CreatePangoLayout());
+						if (heightOfLastText > maxYToDraw)
+							break;
+						
 						aTable.AddRow(textRow);
 						textRow.Clear();
+						
+						/* I add the DataRow to remove it later.
+						 * This is for multipage reports, where there is a lot
+						 * of data. Next call to this function we will draw
+						 * remaning shapes */
+						datarowsDrawn.Add(dataRow);
 					}
+					
+					// Remove already drawn datarows
+					foreach (DataRow dr in datarowsDrawn)
+						this.datarowsToDraw.Remove(dr);
+					
+					Console.WriteLine("AAAAAAAAA Se agregó una tabla");
 				}
 				
+				// Draw the Shape
 				aShape.Draw(context);
+				
+				
+				//shapesToRemove.Add(aShape);
+			}
+		}
+		
+		/// <value>
+		/// Where the section starts. This is, the shape with the min value
+		/// in its "y" property
+		/// </value>
+		public double Y {
+			get {
+				double mixY = Double.MaxValue;
+				
+				foreach (IShape shape in this.shapesInSection)
+					if (shape.Y < mixY)
+						mixY = shape.Y;
+				
+				return mixY;
+			}
+		}
+		
+		public double Height {
+			get {
+				double maxY = Double.MinValue;
+				
+				foreach (IShape shape in this.shapesInSection)
+					if (shape.Y > maxY)
+						maxY = shape.Y;
+				
+				return (maxY - this.Y);
 			}
 		}
 		

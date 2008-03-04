@@ -47,7 +47,7 @@ public class MainWindow {
 //		report.Run(myWindow);
 		
 		Report report = new Report("PruebaMonoReporter", "test.svg");
-		report.Data["titulo"] = "Listado de personas";
+		report.Data["titulo"] = "Listado de personas operantes";
 
 		DataTable personsTable = new DataTable();
 		
@@ -58,26 +58,29 @@ public class MainWindow {
 		columns[3] = new DataColumn("direccion");
 		personsTable.Columns.AddRange(columns);
 		
-		DataRow d1 = personsTable.NewRow();
-		d1["nombre"] = "Milton";
-		d1["apellido"] = "Pividori";
-		d1["dni"] = "99999999";
-		d1["direccion"] = "dirección";
-		personsTable.Rows.Add(d1);
-		
-		d1 = personsTable.NewRow();
-		d1["nombre"] = "Pepe";
-		d1["apellido"] = "Biondi";
-		d1["dni"] = "11111111";
-		d1["direccion"] = "alguna dirección";
-		personsTable.Rows.Add(d1);
-		
-		d1 = personsTable.NewRow();
-		d1["nombre"] = "Juan";
-		d1["apellido"] = "Sanchez";
-		d1["dni"] = "33333333";
-		d1["direccion"] = "otra dirección";
-		personsTable.Rows.Add(d1);
+		DataRow d1;
+		for (int i=0; i<100; i++) {
+			d1 = personsTable.NewRow();
+			d1["nombre"] = "Milton";
+			d1["apellido"] = "Pividori";
+			d1["dni"] = "99999999";
+			d1["direccion"] = "dirección";
+			personsTable.Rows.Add(d1);
+			
+			d1 = personsTable.NewRow();
+			d1["nombre"] = "Pepe";
+			d1["apellido"] = "Biondi";
+			d1["dni"] = "11111111";
+			d1["direccion"] = "alguna dirección";
+			personsTable.Rows.Add(d1);
+			
+			d1 = personsTable.NewRow();
+			d1["nombre"] = "Juan";
+			d1["apellido"] = "Sanchez";
+			d1["dni"] = "33333333";
+			d1["direccion"] = "otra dirección";
+			personsTable.Rows.Add(d1);
+		}
 		
 //		DataRow d1;
 //
