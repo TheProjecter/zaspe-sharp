@@ -91,9 +91,17 @@ namespace SvgReader.Shapes
 			}
 		}
 		
-		public string Id
-		{
+		public string Id {
 			get { return this.id; }
+		}
+		
+		public double Y {
+			get {
+				if (this.y1 > this.y2)
+					return this.y2;
+				
+				return this.y1;
+			}
 		}
 		
 //		public double X1

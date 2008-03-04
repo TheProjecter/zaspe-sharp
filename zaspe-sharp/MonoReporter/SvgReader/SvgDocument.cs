@@ -178,13 +178,15 @@ namespace SvgReader
 					return new Section(xmlNode);
 			}
 			
-			throw new SectionNotFoundException("Section " + sectionName +
-			                                   "not " + "found");
+//			throw new SectionNotFoundException("Section " + sectionName +
+//			                                   " not " + "found");
+			// Return "dummy" Section
+			return new Section();
 		}
 		
-		public Section ReportHeaderSection {
+		public Section PageHeaderSection {
 			get {
-				return this.GetSection("ReportHeader");
+				return this.GetSection("PageHeader");
 			}
 		}
 		
@@ -194,9 +196,9 @@ namespace SvgReader
 			}
 		}
 		
-		public Section ReportFooterSection {
+		public Section PageFooterSection {
 			get {
-				return this.GetSection("ReportFooter");
+				return this.GetSection("PageFooter");
 			}
 		}
 	}

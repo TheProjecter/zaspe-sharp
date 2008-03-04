@@ -28,9 +28,9 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.5938836"
      inkscape:cx="368.11808"
-     inkscape:cy="103.88808"
+     inkscape:cy="831.67021"
      inkscape:document-units="px"
-     inkscape:current-layer="PageDetail"
+     inkscape:current-layer="layer2"
      inkscape:window-width="1680"
      inkscape:window-height="975"
      inkscape:window-x="0"
@@ -56,8 +56,49 @@
   </metadata>
   <g
      inkscape:groupmode="layer"
-     id="ReportFooter"
-     inkscape:label="ReportFooter" />
+     id="layer1"
+     inkscape:label="PageFooter">
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="317.27606"
+       y="1018.4484"
+       id="text2188"><tspan
+         sodipodi:role="line"
+         id="tspan2190"
+         x="317.27606"
+         y="1018.4484">Página</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="369.44449"
+       y="1019.2716"
+       id="text2192"><tspan
+         sodipodi:role="line"
+         id="tspan2194"
+         x="369.44449"
+         y="1019.2716">X</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="390.26526"
+       y="1019.3712"
+       id="text2196"><tspan
+         sodipodi:role="line"
+         id="tspan2198"
+         x="390.26526"
+         y="1019.3712">de</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="418.2872"
+       y="1019.2716"
+       id="text2200"><tspan
+         sodipodi:role="line"
+         id="tspan2202"
+         x="418.2872"
+         y="1019.2716">Y</tspan></text>
+  </g>
   <g
      inkscape:groupmode="layer"
      id="PageDetail"
@@ -163,60 +204,19 @@
     </g>
     <text
        xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="317.27606"
-       y="1018.4484"
-       id="text2188"><tspan
+       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="372.94568"
+       y="65.464523"
+       id="titulo"
+       sodipodi:linespacing="125%"
+       inkscape:label="#text2189"><tspan
          sodipodi:role="line"
-         id="tspan2190"
-         x="317.27606"
-         y="1018.4484">Página</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="369.44449"
-       y="1019.2716"
-       id="text2192"><tspan
-         sodipodi:role="line"
-         id="tspan2194"
-         x="369.44449"
-         y="1019.2716">X</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="390.26526"
-       y="1019.3712"
-       id="text2196"><tspan
-         sodipodi:role="line"
-         id="tspan2198"
-         x="390.26526"
-         y="1019.3712">de</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="418.2872"
-       y="1019.2716"
-       id="text2200"><tspan
-         sodipodi:role="line"
-         id="tspan2202"
-         x="418.2872"
-         y="1019.2716">Y</tspan></text>
+         id="tspan2191"
+         x="372.94568"
+         y="65.464523">Título del reporte</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
-     id="ReportHeader"
-     inkscape:label="ReportHeader">
-    <text
-       xml:space="preserve"
-       style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
-       x="370.8981"
-       y="72.503044"
-       id="titulo"
-       sodipodi:linespacing="100%"
-       inkscape:label="#text2194"><tspan
-         sodipodi:role="line"
-         id="tspan2168"
-         x="370.8981"
-         y="72.503044">TítuloDelReporte</tspan></text>
-  </g>
+     id="layer2"
+     inkscape:label="PageHeader" />
 </svg>

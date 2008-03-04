@@ -166,13 +166,13 @@ namespace SvgReader.Shapes
 //			set { this.opacity = value; }
 //		}
 		
-		internal double X
+		public double X
 		{
 			get { return this.x; }
 			set { this.x = value; }
 		}
 		
-		internal double Y
+		public double Y
 		{
 			get { return this.y; }
 			set { this.y = value; }
