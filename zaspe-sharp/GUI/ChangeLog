@@ -1,0 +1,5 @@
+2008-03-27   <> 
+
+	* AssemblyInfo.cs: Switch to version 0.0.3. Copyright year updated.
+	* glade/main_window.glade: ShowStats menu item disabled by default.
+

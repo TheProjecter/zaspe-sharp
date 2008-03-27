@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Zaspe#")]
-[assembly: AssemblyCopyright("Milton Pividori 2006-2007")]
+[assembly: AssemblyCopyright("Milton Pividori 2006-2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -46,4 +46,4 @@ using System.Runtime.InteropServices;
 // You can specify all values by your own or you can build default build and revision
 // numbers with the '*' character (the default):
 
-[assembly: AssemblyVersion("0.0.2")]
+[assembly: AssemblyVersion("0.0.3")]
