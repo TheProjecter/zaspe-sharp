@@ -1,5 +1,0 @@
-This version of Prebuild is patched to support:
-
-	* WinExe targets on MonoDevelop (Milton Pividori).
-	* FileCopy buildAction on MonoDevelop (Milton Pividori).
-
