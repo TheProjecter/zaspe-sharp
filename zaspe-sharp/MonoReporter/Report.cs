@@ -51,7 +51,7 @@ namespace MonoReporter
 			
 			// Create PrintOperation object
 			this.printOperation = new PrintOperation();
-			this.printOperation.NPages = 1; // FIXME: Correct number of pages must be calculated
+			this.printOperation.NPages = 1;
 			this.printOperation.Unit = Unit.Mm;
 			this.printOperation.JobName = reportName;
 			this.printOperation.ExportFilename = "test.pdf";
@@ -69,6 +69,7 @@ namespace MonoReporter
 			this.printOperation.PrintSettings = psettings;
 			
 			printOperation.DrawPage += this.DrawPage;
+			printOperation.BeginPrint += this.BeginPrint;
 			
 			// Set default action
 			this.action = PrintOperationAction.Export;
@@ -100,6 +101,46 @@ namespace MonoReporter
 			set { this.dataTables = value; }
 		}
 		
+		public void BeginPrint(object o, Gtk.BeginPrintArgs args)
+		{
+			// Print shapes in the PageHeader section
+			Console.WriteLine("$$$$$$$$$$$$$$ Page Header");
+			this.pageHeader.Draw(args.Context,
+			                     this.data,
+			                     this.dataTables,
+			                     this.svgDocument.PageDetailSection.Y,
+			                     false);
+			
+			// Print shapes in the PageDetail section
+			Console.WriteLine("$$$$$$$$$$$$$$ Page Detail");
+			this.pageDetail.Draw(args.Context,
+			                     this.data,
+			                     this.dataTables,
+			                     this.svgDocument.PageFooterSection.Y,
+			                     false);
+			
+			// Print shapes in the PageFooter section
+			Console.WriteLine("$$$$$$$$$$$$$$ Page Footer");
+			this.pageFooter.Draw(args.Context,
+			                     this.data,
+			                     this.dataTables,
+			                     this.printOperation.PrintSettings.PaperSize.GetHeight(Unit.Mm),
+			                     false);
+			
+			Console.WriteLine("PH: " + this.pageHeader.PagesToAdd);
+			Console.WriteLine("PD: " + this.pageDetail.PagesToAdd);
+			Console.WriteLine("PF: " + this.pageFooter.PagesToAdd);
+			int numberOfPagesToAdd = this.pageHeader.PagesToAdd +
+				this.pageDetail.PagesToAdd + this.pageFooter.PagesToAdd;
+			
+			PrintOperation op = o as PrintOperation;
+			op.NPages = op.NPages + numberOfPagesToAdd;
+			
+			this.pageHeader.ResetDataTablesToDraw();
+			this.pageDetail.ResetDataTablesToDraw();
+			this.pageFooter.ResetDataTablesToDraw();
+		}
+		
 		private void DrawPage(object o, DrawPageArgs args)
 		{
 			/* Print shapes in the ReporteHeader section if we are drawing
@@ -117,96 +158,27 @@ namespace MonoReporter
 			this.pageHeader.Draw(args.Context,
 			                     this.data,
 			                     this.dataTables,
-			                     this.svgDocument.PageDetailSection.Y);
+			                     this.svgDocument.PageDetailSection.Y,
+			                     true);
 			
 			// Print shapes in the PageDetail section
 			Console.WriteLine("$$$$$$$$$$$$$$ Page Detail");
 			this.pageDetail.Draw(args.Context,
 			                     this.data,
 			                     this.dataTables,
-			                     this.svgDocument.PageFooterSection.Y);
+			                     this.svgDocument.PageFooterSection.Y,
+			                     true);
 			
 			// Print shapes in the PageFooter section
 			Console.WriteLine("$$$$$$$$$$$$$$ Page Footer");
 			this.pageFooter.Draw(args.Context,
 			                     this.data,
 			                     this.dataTables,
-			                     this.printOperation.PrintSettings.PaperSize.GetHeight(Unit.Mm));
+			                     this.printOperation.PrintSettings.PaperSize.GetHeight(Unit.Mm),
+			                     true);
 			
 			/* Print shapes in the ReportFooter section if we are draing the
 			 * last page (TODO) */
-			
-//			Cairo.Context con = args.Context.CairoContext;
-//			
-//			// Draw rectangles
-//			Rectangle[] rectangles = this.svgDocument.Rectangles;
-//			foreach (Rectangle r in rectangles) {
-//				Console.WriteLine("Rect ID: " + r.Id);
-//				Console.WriteLine("  X: " + r.X + "  Y: " + r.Y + "  Width: " + r.Width + "  Height: " + r.Height);
-//				Console.WriteLine("  FillColor -> R: " + r.FillColor[0] + " - G: " + r.FillColor[1] + " - B: " + r.FillColor[2]);
-//				Console.WriteLine("  FillOpacity: " + r.FillOpacity);
-//				Console.WriteLine("  StrokeColor -> R: " + r.StrokeColor[0] + " - G: " + r.StrokeColor[1] + " - B: " + r.StrokeColor[2]);
-//				Console.WriteLine("  StrokeOpacity: " + r.StrokeOpacity);
-//				CairoDrawingFunctions.Draw(con, r);
-//			}
-//			
-//			// Draw text
-//			Text[] texts = this.svgDocument.Texts;
-//			foreach(Text t in texts) {
-//				Console.WriteLine("Text ID: " + t.Id);
-//				Console.WriteLine("  TextValue: " + t.TextValue);
-//				Console.WriteLine("  FontDescription: " + t.FontDescription);
-//				Console.WriteLine("  X: " + t.X + "  Y: " + t.Y);
-//				Console.WriteLine("  Color -> R: " + t.Color[0] + " - G: " + t.Color[1] + " - B: " + t.Color[2]);
-//				Console.WriteLine("  Opacity: " + t.Opacity);
-////				Console.WriteLine("  StrokeColor -> R: " + r.StrokeColor[0] + " - G: " + r.StrokeColor[1] + " - B: " + r.StrokeColor[2]);
-////				Console.WriteLine("  StrokeOpacity: " + r.StrokeOpacity);
-//				
-//				if (this.data.ContainsKey(t.Id)) {
-//					t.TextValue = this.data[t.Id].ToString();
-//					Console.WriteLine("Data setted. Text id: " + t.Id + ". Value: " + t.TextValue);
-//				}
-//				
-//				CairoDrawingFunctions.Draw(con, args.Context.CreatePangoLayout(), t);
-//			}
-//			
-//			// Draw lines
-//			foreach(Line l in this.svgDocument.Lines) {
-//				CairoDrawingFunctions.Draw(con, l);
-//			}
-//			
-//			// Draw tables
-//			foreach (SvgReader.Shapes.Table aTable in this.svgDocument.Tables) {
-//				Console.WriteLine("Table id: " + aTable.Id);
-//				
-//				if (!this.dataTables.ContainsKey(aTable.Id))
-//					continue;
-//				
-//				Console.WriteLine("Procesando un DataTable...");
-//				
-//				DataTable dataTable = (DataTable)this.dataTables[aTable.Id];
-//				Text textTemp;
-//				ArrayList textRow = new ArrayList(aTable.NumberOfColumns);
-//				
-//				foreach (DataRow dataRow in dataTable.Rows) {
-//					foreach (Text aText in aTable.LastRowAdded) {
-//						Console.WriteLine("   Text: " + aText.TextValue);
-//						
-//						textTemp = (Text)aText.Clone();
-//						textTemp.TextValue = dataRow[textTemp.Id].ToString();
-//						textTemp.Y = textTemp.Y +
-//							CairoDrawingFunctions.GetPixelHeightSize(textTemp,
-//							                                         args.Context.CreatePangoLayout());
-//						
-//						textRow.Add(textTemp);
-//					}
-//					
-//					aTable.AddRow(textRow);
-//					textRow.Clear();
-//				}
-//				
-//				CairoDrawingFunctions.Draw(args.Context, aTable);
-//			}
 		}
 		
 		public void Run(Gtk.Window win)

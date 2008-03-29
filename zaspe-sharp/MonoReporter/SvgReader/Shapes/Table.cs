@@ -32,6 +32,7 @@ namespace SvgReader.Shapes
 		private List<Dictionary<string, Text>> rows;
 		
 		private Dictionary<string, Text> lastRowAdded;
+		private Dictionary<string, Text> lastRowAdded_Original; // Used to reset the table
 		private bool firstTextAlreadyAdded = false;
 		
 		private double y;
@@ -46,6 +47,7 @@ namespace SvgReader.Shapes
 			
 			this.rows = new List<Dictionary<string, Text>>();
 			this.lastRowAdded = new Dictionary<string, Text>();
+			this.lastRowAdded_Original = new Dictionary<string, Text>();
 			this.rows.Add(this.lastRowAdded);
 			
 			this.y = Double.MaxValue;
@@ -53,6 +55,7 @@ namespace SvgReader.Shapes
 				if (childNode.LocalName.Equals("text")) {
 					Text aText = new Text(childNode);
 					this.lastRowAdded[aText.Id] = aText;
+					this.lastRowAdded_Original[aText.Id] = aText;
 					
 					this.numberOfColumns++;
 					
@@ -60,6 +63,18 @@ namespace SvgReader.Shapes
 						this.y = aText.Y;
 				}
 			}
+		}
+		
+		public void Reset()
+		{
+			this.rows.Clear();
+			this.lastRowAdded.Clear();
+			
+			foreach (KeyValuePair<string, Text> kvp in this.lastRowAdded_Original)
+				this.lastRowAdded.Add(kvp.Key, kvp.Value);
+			
+			this.rows.Add(this.lastRowAdded);
+			this.firstTextAlreadyAdded = false;
 		}
 		
 		public string Id
