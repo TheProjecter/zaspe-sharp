@@ -59,9 +59,9 @@ public class MainWindow {
 		personsTable.Columns.AddRange(columns);
 		
 		DataRow d1;
-		for (int i=0; i<100; i++) {
+		for (int i=0; i<30; i++) {
 			d1 = personsTable.NewRow();
-			d1["nombre"] = "Milton";
+			d1["nombre"] = i.ToString() + "Milton";
 			d1["apellido"] = "Pividori";
 			d1["dni"] = "99999999";
 			d1["direccion"] = "dirección";

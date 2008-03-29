@@ -28,8 +28,9 @@ namespace SvgReader.Shapes
 	public class Section
 	{
 		private string id;
-		public List<IShape> shapesInSection;
-		public List<DataRow> datarowsToDraw;
+		private List<IShape> shapesInSection;
+		private List<DataRow> datarowsToDraw;
+		private int originalNumberOfDataRows = 0;
 		
 		internal Section()
 		{
@@ -70,7 +71,8 @@ namespace SvgReader.Shapes
 		public void Draw (Gtk.PrintContext context,
 		                  Dictionary<string, string> data,
 		                  Dictionary<string, DataTable> dataTables,
-		                  double maxYToDraw)
+		                  double maxYToDraw,
+		                  bool reallyDraw)
 		{
 			foreach (IShape aShape in this.shapesInSection) {
 				if (aShape is Text) {
@@ -97,6 +99,8 @@ namespace SvgReader.Shapes
 						// Add all DataRows
 						foreach (DataRow dr in dataTable.Rows)
 							this.datarowsToDraw.Add(dr);
+						
+						this.originalNumberOfDataRows = this.datarowsToDraw.Count;
 					}
 					
 					Console.WriteLine("Procesando un DataTable...");
@@ -140,15 +144,14 @@ namespace SvgReader.Shapes
 					// Remove already drawn datarows
 					foreach (DataRow dr in datarowsDrawn)
 						this.datarowsToDraw.Remove(dr);
-					
-					Console.WriteLine("AAAAAAAAA Se agregó una tabla");
 				}
 				
 				// Draw the Shape
-				aShape.Draw(context);
+				if (reallyDraw)
+					aShape.Draw(context);
 				
-				
-				//shapesToRemove.Add(aShape);
+				// Let's reset all tables for next iteration
+				if (aShape is Table) (aShape as Table).Reset();
 			}
 		}
 		
@@ -178,6 +181,22 @@ namespace SvgReader.Shapes
 				
 				return (maxY - this.Y);
 			}
+		}
+		
+		public int PagesToAdd {
+			get {
+				if (this.datarowsToDraw == null || this.datarowsToDraw.Count == 0)
+					return 0;
+				
+				Console.WriteLine("ONODR: " + this.originalNumberOfDataRows);
+				Console.WriteLine("DRTDC: " + this.datarowsToDraw.Count);
+				return (this.originalNumberOfDataRows / (this.originalNumberOfDataRows - this.datarowsToDraw.Count));
+			}
+		}
+		
+		public void ResetDataTablesToDraw()
+		{
+			this.datarowsToDraw = null;
 		}
 		
 		/// <summary>
