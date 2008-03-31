@@ -16,6 +16,7 @@
     <Execute type="None" entry="Test" />
     <Execute type="None" entry="SvgReader" />
   </StartMode>
+  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UpdateNearestChangeLog" />
   <Entries>
     <Entry filename="MonoReporter.mdp" />
     <Entry filename="Test/Test.mdp" />

@@ -42,6 +42,8 @@ namespace SvgReader.Shapes
 		private double[] color;
 		private double opacity;
 		
+		private string bold;
+		
 		private Text()
 		{
 		}
@@ -109,6 +111,14 @@ namespace SvgReader.Shapes
 			catch (SubOptionNotFoundException) {
 				this.opacity = 1.0;
 			}
+			
+			try {
+				string isBold = Utils.GetValueFromMultiValuatedAttribute(textNode, "style", "font-weight");
+				this.bold = isBold.Equals("bold") ? "Bold " : "";
+			}
+			catch (SubOptionNotFoundException) {
+				this.bold = "";
+			}
 		}
 		
 		public string Id
@@ -150,7 +160,7 @@ namespace SvgReader.Shapes
 		internal string FontDescription
 		{
 			get {
-				return (this.family + " " + Convert.ToInt32(this.size * 0.8));
+				return (this.family + " " + this.bold + Convert.ToInt32(this.size * 0.8));
 			}
 		}
 		
