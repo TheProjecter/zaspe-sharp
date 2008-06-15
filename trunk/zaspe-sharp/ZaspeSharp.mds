@@ -1,0 +1,36 @@
+<Combine name="ZaspeSharp" fileversion="2.0" description="">
+  <Configurations active="Release">
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry configuration="Release" build="True" name="GUI" />
+      <Entry configuration="Release" build="True" name="EventTypesManager" />
+      <Entry configuration="Release" build="True" name="AttendancesManager" />
+      <Entry configuration="Release" build="True" name="InstrumentsManager" />
+      <Entry configuration="Release" build="True" name="PersonsManager" />
+      <Entry configuration="Release" build="True" name="EventsManager" />
+    </Configuration>
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry configuration="Debug" build="True" name="GUI" />
+      <Entry configuration="Debug" build="True" name="EventTypesManager" />
+      <Entry configuration="Debug" build="True" name="AttendancesManager" />
+      <Entry configuration="Debug" build="True" name="InstrumentsManager" />
+      <Entry configuration="Debug" build="True" name="PersonsManager" />
+      <Entry configuration="Debug" build="True" name="EventsManager" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="GUI" single="True">
+    <Execute type="None" entry="GUI" />
+    <Execute type="None" entry="EventTypesManager" />
+    <Execute type="None" entry="AttendancesManager" />
+    <Execute type="None" entry="InstrumentsManager" />
+    <Execute type="None" entry="PersonsManager" />
+    <Execute type="None" entry="EventsManager" />
+  </StartMode>
+  <Entries>
+    <Entry filename="../zaspe-sharp-ultimo/GUI/GUI.mdp" />
+    <Entry filename="../zaspe-sharp-ultimo/EventTypesManager/EventTypesManager.mdp" />
+    <Entry filename="../zaspe-sharp-ultimo/AttendancesManager/AttendancesManager.mdp" />
+    <Entry filename="../zaspe-sharp-ultimo/InstrumentsManager/InstrumentsManager.mdp" />
+    <Entry filename="../zaspe-sharp-ultimo/PersonsManager/PersonsManager.mdp" />
+    <Entry filename="../zaspe-sharp-ultimo/EventsManager/EventsManager.mdp" />
+  </Entries>
+</Combine>
