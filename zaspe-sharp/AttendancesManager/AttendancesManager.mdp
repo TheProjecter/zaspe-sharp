@@ -1,37 +1,38 @@
-<Project name="AttendancesManager" description="" standardNamespace="ZaspeSharp.Attendances" newfilesearch="None" enableviewstate="True" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
-  <Configurations active="Debug">
+<Project name="AttendancesManager" fileversion="2.0" language="C#" clr-version="Net_2_0" description="" standardNamespace="ZaspeSharp.Attendances" enableviewstate="True" ctype="DotNetProject">
+  <Configurations active="Release">
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
-      <Output directory="././bin/Release/" assembly="AttendancesManager" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
+      <Output directory="bin/Release/" assembly="AttendancesManager" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
-      <CodeGeneration compiler="Csc" warninglevel="4" nowarn="" includedebuginformation="False" optimize="True" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" target="Library" definesymbols="" generatexmldocumentation="False" win32Icon="" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="././bin/Debug/" assembly="AttendancesManager" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
+      <Output directory="bin/Debug/" assembly="AttendancesManager" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
-      <CodeGeneration compiler="Csc" warninglevel="4" nowarn="" includedebuginformation="True" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" target="Library" definesymbols="TRACE;DEBUG" generatexmldocumentation="False" win32Icon="" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" definesymbols="TRACE;DEBUG" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
-  <DeploymentInformation target="" script="" strategy="File">
-    <excludeFiles />
-  </DeploymentInformation>
   <Contents>
-    <File name="./AssemblyInfo.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Attendance.Properties.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./Attendance.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./AttendanceExceptions.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./AttendanceManager.Methods.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./AttendanceManager.Properties.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./AttendanceManager.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+    <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Attendance.Properties.cs" subtype="Code" buildaction="Compile" />
+    <File name="Attendance.cs" subtype="Code" buildaction="Compile" />
+    <File name="AttendanceExceptions.cs" subtype="Code" buildaction="Compile" />
+    <File name="AttendanceManager.Methods.cs" subtype="Code" buildaction="Compile" />
+    <File name="AttendanceManager.Properties.cs" subtype="Code" buildaction="Compile" />
+    <File name="AttendanceManager.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="False" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Project" localcopy="False" refto="EventsManager" />
     <ProjectReference type="Project" localcopy="False" refto="PersonsManager" />
-    <ProjectReference type="Assembly" refto="../Gentle.NET/Gentle.Common.dll" localcopy="True" />
-    <ProjectReference type="Assembly" refto="../Gentle.NET/Gentle.Framework.dll" localcopy="True" />
-    <ProjectReference type="Assembly" refto="../Gentle.NET/Gentle.Provider.SQLite.dll" localcopy="True" />
-    <ProjectReference type="Assembly" refto="../Gentle.NET/log4net.dll" localcopy="True" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../Gentle.NET/Gentle.Common.dll" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../Gentle.NET/Gentle.Framework.dll" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../Gentle.NET/Gentle.Provider.SQLite.dll" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../Gentle.NET/log4net.dll" />
+    <ProjectReference type="Project" localcopy="True" refto="EventTypesManager" />
   </References>
+  <DeploymentInformation target="" script="" strategy="File">
+    <excludeFiles />
+  </DeploymentInformation>
 </Project>
