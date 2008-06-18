@@ -26,6 +26,7 @@ using Gtk;
 using ZaspeSharp.Persons;
 using ZaspeSharp.Events;
 using ZaspeSharp.Attendances;
+using ZaspeSharp.ReportGenerator;
 
 namespace ZaspeSharp.GUI
 {
@@ -230,7 +231,8 @@ namespace ZaspeSharp.GUI
 #region Event handlers
 		public void OnMenuItemShowStats(object o, EventArgs args)
 		{
-			new AttendancesReport(this.mainWindow);
+			ReportGUI rg = new ReportGUI(this.mainWindow);
+			rg.Run();
 		}
 		
 		public void OnToolButtonReloadClicked(object o, EventArgs args)

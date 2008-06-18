@@ -1,20 +1,22 @@
-<Combine name="ZaspeSharp" fileversion="2.0" description="">
-  <Configurations active="Release">
+<Combine name="ZaspeSharp" fileversion="2.0">
+  <Configurations active="Debug">
     <Configuration name="Release" ctype="CombineConfiguration">
-      <Entry configuration="Release" build="True" name="GUI" />
-      <Entry configuration="Release" build="True" name="EventTypesManager" />
-      <Entry configuration="Release" build="True" name="AttendancesManager" />
-      <Entry configuration="Release" build="True" name="InstrumentsManager" />
-      <Entry configuration="Release" build="True" name="PersonsManager" />
-      <Entry configuration="Release" build="True" name="EventsManager" />
+      <Entry build="True" name="GUI" configuration="Release" />
+      <Entry build="True" name="EventTypesManager" configuration="Release" />
+      <Entry build="True" name="AttendancesManager" configuration="Release" />
+      <Entry build="True" name="InstrumentsManager" configuration="Release" />
+      <Entry build="True" name="PersonsManager" configuration="Release" />
+      <Entry build="True" name="EventsManager" configuration="Release" />
+      <Entry build="True" name="ReportGenerator" configuration="Release" />
     </Configuration>
     <Configuration name="Debug" ctype="CombineConfiguration">
-      <Entry configuration="Debug" build="True" name="GUI" />
-      <Entry configuration="Debug" build="True" name="EventTypesManager" />
-      <Entry configuration="Debug" build="True" name="AttendancesManager" />
-      <Entry configuration="Debug" build="True" name="InstrumentsManager" />
-      <Entry configuration="Debug" build="True" name="PersonsManager" />
-      <Entry configuration="Debug" build="True" name="EventsManager" />
+      <Entry build="True" name="GUI" configuration="Debug" />
+      <Entry build="True" name="EventTypesManager" configuration="Debug" />
+      <Entry build="True" name="AttendancesManager" configuration="Debug" />
+      <Entry build="True" name="InstrumentsManager" configuration="Debug" />
+      <Entry build="True" name="PersonsManager" configuration="Debug" />
+      <Entry build="True" name="EventsManager" configuration="Debug" />
+      <Entry build="True" name="ReportGenerator" configuration="Debug" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="GUI" single="True">
@@ -24,13 +26,15 @@
     <Execute type="None" entry="InstrumentsManager" />
     <Execute type="None" entry="PersonsManager" />
     <Execute type="None" entry="EventsManager" />
+    <Execute type="None" entry="ReportGenerator" />
   </StartMode>
   <Entries>
-    <Entry filename="../zaspe-sharp-ultimo/GUI/GUI.mdp" />
-    <Entry filename="../zaspe-sharp-ultimo/EventTypesManager/EventTypesManager.mdp" />
-    <Entry filename="../zaspe-sharp-ultimo/AttendancesManager/AttendancesManager.mdp" />
-    <Entry filename="../zaspe-sharp-ultimo/InstrumentsManager/InstrumentsManager.mdp" />
-    <Entry filename="../zaspe-sharp-ultimo/PersonsManager/PersonsManager.mdp" />
-    <Entry filename="../zaspe-sharp-ultimo/EventsManager/EventsManager.mdp" />
+    <Entry filename="GUI/GUI.mdp" />
+    <Entry filename="EventTypesManager/EventTypesManager.mdp" />
+    <Entry filename="AttendancesManager/AttendancesManager.mdp" />
+    <Entry filename="InstrumentsManager/InstrumentsManager.mdp" />
+    <Entry filename="PersonsManager/PersonsManager.mdp" />
+    <Entry filename="EventsManager/EventsManager.mdp" />
+    <Entry filename="ReportGenerator/ReportGenerator.mdp" />
   </Entries>
 </Combine>
