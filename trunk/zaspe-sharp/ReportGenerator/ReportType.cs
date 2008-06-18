@@ -17,38 +17,34 @@
 //  along with Zaspe#.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Glade;
-using Gtk;
+using System.IO;
 
-namespace ZaspeSharp.GUI
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+
+namespace ZaspeSharp.ReportGenerator
 {
-	public class AttendancesReport
+	internal abstract class ReportType
 	{
-		[Widget]
-		private Dialog dialogShowStats;
+		protected Selection selection;
+		protected Document doc;
 		
-		[Widget]
-		private ComboBox cmbPageSize;
-		
-		public AttendancesReport(Gtk.Window parent)
+		public ReportType(Selection sel, string reportFile, string reportTitle)
 		{
-			Glade.XML gxml = new Glade.XML ("show_stats.glade", "dialogShowStats",
-			                                null);
-			gxml.Autoconnect(this);
+			this.selection = sel;
+			this.doc = new Document(PageSize.A4);
 			
-			this.cmbPageSize.Active = 0;
+			PdfWriter.GetInstance(doc, new FileStream(reportFile, FileMode.Create));
+			this.doc.Open();
 			
-			this.dialogShowStats.ShowAll();
+			// Title
+			Chunk c = new Chunk(reportTitle, FontFactory.GetFont(FontFactory.HELVETICA, 20, Font.BOLD));
+			Paragraph par = new Paragraph(c);
+			par.Alignment = 1;
+
+			this.doc.Add(par);
 		}
 		
-		private void OnCancelClicked(object o, EventArgs args)
-		{
-			this.dialogShowStats.Destroy();
-		}
-		
-		private void OnAcceptClicked(object o, EventArgs args)
-		{
-			this.dialogShowStats.Destroy();
-		}
+		public abstract void MakeReport();
 	}
 }

@@ -1,41 +1,39 @@
-<Project name="GUI" description="" standardNamespace="ZaspeSharp.GUI" newfilesearch="None" enableviewstate="True" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="GUI" fileversion="2.0" language="C#" clr-version="Net_2_0" description="" standardNamespace="ZaspeSharp.GUI" enableviewstate="True" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
-      <Output directory="././bin/Release/" assembly="GUI" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
+      <Output directory="bin/Release/" assembly="GUI" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
       <Build debugmode="True" target="WinExe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
-      <CodeGeneration compiler="Csc" warninglevel="4" nowarn="" includedebuginformation="False" optimize="True" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" target="WinExe" definesymbols="" generatexmldocumentation="False" win32Icon="resources/blue_fea.ico" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" generatexmldocumentation="False" win32Icon="resources/blue_fea.ico" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="././bin/Debug/" assembly="GUI" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
+      <Output directory="bin/Debug/" assembly="GUI" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
       <Build debugmode="True" target="WinExe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
-      <CodeGeneration compiler="Csc" warninglevel="4" nowarn="" includedebuginformation="True" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" target="WinExe" definesymbols="TRACE;DEBUG" generatexmldocumentation="False" win32Icon="resources/blue_fea.ico" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" definesymbols="TRACE;DEBUG" generatexmldocumentation="False" win32Icon="resources/blue_fea.ico" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
-  <DeploymentInformation target="" script="" strategy="File">
-    <excludeFiles />
-  </DeploymentInformation>
   <Contents>
-    <File name="../Database/data.db" subtype="Code" buildaction="FileCopy" dependson="" data="" />
-    <File name="../Gentle.NET/Gentle.config" subtype="Code" buildaction="FileCopy" dependson="" data="" />
-    <File name="../Gentle.NET/sqlite3.dll" subtype="Code" buildaction="FileCopy" dependson="" data="" />
-    <File name="../Gentle.NET/libsqlite3.so.0" subtype="Code" buildaction="FileCopy" dependson="" data="" />
-    <File name="../Gentle.NET/Mono.Data.SqliteClient.dll" subtype="Code" buildaction="FileCopy" dependson="" data="" />
-    <File name="./resources/blue_fea.gif" subtype="Code" buildaction="FileCopy" dependson="" data="" />
-    <File name="./glade/add_event.glade" subtype="Code" buildaction="FileCopy" dependson="" data="" />
-    <File name="./glade/add_person.glade" subtype="Code" buildaction="FileCopy" dependson="" data="" />
-    <File name="./glade/main_window.glade" subtype="Code" buildaction="FileCopy" dependson="" data="" />
-    <File name="./About.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./AddEvent.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./AddPerson.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./AssemblyInfo.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./AttendancesReport.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./MainWindow.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./ModifyEvent.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./ModifyPerson.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./CustomWidgets/CustomCellRendererToggle.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
-    <File name="./CustomWidgets/CustomTreeViewColumn.cs" subtype="Code" buildaction="Compile" dependson="" data="" />
+    <File name="../Database/data.db" subtype="Code" buildaction="FileCopy" />
+    <File name="../Gentle.NET/Gentle.config" subtype="Code" buildaction="FileCopy" />
+    <File name="../Gentle.NET/sqlite3.dll" subtype="Code" buildaction="FileCopy" />
+    <File name="../Gentle.NET/libsqlite3.so.0" subtype="Code" buildaction="FileCopy" />
+    <File name="../Gentle.NET/Mono.Data.SqliteClient.dll" subtype="Code" buildaction="FileCopy" />
+    <File name="resources/blue_fea.gif" subtype="Code" buildaction="FileCopy" />
+    <File name="glade/add_event.glade" subtype="Code" buildaction="FileCopy" />
+    <File name="glade/add_person.glade" subtype="Code" buildaction="FileCopy" />
+    <File name="glade/main_window.glade" subtype="Code" buildaction="FileCopy" />
+    <File name="About.cs" subtype="Code" buildaction="Compile" />
+    <File name="AddEvent.cs" subtype="Code" buildaction="Compile" />
+    <File name="AddPerson.cs" subtype="Code" buildaction="Compile" />
+    <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="AttendancesReport.cs" subtype="Code" buildaction="Compile" />
+    <File name="MainWindow.cs" subtype="Code" buildaction="Compile" />
+    <File name="ModifyEvent.cs" subtype="Code" buildaction="Compile" />
+    <File name="ModifyPerson.cs" subtype="Code" buildaction="Compile" />
+    <File name="CustomWidgets/CustomCellRendererToggle.cs" subtype="Code" buildaction="Compile" />
+    <File name="CustomWidgets/CustomTreeViewColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="glade/show_stats.glade" subtype="Code" buildaction="FileCopy" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="False" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -48,9 +46,13 @@
     <ProjectReference type="Project" localcopy="True" refto="EventsManager" />
     <ProjectReference type="Project" localcopy="True" refto="EventTypesManager" />
     <ProjectReference type="Project" localcopy="True" refto="AttendancesManager" />
-    <ProjectReference type="Assembly" refto="../Gentle.NET/Gentle.Common.dll" localcopy="True" />
-    <ProjectReference type="Assembly" refto="../Gentle.NET/Gentle.Framework.dll" localcopy="True" />
-    <ProjectReference type="Assembly" refto="../Gentle.NET/Gentle.Provider.SQLite.dll" localcopy="True" />
-    <ProjectReference type="Assembly" refto="../Gentle.NET/log4net.dll" localcopy="True" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../Gentle.NET/Gentle.Common.dll" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../Gentle.NET/Gentle.Framework.dll" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../Gentle.NET/Gentle.Provider.SQLite.dll" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../Gentle.NET/log4net.dll" />
+    <ProjectReference type="Project" localcopy="True" refto="ReportGenerator" />
   </References>
+  <DeploymentInformation target="" script="" strategy="File">
+    <excludeFiles />
+  </DeploymentInformation>
 </Project>

@@ -115,6 +115,12 @@ namespace ZaspeSharp.GUI
 			        " de " + this.cmbMonth.ActiveText);
 		}
 		
+		protected virtual void OnResponse (object o, Gtk.ResponseArgs args)
+		{
+			if (args.ResponseId.Equals(Gtk.ResponseType.DeleteEvent))
+				this.dlgAddEvent.Respond(ResponseType.Close);
+		}
+		
 		public void OnMonthChanged(object o, EventArgs args)
 		{
 			/* If we are on November or Dicember, and the event's month is January

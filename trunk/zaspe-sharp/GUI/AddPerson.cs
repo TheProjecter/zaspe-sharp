@@ -105,6 +105,12 @@ namespace ZaspeSharp.GUI
 			this.dlgAddPerson.Destroy();
 		}
 		
+		protected virtual void OnResponse (object o, Gtk.ResponseArgs args)
+		{
+			if (args.ResponseId.Equals(Gtk.ResponseType.DeleteEvent))
+				this.dlgAddPerson.Respond(ResponseType.Close);
+		}
+		
 		public void OnCancelClicked(object o, EventArgs args)
 		{
 			this.dlgAddPerson.Respond(ResponseType.Close);
