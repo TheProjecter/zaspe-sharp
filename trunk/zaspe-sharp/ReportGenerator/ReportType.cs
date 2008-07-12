@@ -29,6 +29,10 @@ namespace ZaspeSharp.ReportGenerator
 		protected Selection selection;
 		protected Document doc;
 		
+//		public ReportType(string reportFile, string reportTitle) : this(null, reportFile, reportTitle)
+//		{
+//		}
+		
 		public ReportType(Selection sel, string reportFile, string reportTitle)
 		{
 			this.selection = sel;
@@ -40,7 +44,7 @@ namespace ZaspeSharp.ReportGenerator
 			// Title
 			Chunk c = new Chunk(reportTitle, FontFactory.GetFont(FontFactory.HELVETICA, 20, Font.BOLD));
 			Paragraph par = new Paragraph(c);
-			par.Alignment = 1;
+			par.Alignment = Rectangle.ALIGN_CENTER;
 
 			this.doc.Add(par);
 		}

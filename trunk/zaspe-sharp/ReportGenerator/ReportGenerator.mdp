@@ -1,4 +1,4 @@
-<Project name="ReportGenerator" fileversion="2.0" DefaultNamespace="ZaspeSharp" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="ReportGenerator" fileversion="2.0" DefaultNamespace="ZaspeSharp.ReportGenerator" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Debug" assembly="ReportGenerator" />
@@ -23,6 +23,7 @@
     <File name="ReportTypes/SimplePersonsList.cs" subtype="Code" buildaction="Compile" />
     <File name="Selection.cs" subtype="Code" buildaction="Compile" />
     <File name="ReportType.cs" subtype="Code" buildaction="Compile" />
+    <File name="ReportTypes/SimpleAttendanceList.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
