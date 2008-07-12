@@ -17,26 +17,26 @@
 //  along with Zaspe#.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using System.IO;
 
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
 using ZaspeSharp.Persons;
+using ZaspeSharp.Attendances;
 
 namespace ZaspeSharp.ReportGenerator
 {
-	internal class SimplePersonsList : ReportType
+	internal class SimpleAttendanceList : ReportType
 	{
-		private static SimplePersonsList instance;
-						
-		private SimplePersonsList(Selection s) : base(s, "lista_personas.pdf", "Lista de personas")
+		private static SimpleAttendanceList instance;
+		
+		private SimpleAttendanceList(Selection s) : base(s, "lista_asistencias.pdf", "Asistencias")
 		{
 		}
 		
-		public static SimplePersonsList GetInstance(Selection selection) {
+		public static SimpleAttendanceList GetInstance(Selection selection) {
 			if (instance == null)
-				instance = new SimplePersonsList(selection);
+				instance = new SimpleAttendanceList(selection);
 			
 			instance.selection = selection;
 			
@@ -45,7 +45,16 @@ namespace ZaspeSharp.ReportGenerator
 		
 		public override void MakeReport ()
 		{
-			Table t = new Table(3);
+			// Subtitle
+			Chunk c = new Chunk(this.selection.Events[0].Name,
+			                    FontFactory.GetFont(FontFactory.HELVETICA, 14, Font.BOLD));
+			Paragraph par = new Paragraph(c);
+			par.Alignment = Rectangle.ALIGN_CENTER;
+			
+			this.doc.Add(par);
+			
+			// List
+			Table t = new Table(2);
 			t.Border = 0;
 			t.DefaultCellBorder = 0;
 			
@@ -56,35 +65,36 @@ namespace ZaspeSharp.ReportGenerator
 			Font fuenteTitulo = FontFactory.GetFont(FontFactory.HELVETICA_OBLIQUE, 14, Font.UNDERLINE);
 
 			cell = new Cell();
-			Chunk texto = new Chunk("Apellido", fuenteTitulo);
+			Chunk texto = new Chunk("Nombre y Apellido", fuenteTitulo);
 			cell.Add(texto);
 			t.AddCell(cell);
 			
 			cell = new Cell();
-			texto = new Chunk("Nombre", fuenteTitulo);
-			cell.Add(texto);
-			t.AddCell(cell);
-			
-			cell = new Cell();
-			texto = new Chunk("E-Mail", fuenteTitulo);
+			texto = new Chunk("¿Asistió?", fuenteTitulo);
 			cell.Add(texto);
 			t.AddCell(cell);
 			
 			Font fuenteDatos = FontFactory.GetFont(FontFactory.HELVETICA, 10);
 			
+			Font fuenteSi = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 10);
+			fuenteSi.Color = Color.GREEN;
+			
+			Font fuenteNo = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 10);
+			fuenteNo.Color = Color.RED;
+			
 			foreach (Person p in this.selection.Persons) {
 				cell = new Cell();
-				texto = new Chunk(p.Surname, fuenteDatos);
+				texto = new Chunk(p.Name + " " + p.Surname, fuenteDatos);
 				cell.Add(texto);
 				t.AddCell(cell);
 				
 				cell = new Cell();
-				texto = new Chunk(p.Name, fuenteDatos);
-				cell.Add(texto);
-				t.AddCell(cell);
 				
-				cell = new Cell();
-				texto = new Chunk(p.EMail, fuenteDatos);
+				if (AttendancesManager.Instance.Attended(p, this.selection.Events[0]))
+					texto = new Chunk("Si", fuenteSi);
+				else
+					texto = new Chunk("No", fuenteNo);
+				
 				cell.Add(texto);
 				t.AddCell(cell);
 			}

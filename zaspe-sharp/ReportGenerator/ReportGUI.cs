@@ -26,13 +26,15 @@ namespace ZaspeSharp.ReportGenerator {
 	public partial class ReportGUI : Gtk.Dialog {
 		
 		private Selection selection;
+		private ReportType reportType;
 		
 		public ReportGUI()
 		{
 			this.Build();
 			
-			// Create Selection object
+			// Create Selection object and default report type
 			this.selection = new Selection();
+			this.reportType = SimplePersonsList.GetInstance(this.selection);
 			
 			// Setup person's treeview
 			
@@ -85,7 +87,7 @@ namespace ZaspeSharp.ReportGenerator {
 				(this.tvEvents.Model as ListStore).AppendValues(e);
 			
 			// Select all events
-			this.tvEvents.Selection.Mode = SelectionMode.Multiple;
+			this.tvEvents.Selection.Mode = SelectionMode.Single;
 			this.tvEvents.Selection.SelectAll();
 		}
 		
@@ -101,8 +103,7 @@ namespace ZaspeSharp.ReportGenerator {
 		
 		protected virtual void OnAcceptClicked(object sender, System.EventArgs e)
 		{
-			ReportType rt = new SimplePersonsList(this.selection);
-			rt.MakeReport();
+			this.reportType.MakeReport();
 		}
 
 		protected virtual void OnResponse (object o, Gtk.ResponseArgs args)
@@ -114,6 +115,7 @@ namespace ZaspeSharp.ReportGenerator {
 
 		protected virtual void OnPersonsListToggled (object sender, System.EventArgs e)
 		{
+			this.reportType = SimplePersonsList.GetInstance(this.selection);
 			this.tvPersons.Sensitive = true;
 			this.tvEvents.Sensitive = false;
 		}
@@ -126,6 +128,7 @@ namespace ZaspeSharp.ReportGenerator {
 
 		protected virtual void OnAttendancesListToggled (object sender, System.EventArgs e)
 		{
+			this.reportType = SimpleAttendanceList.GetInstance(this.selection);
 			this.tvPersons.Sensitive = true;
 			this.tvEvents.Sensitive = true;
 		}
