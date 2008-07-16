@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
+<!--Generated with glade3 3.4.5 on Tue Jul 15 21:50:20 2008 -->
+<glade-interface>
+  <widget class="GtkWindow" id="mainWindow">
+    <property name="width_request">800</property>
+    <property name="height_request">600</property>
+    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+    <property name="title" translatable="yes">Zaspe# - Gestión de asistencias</property>
+    <property name="window_position">GTK_WIN_POS_CENTER</property>
+    <signal name="delete_event" handler="OnWindowDeleteEvent"/>
+    <child>
+      <widget class="GtkVBox" id="vbox1">
+        <property name="visible">True</property>
+        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+        <child>
+          <widget class="GtkMenuBar" id="menubar1">
+            <property name="visible">True</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <child>
+              <widget class="GtkMenuItem" id="miArchivo">
+                <property name="visible">True</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="label" translatable="yes">_Archivo</property>
+                <property name="use_underline">True</property>
+                <child>
+                  <widget class="GtkMenu" id="menu1">
+                    <property name="visible">True</property>
+                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                    <child>
+                      <widget class="GtkImageMenuItem" id="imiShowStats">
+                        <property name="visible">True</property>
+                        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                        <property name="label" translatable="yes">Reportes</property>
+                        <property name="use_underline">True</property>
+                        <signal name="activate" handler="OnMenuItemShowStats"/>
+                        <child internal-child="image">
+                          <widget class="GtkImage" id="menu-item-image8">
+                            <property name="visible">True</property>
+                            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                            <property name="stock">gtk-edit</property>
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="GtkSeparatorMenuItem" id="separatormenuitem2">
+                        <property name="visible">True</property>
+                        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="GtkImageMenuItem" id="miQuit">
+                        <property name="visible">True</property>
+                        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                        <property name="label" translatable="yes">_Salir</property>
+                        <property name="use_underline">True</property>
+                        <signal name="activate" handler="OnToolButtonQuitClicked"/>
+                        <child internal-child="image">
+                          <widget class="GtkImage" id="menu-item-image9">
+                            <property name="visible">True</property>
+                            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                            <property name="stock">gtk-quit</property>
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+            <child>
+              <widget class="GtkMenuItem" id="miVer">
+                <property name="visible">True</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="label" translatable="yes">_Ver</property>
+                <property name="use_underline">True</property>
+                <child>
+                  <widget class="GtkMenu" id="menu4">
+                    <property name="visible">True</property>
+                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                    <child>
+                      <widget class="GtkRadioMenuItem" id="miShowPersonsList">
+                        <property name="visible">True</property>
+                        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                        <property name="label" translatable="yes">Lista de _personas</property>
+                        <property name="use_underline">True</property>
+                        <signal name="toggled" handler="OnPersonsListToggle"/>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="GtkRadioMenuItem" id="miShowEventsList">
+                        <property name="visible">True</property>
+                        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                        <property name="label" translatable="yes">Lista de _eventos</property>
+                        <property name="use_underline">True</property>
+                        <property name="group">miShowPersonsList</property>
+                        <signal name="toggled" handler="OnEventsListToggle"/>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="GtkRadioMenuItem" id="miShowAttendancesList">
+                        <property name="visible">True</property>
+                        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                        <property name="label" translatable="yes">Lista de _asistencias</property>
+                        <property name="use_underline">True</property>
+                        <property name="active">True</property>
+                        <property name="draw_as_radio">True</property>
+                        <property name="group">miShowPersonsList</property>
+                        <signal name="toggled" handler="OnAttendancesListToggle"/>
+                      </widget>
+                    </child>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+            <child>
+              <widget class="GtkMenuItem" id="miAyuda">
+                <property name="visible">True</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="label" translatable="yes">Ay_uda</property>
+                <property name="use_underline">True</property>
+                <child>
+                  <widget class="GtkMenu" id="menu3">
+                    <property name="visible">True</property>
+                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                    <child>
+                      <widget class="GtkImageMenuItem" id="miAbout">
+                        <property name="visible">True</property>
+                        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                        <property name="label" translatable="yes">gtk-about</property>
+                        <property name="use_underline">True</property>
+                        <property name="use_stock">True</property>
+                        <signal name="activate" handler="OnImageMenuItemAboutActivate"/>
+                      </widget>
+                    </child>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkToolbar" id="toolbarPrincipal">
+            <property name="visible">True</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <property name="toolbar_style">GTK_TOOLBAR_BOTH</property>
+            <child>
+              <widget class="GtkMenuToolButton" id="mtbAddPerson">
+                <property name="visible">True</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="label">Agregar persona</property>
+                <property name="stock_id">gtk-add</property>
+                <property name="menu">menuPersonActions</property>
+                <signal name="clicked" handler="OnAddPersonClicked"/>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkMenuToolButton" id="mtbAddEvent">
+                <property name="visible">True</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="label">Agregar evento</property>
+                <property name="stock_id">gtk-yes</property>
+                <property name="menu">menuEventActions</property>
+                <signal name="clicked" handler="OnAddEventClicked"/>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkToolButton" id="tbReload">
+                <property name="visible">True</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="tooltip" translatable="yes">Actualiza las columnas (eventos) al tiempo actual.</property>
+                <property name="stock_id">gtk-refresh</property>
+                <signal name="clicked" handler="OnToolButtonReloadClicked"/>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkSeparatorToolItem" id="tbSeparador1">
+                <property name="visible">True</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkToolButton" id="tbQuit">
+                <property name="visible">True</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="label">Salir</property>
+                <property name="stock_id">gtk-quit</property>
+                <signal name="clicked" handler="OnToolButtonQuitClicked"/>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkTreeView" id="tvAttendances">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <property name="headers_clickable">True</property>
+          </widget>
+          <packing>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkStatusbar" id="statusbar1">
+            <property name="visible">True</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <property name="spacing">2</property>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="GtkAboutDialog" id="adAbout">
+    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+    <property name="border_width">5</property>
+    <property name="title" translatable="yes">Acerca de Zaspe#</property>
+    <property name="resizable">False</property>
+    <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
+    <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
+    <property name="skip_taskbar_hint">True</property>
+    <property name="program_name">Zaspe#</property>
+    <property name="version">0.0.1</property>
+    <property name="copyright" translatable="yes">Copyright © 2006-2007 Milton Pividori</property>
+    <property name="comments" translatable="yes">Gestión de asistencias</property>
+    <property name="website">http://code.google.com/p/zaspe-sharp/</property>
+    <property name="license" translatable="yes">Zaspe# - Attendance management
+Copyright (C) 2006, 2007 Milton Pividori
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</property>
+    <property name="authors">Milton Pividori &lt;miltondp@gmail.com&gt;</property>
+    <property name="documenters">Milton Pividori &lt;miltondp@gmail.com&gt;</property>
+    <property name="artists"></property>
+    <child internal-child="vbox">
+      <widget class="GtkVBox" id="dialog-vbox1">
+        <property name="visible">True</property>
+        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+        <property name="spacing">2</property>
+        <child>
+          <placeholder/>
+        </child>
+        <child internal-child="action_area">
+          <widget class="GtkHButtonBox" id="dialog-action_area1">
+            <property name="visible">True</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <property name="layout_style">GTK_BUTTONBOX_END</property>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">GTK_PACK_END</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="GtkMenu" id="menuPersonActions">
+    <property name="visible">True</property>
+    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+    <child>
+      <widget class="GtkImageMenuItem" id="imiModifyPerson">
+        <property name="visible">True</property>
+        <property name="sensitive">False</property>
+        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+        <property name="label" translatable="yes">Modificar persona</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="OnMenuItemModifyPersonActivate"/>
+        <child internal-child="image">
+          <widget class="GtkImage" id="menu-item-image3">
+            <property name="visible">True</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <property name="stock">gtk-edit</property>
+          </widget>
+        </child>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkImageMenuItem" id="imiRemovePerson">
+        <property name="visible">True</property>
+        <property name="sensitive">False</property>
+        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+        <property name="label" translatable="yes">Eliminar persona</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="OnMenuItemRemovePersonActivate"/>
+        <child internal-child="image">
+          <widget class="GtkImage" id="menu-item-image4">
+            <property name="visible">True</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <property name="stock">gtk-delete</property>
+          </widget>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="GtkMenu" id="menuEventActions">
+    <property name="visible">True</property>
+    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+    <child>
+      <widget class="GtkImageMenuItem" id="imiWhoHadAttended">
+        <property name="visible">True</property>
+        <property name="sensitive">False</property>
+        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+        <property name="label" translatable="yes">¿Quiénes vinieron?</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="OnMenuItemWhoHadAttendedActivate"/>
+        <child internal-child="image">
+          <widget class="GtkImage" id="menu-item-image7">
+            <property name="visible">True</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <property name="stock">gtk-info</property>
+          </widget>
+        </child>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkSeparatorMenuItem" id="separatormenuitem1">
+        <property name="visible">True</property>
+        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkImageMenuItem" id="imiModifyEvent">
+        <property name="visible">True</property>
+        <property name="sensitive">False</property>
+        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+        <property name="label" translatable="yes">Modificar evento</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="OnMenuItemModifyEventActivate"/>
+        <child internal-child="image">
+          <widget class="GtkImage" id="menu-item-image5">
+            <property name="visible">True</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <property name="stock">gtk-edit</property>
+          </widget>
+        </child>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkImageMenuItem" id="imiRemoveEvent">
+        <property name="visible">True</property>
+        <property name="sensitive">False</property>
+        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+        <property name="label" translatable="yes">Eliminar evento</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="OnMenuItemRemoveEventActivate"/>
+        <child internal-child="image">
+          <widget class="GtkImage" id="menu-item-image6">
+            <property name="visible">True</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <property name="stock">gtk-delete</property>
+          </widget>
+        </child>
+      </widget>
+    </child>
+  </widget>
+</glade-interface>
