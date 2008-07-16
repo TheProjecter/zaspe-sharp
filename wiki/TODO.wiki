@@ -6,6 +6,7 @@
  * Internationalization.
  * Move from Glade to Stetic.
  * Tabs.
+ * Mono.Addins for extension support, and for personalized reports.
 
 = Bugs =
 
