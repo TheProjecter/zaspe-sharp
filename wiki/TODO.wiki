@@ -1,4 +1,6 @@
 #summary TODO
 
- * Remove Gentle.NET and use NHibernate.
+ * Move from Gentle.NET to NHibernate.
  * Internationalization.
+ * Move from Glade to Stetic.
+ * Tabs.
