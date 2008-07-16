@@ -1,5 +1,5 @@
 <Project name="GUI" fileversion="2.0" language="C#" clr-version="Net_2_0" description="" standardNamespace="ZaspeSharp.GUI" enableviewstate="True" ctype="DotNetProject">
-  <Configurations active="Debug">
+  <Configurations active="Release">
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Release/" assembly="GUI" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
       <Build debugmode="True" target="WinExe" />
@@ -34,14 +34,11 @@
     <File name="CustomWidgets/CustomCellRendererToggle.cs" subtype="Code" buildaction="Compile" />
     <File name="CustomWidgets/CustomTreeViewColumn.cs" subtype="Code" buildaction="Compile" />
     <File name="glade/show_stats.glade" subtype="Code" buildaction="FileCopy" />
+    <File name="gtk-gui/gui.stetic" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="gtk-gui/generated.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="False" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-    <ProjectReference type="Gac" localcopy="False" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <ProjectReference type="Gac" localcopy="False" refto="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <ProjectReference type="Gac" localcopy="False" refto="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <ProjectReference type="Gac" localcopy="False" refto="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <ProjectReference type="Gac" localcopy="False" refto="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Project" localcopy="True" refto="PersonsManager" />
     <ProjectReference type="Project" localcopy="True" refto="EventsManager" />
     <ProjectReference type="Project" localcopy="True" refto="EventTypesManager" />
@@ -51,7 +48,14 @@
     <ProjectReference type="Assembly" localcopy="True" refto="../Gentle.NET/Gentle.Provider.SQLite.dll" />
     <ProjectReference type="Assembly" localcopy="True" refto="../Gentle.NET/log4net.dll" />
     <ProjectReference type="Project" localcopy="True" refto="ReportGenerator" />
+    <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="glade-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="glib-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
+  <GtkDesignInfo generateGettext="False" gtkVersion="2.10.0" />
   <DeploymentInformation target="" script="" strategy="File">
     <excludeFiles />
   </DeploymentInformation>

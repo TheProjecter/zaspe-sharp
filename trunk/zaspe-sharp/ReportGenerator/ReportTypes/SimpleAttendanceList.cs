@@ -28,24 +28,38 @@ namespace ZaspeSharp.ReportGenerator
 {
 	internal class SimpleAttendanceList : ReportType
 	{
-		private static SimpleAttendanceList instance;
+//		private static SimpleAttendanceList instance;
+//		
+//		private SimpleAttendanceList(Selection s, Rectangle pageSize, string reportFile)
+//			: base(s, pageSize, reportFile, "Asistencias")
+//		{
+//		}
 		
-		private SimpleAttendanceList(Selection s) : base(s, "lista_asistencias.pdf", "Asistencias")
+		public SimpleAttendanceList()
 		{
+			this.reportTitle = "Asistencias";
 		}
 		
-		public static SimpleAttendanceList GetInstance(Selection selection) {
-			if (instance == null)
-				instance = new SimpleAttendanceList(selection);
-			
-			instance.selection = selection;
-			
-			return instance;
-		}
+//		public static SimpleAttendanceList GetInstance(Selection selection,
+//		                                               Rectangle pageSize,
+//		                                               string reportFile) {
+//			
+//			if (instance == null)
+//				instance = new SimpleAttendanceList(selection, pageSize, reportFile);
+//			else {
+//				instance.selection = selection;
+//				instance.reportFile = reportFile;
+//			}
+//			
+//			if (!this.doc.IsOpen())
+//				this.doc.Open();
+//			
+//			return instance;
+//		}
 		
 		public override void MakeReport ()
 		{
-			// Subtitle
+			// Subtitle = Event name
 			Chunk c = new Chunk(this.selection.Events[0].Name,
 			                    FontFactory.GetFont(FontFactory.HELVETICA, 14, Font.BOLD));
 			Paragraph par = new Paragraph(c);
@@ -77,7 +91,7 @@ namespace ZaspeSharp.ReportGenerator
 			Font fuenteDatos = FontFactory.GetFont(FontFactory.HELVETICA, 10);
 			
 			Font fuenteSi = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 10);
-			fuenteSi.Color = Color.GREEN;
+			fuenteSi.Color = Color.BLUE;
 			
 			Font fuenteNo = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 10);
 			fuenteNo.Color = Color.RED;
@@ -100,8 +114,6 @@ namespace ZaspeSharp.ReportGenerator
 			}
 			
 			this.doc.Add(t);
-			
-			this.doc.Close();
 		}
 
 	}

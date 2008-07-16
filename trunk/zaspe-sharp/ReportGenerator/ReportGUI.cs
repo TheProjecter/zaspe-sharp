@@ -22,11 +22,13 @@ using Gtk;
 using ZaspeSharp.Persons;
 using ZaspeSharp.Events;
 
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+
 namespace ZaspeSharp.ReportGenerator {
 	public partial class ReportGUI : Gtk.Dialog {
 		
 		private Selection selection;
-		private ReportType reportType;
 		
 		public ReportGUI()
 		{
@@ -34,7 +36,8 @@ namespace ZaspeSharp.ReportGenerator {
 			
 			// Create Selection object and default report type
 			this.selection = new Selection();
-			this.reportType = SimplePersonsList.GetInstance(this.selection);
+//			this.pageSize = PageSize.A4;
+			//this.reportType = SimplePersonsList.GetInstance(this.selection, this.pageSize);
 			
 			// Setup person's treeview
 			
@@ -82,13 +85,27 @@ namespace ZaspeSharp.ReportGenerator {
 			
 			this.tvEvents.Model = new ListStore(typeof(Event));
 			
-			// Add all events
-			foreach (Event e in EventsManager.Instance.RetrieveAll())
+			// Add past events
+			foreach (Event e in EventsManager.Instance.RetrieveLast(10)) {
 				(this.tvEvents.Model as ListStore).AppendValues(e);
+			}
 			
 			// Select all events
 			this.tvEvents.Selection.Mode = SelectionMode.Single;
 			this.tvEvents.Selection.SelectAll();
+		}
+		
+		private Rectangle PageSizeSelected {
+			get {
+				Rectangle pageSize = iTextSharp.text.PageSize.A4;
+				
+				if (this.cmbPageSize.ActiveText.Equals("A4"))
+					pageSize = iTextSharp.text.PageSize.A4;
+				else if (this.cmbPageSize.ActiveText.Equals("Carta"))
+					pageSize = iTextSharp.text.PageSize.LETTER;
+				
+				return pageSize;
+			}
 		}
 		
 		public ReportGUI(Gtk.Window parent) : this()
@@ -103,7 +120,48 @@ namespace ZaspeSharp.ReportGenerator {
 		
 		protected virtual void OnAcceptClicked(object sender, System.EventArgs e)
 		{
-			this.reportType.MakeReport();
+			// Ask for report file
+			Gtk.FileChooserDialog fc =
+				new Gtk.FileChooserDialog("Elija dónde guardar el archivo de reporte",
+				                          this,
+				                          FileChooserAction.Save,
+				                          "Cancelar", ResponseType.Cancel,
+				                          "Guardar", ResponseType.Accept);
+			
+			if (fc.Run() != (int)ResponseType.Accept) {
+				fc.Destroy();
+				return;
+			}
+			
+			try {
+				ReportType rt = null;
+				if (this.rbPersonsList.Active)
+					rt = ReportType.GetInstance<SimplePersonsList>(this.selection,
+					                                               this.PageSizeSelected,
+					                                               fc.Filename);
+				else if (this.rbAttendancesList.Active)
+					rt = ReportType.GetInstance<SimpleAttendanceList>(this.selection,
+					                                                  this.PageSizeSelected,
+					                                                  fc.Filename);
+				
+				rt.Run();
+			}
+			catch(Exception ex) {
+				MessageDialog md = new MessageDialog(this,
+				                                     DialogFlags.Modal,
+				                                     MessageType.Error,
+				                                     ButtonsType.Ok,
+				                                     true,
+				                                     "format?");
+				
+				md.Title = "Error";
+				//md.Text = "Hubo un error al generar el reporte:\n'" + ex.Message + "'";
+				
+				md.Run();
+				md.Destroy();
+			}
+			
+			fc.Destroy();
 		}
 
 		protected virtual void OnResponse (object o, Gtk.ResponseArgs args)
@@ -115,7 +173,6 @@ namespace ZaspeSharp.ReportGenerator {
 
 		protected virtual void OnPersonsListToggled (object sender, System.EventArgs e)
 		{
-			this.reportType = SimplePersonsList.GetInstance(this.selection);
 			this.tvPersons.Sensitive = true;
 			this.tvEvents.Sensitive = false;
 		}
@@ -128,7 +185,6 @@ namespace ZaspeSharp.ReportGenerator {
 
 		protected virtual void OnAttendancesListToggled (object sender, System.EventArgs e)
 		{
-			this.reportType = SimpleAttendanceList.GetInstance(this.selection);
 			this.tvPersons.Sensitive = true;
 			this.tvEvents.Sensitive = true;
 		}
@@ -181,6 +237,11 @@ namespace ZaspeSharp.ReportGenerator {
 				
 				this.selection.AddEvents(e);
 			}
+		}
+
+		protected virtual void OnPageSizeChanged (object sender, System.EventArgs e)
+		{
+			Console.WriteLine(this.cmbPageSize.ActiveText);
 		}
 	}
 }

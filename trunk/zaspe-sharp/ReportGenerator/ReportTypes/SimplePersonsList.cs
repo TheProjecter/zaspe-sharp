@@ -28,20 +28,35 @@ namespace ZaspeSharp.ReportGenerator
 {
 	internal class SimplePersonsList : ReportType
 	{
-		private static SimplePersonsList instance;
+//		private static SimplePersonsList instance;
 						
-		private SimplePersonsList(Selection s) : base(s, "lista_personas.pdf", "Lista de personas")
+//		private SimplePersonsList(Selection s, Rectangle pageSize, string reportFile)
+//			: base(s, pageSize, reportFile, "Lista de personas")
+//		{
+//		}
+		
+		public SimplePersonsList()
 		{
+			this.reportTitle = "Lista de personas";
 		}
 		
-		public static SimplePersonsList GetInstance(Selection selection) {
-			if (instance == null)
-				instance = new SimplePersonsList(selection);
-			
-			instance.selection = selection;
-			
-			return instance;
-		}
+//		
+//		public static SimplePersonsList GetInstance(Selection selection,
+//		                                            Rectangle pageSize,
+//		                                            string reportFile) {
+//			
+//			if (instance == null)
+//				instance = new SimplePersonsList(selection, pageSize, reportFile);
+//			else {
+//				instance.selection = selection;
+//				instance.reportFile = reportFile;
+//			}
+//			
+//			if (!this.doc.IsOpen())
+//				this.doc.Open();
+//			
+//			return instance;
+//		}
 		
 		public override void MakeReport ()
 		{
@@ -90,8 +105,6 @@ namespace ZaspeSharp.ReportGenerator
 			}
 			
 			this.doc.Add(t);
-			
-			this.doc.Close();
 		}
 
 	}
