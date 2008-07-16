@@ -1,5 +1,5 @@
 
-EXTRA_DIST =  rules.make configure Makefile.include Gentle.NET/Gentle.Common.dll Gentle.NET/Gentle.Provider.SQLite.dll Gentle.NET/Gentle.Framework.dll Gentle.NET/log4net.dll
+EXTRA_DIST =  rules.make configure Makefile.include Gentle.NET/Gentle.Common.dll Gentle.NET/Gentle.Provider.SQLite.dll iTextSharp/itextsharp.dll Gentle.NET/Gentle.Framework.dll Gentle.NET/log4net.dll
 
 all: all-recursive
 
@@ -11,10 +11,10 @@ include $(top_srcdir)/rules.make
 
 #Warning: This is an automatically generated file, do not edit!
 ifeq ($(CONFIG),RELEASE)
- SUBDIRS =  EventTypesManager InstrumentsManager PersonsManager EventsManager AttendancesManager GUI
+ SUBDIRS =  EventTypesManager InstrumentsManager PersonsManager EventsManager AttendancesManager ReportGenerator GUI
 endif
 ifeq ($(CONFIG),DEBUG)
- SUBDIRS =  EventTypesManager InstrumentsManager PersonsManager EventsManager AttendancesManager GUI
+ SUBDIRS =  EventTypesManager InstrumentsManager PersonsManager EventsManager AttendancesManager ReportGenerator GUI
 endif
 
 

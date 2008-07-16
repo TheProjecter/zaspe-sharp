@@ -1,5 +1,5 @@
 <Project name="ReportGenerator" fileversion="2.0" DefaultNamespace="ZaspeSharp.ReportGenerator" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
-  <Configurations active="Debug">
+  <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Debug" assembly="ReportGenerator" />
       <Build debugmode="True" target="Library" />
@@ -28,12 +28,13 @@
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Assembly" localcopy="True" refto="../iTextSharp/itextsharp.dll" />
-    <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Project" localcopy="True" refto="PersonsManager" />
     <ProjectReference type="Project" localcopy="True" refto="AttendancesManager" />
     <ProjectReference type="Project" localcopy="True" refto="EventsManager" />
+    <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="glib-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
-  <GtkDesignInfo generateGettext="False" gtkVersion="2.12.0" />
+  <GtkDesignInfo generateGettext="False" gtkVersion="2.10.0" />
 </Project>

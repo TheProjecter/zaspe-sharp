@@ -18,9 +18,11 @@ PROJECT_REFERENCES =  \
 	../PersonsManager/bin/Release/PersonsManager.dll \
 	../EventsManager/bin/Release/EventsManager.dll \
 	../EventTypesManager/bin/Release/EventTypesManager.dll \
-	../AttendancesManager/bin/Release/AttendancesManager.dll
+	../AttendancesManager/bin/Release/AttendancesManager.dll \
+	../ReportGenerator/bin/Release/ReportGenerator.dll
 BUILD_DIR = bin/Release/
 
+REPORTGENERATOR_DLL_SOURCE=../ReportGenerator/bin/Release/ReportGenerator.dll
 EVENTTYPESMANAGER_DLL_MDB_SOURCE=../EventTypesManager/bin/Release/EventTypesManager.dll.mdb
 ADD_PERSON_GLADE_SOURCE=glade/add_person.glade
 GENTLE_COMMON_DLL_SOURCE=../Gentle.NET/Gentle.Common.dll
@@ -29,6 +31,8 @@ LIBSQLITE3_SO_0_SOURCE=../Gentle.NET/libsqlite3.so.0
 BLUE_FEA_GIF_SOURCE=resources/blue_fea.gif
 ATTENDANCESMANAGER_DLL_MDB_SOURCE=../AttendancesManager/bin/Release/AttendancesManager.dll.mdb
 PERSONSMANAGER_DLL_MDB_SOURCE=../PersonsManager/bin/Release/PersonsManager.dll.mdb
+REPORTGENERATOR_DLL_MDB=
+SHOW_STATS_GLADE_SOURCE=glade/show_stats.glade
 DATA_DB_SOURCE=../Database/data.db
 ADD_EVENT_GLADE_SOURCE=glade/add_event.glade
 EVENTTYPESMANAGER_DLL_SOURCE=../EventTypesManager/bin/Release/EventTypesManager.dll
@@ -39,6 +43,7 @@ ATTENDANCESMANAGER_DLL_SOURCE=../AttendancesManager/bin/Release/AttendancesManag
 EVENTSMANAGER_DLL_MDB_SOURCE=../EventsManager/bin/Release/EventsManager.dll.mdb
 EVENTSMANAGER_DLL_SOURCE=../EventsManager/bin/Release/EventsManager.dll
 GENTLE_FRAMEWORK_DLL_SOURCE=../Gentle.NET/Gentle.Framework.dll
+ITEXTSHARP_DLL_SOURCE=../iTextSharp/itextsharp.dll
 PERSONSMANAGER_DLL_SOURCE=../PersonsManager/bin/Release/PersonsManager.dll
 LOG4NET_DLL_SOURCE=../Gentle.NET/log4net.dll
 MAIN_WINDOW_GLADE_SOURCE=glade/main_window.glade
@@ -56,9 +61,11 @@ PROJECT_REFERENCES =  \
 	../PersonsManager/bin/Debug/PersonsManager.dll \
 	../EventsManager/bin/Debug/EventsManager.dll \
 	../EventTypesManager/bin/Debug/EventTypesManager.dll \
-	../AttendancesManager/bin/Debug/AttendancesManager.dll
+	../AttendancesManager/bin/Debug/AttendancesManager.dll \
+	../ReportGenerator/bin/Debug/ReportGenerator.dll
 BUILD_DIR = bin/Debug/
 
+REPORTGENERATOR_DLL_SOURCE=../ReportGenerator/bin/Debug/ReportGenerator.dll
 EVENTTYPESMANAGER_DLL_MDB_SOURCE=../EventTypesManager/bin/Debug/EventTypesManager.dll.mdb
 ADD_PERSON_GLADE_SOURCE=glade/add_person.glade
 GENTLE_COMMON_DLL_SOURCE=../Gentle.NET/Gentle.Common.dll
@@ -67,6 +74,9 @@ LIBSQLITE3_SO_0_SOURCE=../Gentle.NET/libsqlite3.so.0
 BLUE_FEA_GIF_SOURCE=resources/blue_fea.gif
 ATTENDANCESMANAGER_DLL_MDB_SOURCE=../AttendancesManager/bin/Debug/AttendancesManager.dll.mdb
 PERSONSMANAGER_DLL_MDB_SOURCE=../PersonsManager/bin/Debug/PersonsManager.dll.mdb
+REPORTGENERATOR_DLL_MDB_SOURCE=../ReportGenerator/bin/Debug/ReportGenerator.dll.mdb
+REPORTGENERATOR_DLL_MDB=$(BUILD_DIR)/ReportGenerator.dll.mdb
+SHOW_STATS_GLADE_SOURCE=glade/show_stats.glade
 DATA_DB_SOURCE=../Database/data.db
 ADD_EVENT_GLADE_SOURCE=glade/add_event.glade
 EVENTTYPESMANAGER_DLL_SOURCE=../EventTypesManager/bin/Debug/EventTypesManager.dll
@@ -77,6 +87,7 @@ ATTENDANCESMANAGER_DLL_SOURCE=../AttendancesManager/bin/Debug/AttendancesManager
 EVENTSMANAGER_DLL_MDB_SOURCE=../EventsManager/bin/Debug/EventsManager.dll.mdb
 EVENTSMANAGER_DLL_SOURCE=../EventsManager/bin/Debug/EventsManager.dll
 GENTLE_FRAMEWORK_DLL_SOURCE=../Gentle.NET/Gentle.Framework.dll
+ITEXTSHARP_DLL_SOURCE=../iTextSharp/itextsharp.dll
 PERSONSMANAGER_DLL_SOURCE=../PersonsManager/bin/Debug/PersonsManager.dll
 LOG4NET_DLL_SOURCE=../Gentle.NET/log4net.dll
 MAIN_WINDOW_GLADE_SOURCE=glade/main_window.glade
@@ -87,6 +98,7 @@ AL=al2
 SATELLITE_ASSEMBLY_NAME=.resources.dll
 
 PROGRAMFILES = \
+	$(REPORTGENERATOR_DLL) \
 	$(EVENTTYPESMANAGER_DLL_MDB) \
 	$(ADD_PERSON_GLADE) \
 	$(GENTLE_COMMON_DLL) \
@@ -95,6 +107,8 @@ PROGRAMFILES = \
 	$(BLUE_FEA_GIF) \
 	$(ATTENDANCESMANAGER_DLL_MDB) \
 	$(PERSONSMANAGER_DLL_MDB) \
+	$(REPORTGENERATOR_DLL_MDB) \
+	$(SHOW_STATS_GLADE) \
 	$(DATA_DB) \
 	$(ADD_EVENT_GLADE) \
 	$(EVENTTYPESMANAGER_DLL) \
@@ -105,6 +119,7 @@ PROGRAMFILES = \
 	$(EVENTSMANAGER_DLL_MDB) \
 	$(EVENTSMANAGER_DLL) \
 	$(GENTLE_FRAMEWORK_DLL) \
+	$(ITEXTSHARP_DLL) \
 	$(PERSONSMANAGER_DLL) \
 	$(LOG4NET_DLL) \
 	$(MAIN_WINDOW_GLADE)  
@@ -114,6 +129,7 @@ BINARIES = \
 
 
 
+REPORTGENERATOR_DLL = $(BUILD_DIR)/ReportGenerator.dll
 EVENTTYPESMANAGER_DLL_MDB = $(BUILD_DIR)/EventTypesManager.dll.mdb
 ADD_PERSON_GLADE = $(BUILD_DIR)/add_person.glade
 GENTLE_COMMON_DLL = $(BUILD_DIR)/Gentle.Common.dll
@@ -123,6 +139,7 @@ LIBSQLITE3_SO_0 = $(BUILD_DIR)/libsqlite3.so.0
 BLUE_FEA_GIF = $(BUILD_DIR)/blue_fea.gif
 ATTENDANCESMANAGER_DLL_MDB = $(BUILD_DIR)/AttendancesManager.dll.mdb
 PERSONSMANAGER_DLL_MDB = $(BUILD_DIR)/PersonsManager.dll.mdb
+SHOW_STATS_GLADE = $(BUILD_DIR)/show_stats.glade
 DATA_DB = $(BUILD_DIR)/data.db
 ADD_EVENT_GLADE = $(BUILD_DIR)/add_event.glade
 EVENTTYPESMANAGER_DLL = $(BUILD_DIR)/EventTypesManager.dll
@@ -133,6 +150,7 @@ ATTENDANCESMANAGER_DLL = $(BUILD_DIR)/AttendancesManager.dll
 EVENTSMANAGER_DLL_MDB = $(BUILD_DIR)/EventsManager.dll.mdb
 EVENTSMANAGER_DLL = $(BUILD_DIR)/EventsManager.dll
 GENTLE_FRAMEWORK_DLL = $(BUILD_DIR)/Gentle.Framework.dll
+ITEXTSHARP_DLL = $(BUILD_DIR)/itextsharp.dll
 PERSONSMANAGER_DLL = $(BUILD_DIR)/PersonsManager.dll
 LOG4NET_DLL = $(BUILD_DIR)/log4net.dll
 MAIN_WINDOW_GLADE = $(BUILD_DIR)/main_window.glade
@@ -158,7 +176,8 @@ DATA_FILES = \
 	resources/blue_fea.gif \
 	glade/add_event.glade \
 	glade/add_person.glade \
-	glade/main_window.glade 
+	glade/main_window.glade \
+	glade/show_stats.glade 
 
 RESOURCES = 
 
@@ -187,6 +206,7 @@ include $(top_srcdir)/Makefile.include
 
 
 
+$(eval $(call emit-deploy-target,REPORTGENERATOR_DLL))
 $(eval $(call emit-deploy-target,EVENTTYPESMANAGER_DLL_MDB))
 $(eval $(call emit-deploy-target,ADD_PERSON_GLADE))
 $(eval $(call emit-deploy-target,GENTLE_COMMON_DLL))
@@ -196,6 +216,8 @@ $(eval $(call emit-deploy-target,LIBSQLITE3_SO_0))
 $(eval $(call emit-deploy-target,BLUE_FEA_GIF))
 $(eval $(call emit-deploy-target,ATTENDANCESMANAGER_DLL_MDB))
 $(eval $(call emit-deploy-target,PERSONSMANAGER_DLL_MDB))
+$(eval $(call emit-deploy-target,REPORTGENERATOR_DLL_MDB))
+$(eval $(call emit-deploy-target,SHOW_STATS_GLADE))
 $(eval $(call emit-deploy-target,DATA_DB))
 $(eval $(call emit-deploy-target,ADD_EVENT_GLADE))
 $(eval $(call emit-deploy-target,EVENTTYPESMANAGER_DLL))
@@ -206,6 +228,7 @@ $(eval $(call emit-deploy-target,ATTENDANCESMANAGER_DLL))
 $(eval $(call emit-deploy-target,EVENTSMANAGER_DLL_MDB))
 $(eval $(call emit-deploy-target,EVENTSMANAGER_DLL))
 $(eval $(call emit-deploy-target,GENTLE_FRAMEWORK_DLL))
+$(eval $(call emit-deploy-target,ITEXTSHARP_DLL))
 $(eval $(call emit-deploy-target,PERSONSMANAGER_DLL))
 $(eval $(call emit-deploy-target,LOG4NET_DLL))
 $(eval $(call emit-deploy-target,MAIN_WINDOW_GLADE))
@@ -225,10 +248,11 @@ $(ASSEMBLY) $(ASSEMBLY_MDB): $(build_sources) $(build_resources) $(build_datafil
 	make $(CONFIG)_AfterBuild
 	make post-all-local-hook prefix=$(prefix)
 
-install-local: $(ASSEMBLY) $(ASSEMBLY_MDB) $(EVENTTYPESMANAGER_DLL_MDB) $(ADD_PERSON_GLADE) $(GENTLE_COMMON_DLL) $(SQLITE3_DLL) $(GUI) $(LIBSQLITE3_SO_0) $(BLUE_FEA_GIF) $(ATTENDANCESMANAGER_DLL_MDB) $(PERSONSMANAGER_DLL_MDB) $(DATA_DB) $(ADD_EVENT_GLADE) $(EVENTTYPESMANAGER_DLL) $(GENTLE_CONFIG) $(GENTLE_PROVIDER_SQLITE_DLL) $(MONO_DATA_SQLITECLIENT_DLL) $(ATTENDANCESMANAGER_DLL) $(EVENTSMANAGER_DLL_MDB) $(EVENTSMANAGER_DLL) $(GENTLE_FRAMEWORK_DLL) $(PERSONSMANAGER_DLL) $(LOG4NET_DLL) $(MAIN_WINDOW_GLADE)
+install-local: $(ASSEMBLY) $(ASSEMBLY_MDB) $(REPORTGENERATOR_DLL) $(EVENTTYPESMANAGER_DLL_MDB) $(ADD_PERSON_GLADE) $(GENTLE_COMMON_DLL) $(SQLITE3_DLL) $(GUI) $(LIBSQLITE3_SO_0) $(BLUE_FEA_GIF) $(ATTENDANCESMANAGER_DLL_MDB) $(PERSONSMANAGER_DLL_MDB) $(REPORTGENERATOR_DLL_MDB) $(SHOW_STATS_GLADE) $(DATA_DB) $(ADD_EVENT_GLADE) $(EVENTTYPESMANAGER_DLL) $(GENTLE_CONFIG) $(GENTLE_PROVIDER_SQLITE_DLL) $(MONO_DATA_SQLITECLIENT_DLL) $(ATTENDANCESMANAGER_DLL) $(EVENTSMANAGER_DLL_MDB) $(EVENTSMANAGER_DLL) $(GENTLE_FRAMEWORK_DLL) $(ITEXTSHARP_DLL) $(PERSONSMANAGER_DLL) $(LOG4NET_DLL) $(MAIN_WINDOW_GLADE)
 	make pre-install-local-hook prefix=$(prefix)
 	mkdir -p $(DESTDIR)$(libdir)/$(PACKAGE)
 	cp $(ASSEMBLY) $(ASSEMBLY_MDB) $(DESTDIR)$(libdir)/$(PACKAGE)
+	test -z '$(REPORTGENERATOR_DLL)' || cp $(REPORTGENERATOR_DLL) $(DESTDIR)$(libdir)/$(PACKAGE)
 	test -z '$(EVENTTYPESMANAGER_DLL_MDB)' || cp $(EVENTTYPESMANAGER_DLL_MDB) $(DESTDIR)$(libdir)/$(PACKAGE)
 	test -z '$(ADD_PERSON_GLADE)' || cp $(ADD_PERSON_GLADE) $(DESTDIR)$(libdir)/$(PACKAGE)
 	test -z '$(GENTLE_COMMON_DLL)' || cp $(GENTLE_COMMON_DLL) $(DESTDIR)$(libdir)/$(PACKAGE)
@@ -239,6 +263,8 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB) $(EVENTTYPESMANAGER_DLL_MDB) $(ADD_PE
 	test -z '$(BLUE_FEA_GIF)' || cp $(BLUE_FEA_GIF) $(DESTDIR)$(libdir)/$(PACKAGE)
 	test -z '$(ATTENDANCESMANAGER_DLL_MDB)' || cp $(ATTENDANCESMANAGER_DLL_MDB) $(DESTDIR)$(libdir)/$(PACKAGE)
 	test -z '$(PERSONSMANAGER_DLL_MDB)' || cp $(PERSONSMANAGER_DLL_MDB) $(DESTDIR)$(libdir)/$(PACKAGE)
+	test -z '$(REPORTGENERATOR_DLL_MDB)' || cp $(REPORTGENERATOR_DLL_MDB) $(DESTDIR)$(libdir)/$(PACKAGE)
+	test -z '$(SHOW_STATS_GLADE)' || cp $(SHOW_STATS_GLADE) $(DESTDIR)$(libdir)/$(PACKAGE)
 	test -z '$(DATA_DB)' || cp $(DATA_DB) $(DESTDIR)$(libdir)/$(PACKAGE)
 	test -z '$(ADD_EVENT_GLADE)' || cp $(ADD_EVENT_GLADE) $(DESTDIR)$(libdir)/$(PACKAGE)
 	test -z '$(EVENTTYPESMANAGER_DLL)' || cp $(EVENTTYPESMANAGER_DLL) $(DESTDIR)$(libdir)/$(PACKAGE)
@@ -249,15 +275,17 @@ install-local: $(ASSEMBLY) $(ASSEMBLY_MDB) $(EVENTTYPESMANAGER_DLL_MDB) $(ADD_PE
 	test -z '$(EVENTSMANAGER_DLL_MDB)' || cp $(EVENTSMANAGER_DLL_MDB) $(DESTDIR)$(libdir)/$(PACKAGE)
 	test -z '$(EVENTSMANAGER_DLL)' || cp $(EVENTSMANAGER_DLL) $(DESTDIR)$(libdir)/$(PACKAGE)
 	test -z '$(GENTLE_FRAMEWORK_DLL)' || cp $(GENTLE_FRAMEWORK_DLL) $(DESTDIR)$(libdir)/$(PACKAGE)
+	test -z '$(ITEXTSHARP_DLL)' || cp $(ITEXTSHARP_DLL) $(DESTDIR)$(libdir)/$(PACKAGE)
 	test -z '$(PERSONSMANAGER_DLL)' || cp $(PERSONSMANAGER_DLL) $(DESTDIR)$(libdir)/$(PACKAGE)
 	test -z '$(LOG4NET_DLL)' || cp $(LOG4NET_DLL) $(DESTDIR)$(libdir)/$(PACKAGE)
 	test -z '$(MAIN_WINDOW_GLADE)' || cp $(MAIN_WINDOW_GLADE) $(DESTDIR)$(libdir)/$(PACKAGE)
 	make post-install-local-hook prefix=$(prefix)
 
-uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB) $(EVENTTYPESMANAGER_DLL_MDB) $(ADD_PERSON_GLADE) $(GENTLE_COMMON_DLL) $(SQLITE3_DLL) $(GUI) $(LIBSQLITE3_SO_0) $(BLUE_FEA_GIF) $(ATTENDANCESMANAGER_DLL_MDB) $(PERSONSMANAGER_DLL_MDB) $(DATA_DB) $(ADD_EVENT_GLADE) $(EVENTTYPESMANAGER_DLL) $(GENTLE_CONFIG) $(GENTLE_PROVIDER_SQLITE_DLL) $(MONO_DATA_SQLITECLIENT_DLL) $(ATTENDANCESMANAGER_DLL) $(EVENTSMANAGER_DLL_MDB) $(EVENTSMANAGER_DLL) $(GENTLE_FRAMEWORK_DLL) $(PERSONSMANAGER_DLL) $(LOG4NET_DLL) $(MAIN_WINDOW_GLADE)
+uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB) $(REPORTGENERATOR_DLL) $(EVENTTYPESMANAGER_DLL_MDB) $(ADD_PERSON_GLADE) $(GENTLE_COMMON_DLL) $(SQLITE3_DLL) $(GUI) $(LIBSQLITE3_SO_0) $(BLUE_FEA_GIF) $(ATTENDANCESMANAGER_DLL_MDB) $(PERSONSMANAGER_DLL_MDB) $(REPORTGENERATOR_DLL_MDB) $(SHOW_STATS_GLADE) $(DATA_DB) $(ADD_EVENT_GLADE) $(EVENTTYPESMANAGER_DLL) $(GENTLE_CONFIG) $(GENTLE_PROVIDER_SQLITE_DLL) $(MONO_DATA_SQLITECLIENT_DLL) $(ATTENDANCESMANAGER_DLL) $(EVENTSMANAGER_DLL_MDB) $(EVENTSMANAGER_DLL) $(GENTLE_FRAMEWORK_DLL) $(ITEXTSHARP_DLL) $(PERSONSMANAGER_DLL) $(LOG4NET_DLL) $(MAIN_WINDOW_GLADE)
 	make pre-uninstall-local-hook prefix=$(prefix)
 	rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(ASSEMBLY))
 	test -z '$(ASSEMBLY_MDB)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(ASSEMBLY_MDB))
+	test -z '$(REPORTGENERATOR_DLL)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(REPORTGENERATOR_DLL))
 	test -z '$(EVENTTYPESMANAGER_DLL_MDB)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(EVENTTYPESMANAGER_DLL_MDB))
 	test -z '$(ADD_PERSON_GLADE)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(ADD_PERSON_GLADE))
 	test -z '$(GENTLE_COMMON_DLL)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(GENTLE_COMMON_DLL))
@@ -267,6 +295,8 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB) $(EVENTTYPESMANAGER_DLL_MDB) $(ADD_
 	test -z '$(BLUE_FEA_GIF)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(BLUE_FEA_GIF))
 	test -z '$(ATTENDANCESMANAGER_DLL_MDB)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(ATTENDANCESMANAGER_DLL_MDB))
 	test -z '$(PERSONSMANAGER_DLL_MDB)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(PERSONSMANAGER_DLL_MDB))
+	test -z '$(REPORTGENERATOR_DLL_MDB)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(REPORTGENERATOR_DLL_MDB))
+	test -z '$(SHOW_STATS_GLADE)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(SHOW_STATS_GLADE))
 	test -z '$(DATA_DB)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(DATA_DB))
 	test -z '$(ADD_EVENT_GLADE)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(ADD_EVENT_GLADE))
 	test -z '$(EVENTTYPESMANAGER_DLL)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(EVENTTYPESMANAGER_DLL))
@@ -277,6 +307,7 @@ uninstall-local: $(ASSEMBLY) $(ASSEMBLY_MDB) $(EVENTTYPESMANAGER_DLL_MDB) $(ADD_
 	test -z '$(EVENTSMANAGER_DLL_MDB)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(EVENTSMANAGER_DLL_MDB))
 	test -z '$(EVENTSMANAGER_DLL)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(EVENTSMANAGER_DLL))
 	test -z '$(GENTLE_FRAMEWORK_DLL)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(GENTLE_FRAMEWORK_DLL))
+	test -z '$(ITEXTSHARP_DLL)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(ITEXTSHARP_DLL))
 	test -z '$(PERSONSMANAGER_DLL)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(PERSONSMANAGER_DLL))
 	test -z '$(LOG4NET_DLL)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(LOG4NET_DLL))
 	test -z '$(MAIN_WINDOW_GLADE)' || rm -f $(DESTDIR)$(libdir)/$(PACKAGE)/$(notdir $(MAIN_WINDOW_GLADE))
