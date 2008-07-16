@@ -1,0 +1,4 @@
+#summary TODO
+
+ * Remove Gentle.NET and use NHibernate.
+ * Internationalization.
