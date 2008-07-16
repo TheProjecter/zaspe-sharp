@@ -1,6 +1,12 @@
 #summary TODO
 
+= Features/Improvements =
+
  * Move from Gentle.NET to NHibernate.
  * Internationalization.
  * Move from Glade to Stetic.
  * Tabs.
+
+= Bugs =
+
+ * On Windows Vista, the About Dialog shows GUI instead of ZaspeSharp.
