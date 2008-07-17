@@ -1,5 +1,0 @@
-2008-03-31  Milton Pividori <miltondp@gmail.com> 
-
-	* SvgReader/Shapes/Text.cs: Bold text is recognized.
-	* MonoReporter.mds: ChangeLog feature activated.
-

@@ -1,6 +1,0 @@
-Name: AttendancesManager
-Description: AttendancesManager
-Version: 0.1
-
-Requires: 
-Libs: -r:@expanded_libdir@/@PACKAGE@/AttendancesManager.dll
