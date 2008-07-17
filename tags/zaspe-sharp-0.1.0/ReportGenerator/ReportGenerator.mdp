@@ -1,0 +1,40 @@
+<Project name="ReportGenerator" fileversion="2.0" DefaultNamespace="ZaspeSharp.ReportGenerator" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+  <Configurations active="Release">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="bin/Debug" assembly="ReportGenerator" />
+      <Build debugmode="True" target="Library" />
+      <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" definesymbols="DEBUG" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="DotNetProjectConfiguration">
+      <Output directory="bin/Release" assembly="ReportGenerator" />
+      <Build debugmode="False" target="Library" />
+      <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <Contents>
+    <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/gui.stetic" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="gtk-gui/generated.cs" subtype="Code" buildaction="Compile" />
+    <File name="ReportGUI.cs" subtype="Code" buildaction="Compile" />
+    <File name="gtk-gui/ZaspeSharp.ReportGenerator.ReportGUI.cs" subtype="Code" buildaction="Compile" />
+    <File name="ReportTypes" subtype="Directory" buildaction="Compile" />
+    <File name="ReportTypes/SimplePersonsList.cs" subtype="Code" buildaction="Compile" />
+    <File name="Selection.cs" subtype="Code" buildaction="Compile" />
+    <File name="ReportType.cs" subtype="Code" buildaction="Compile" />
+    <File name="ReportTypes/SimpleAttendanceList.cs" subtype="Code" buildaction="Compile" />
+  </Contents>
+  <References>
+    <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../iTextSharp/itextsharp.dll" />
+    <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <ProjectReference type="Project" localcopy="True" refto="PersonsManager" />
+    <ProjectReference type="Project" localcopy="True" refto="AttendancesManager" />
+    <ProjectReference type="Project" localcopy="True" refto="EventsManager" />
+    <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="glib-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+  </References>
+  <GtkDesignInfo generateGettext="False" gtkVersion="2.10.0" />
+</Project>
