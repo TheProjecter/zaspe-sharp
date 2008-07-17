@@ -1,3 +1,13 @@
+2008-07-17  Milton Pividori <miltondp@gmail.com> 
+
+	* ReportGenerator/ReportGUI.cs: ReportGUI is Modal now. When opened,
+	  ReportGUI selects the actual event. ".pdf" extension added if not
+	  present when choosing a file. Reports can be maked only if the needed
+	  data exists.
+	* GUI/MainWindow.cs: Removed debugging console output.
+	* GUI/About.cs: Now "Zaspe#" is explicitly set.
+	* ZaspeSharp.mds: ChangeLog update activated.
+
 2008-07-15   <> 
 
 	* ReportGenerator/ReportTypes/SimpleAttendanceList.cs,

@@ -1,5 +1,5 @@
 <Project name="EventTypesManager" fileversion="2.0" language="C#" clr-version="Net_2_0" description="" standardNamespace="ZaspeSharp.Events" enableviewstate="True" ctype="DotNetProject">
-  <Configurations active="Debug">
+  <Configurations active="Release">
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Release/" assembly="EventTypesManager" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
       <Build debugmode="True" target="Library" />

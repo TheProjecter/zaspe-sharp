@@ -56,14 +56,7 @@ namespace ZaspeSharp.ReportGenerator {
 			                        new TreeCellDataFunc(this.RenderPersonName));
 			
 			this.tvPersons.Model = new ListStore(typeof(Person));
-			
-			// Add all persons
-			foreach (Person p in PersonsManager.Instance.RetrieveAll())
-				(this.tvPersons.Model as ListStore).AppendValues(p);
-			
-			// Select all persons
 			this.tvPersons.Selection.Mode = SelectionMode.Multiple;
-			this.tvPersons.Selection.SelectAll();
 			
 			
 			
@@ -84,15 +77,59 @@ namespace ZaspeSharp.ReportGenerator {
 			                          new TreeCellDataFunc(this.RenderEventName));
 			
 			this.tvEvents.Model = new ListStore(typeof(Event));
+
+			// Single selection
+			this.tvEvents.Selection.Mode = SelectionMode.Single;
+			
+			
+			// ######### Add data ###########
+			// Add all persons
+			ListStore personsModel = (ListStore)this.tvPersons.Model;
+			Person[] allPersons = PersonsManager.Instance.RetrieveAll();
+			
+			foreach (Person p in allPersons)
+				personsModel.AppendValues(p);
+			
+			// Select all persons
+			this.tvPersons.Selection.SelectAll();
+			
 			
 			// Add past events
-			foreach (Event e in EventsManager.Instance.RetrieveLast(10)) {
-				(this.tvEvents.Model as ListStore).AppendValues(e);
+			ListStore eventsModel = (ListStore)this.tvEvents.Model;
+			Event[] lastEvents = EventsManager.Instance.RetrieveLast(10);
+			
+			if (lastEvents.Length > 0) {
+				TreeIter firstIter = eventsModel.AppendValues(lastEvents[0]); 
+				
+				for (int i=1; i<lastEvents.Length; i++) {
+					eventsModel.AppendValues(lastEvents[i]);
+				}
+				
+				// Select first event by default
+				this.tvEvents.Selection.SelectIter(firstIter);
 			}
 			
-			// Select all events
-			this.tvEvents.Selection.Mode = SelectionMode.Single;
-			this.tvEvents.Selection.SelectAll();
+			// Disable persons report if there is no person.
+			this.CanMakePersonsReport(allPersons.Length > 0);
+			
+			// Disable events report if there is no event.
+			// TODO: Events report disable for now.
+			//this.CanMakeEventsReport(lastEvents.Length == 0);
+				
+			
+			// Disable attendances report if there is no person or no event.
+			this.CanMakeAttendancesReport(allPersons.Length > 0 && lastEvents.Length > 0);
+			
+			// If no report type is available, disable Accept button, and report page size options
+			this.CanMakeAnyReport(this.rbAttendancesList.Sensitive ||
+			    this.rbEventsList.Sensitive ||
+			    this.rbPersonsList.Sensitive);
+		}
+		
+		public ReportGUI(Gtk.Window parent) : this()
+		{
+			this.TransientFor = parent;
+			this.Modal = true;
 		}
 		
 		private Rectangle PageSizeSelected {
@@ -108,9 +145,23 @@ namespace ZaspeSharp.ReportGenerator {
 			}
 		}
 		
-		public ReportGUI(Gtk.Window parent) : this()
-		{
-			this.TransientFor = parent;
+		private void CanMakeAnyReport(bool val) {
+			this.btnAccept.Sensitive = val;
+			this.fraReportOptions.Sensitive = val;
+		}
+		
+		private void CanMakePersonsReport(bool val) {
+			this.rbPersonsList.Sensitive = val;
+			this.fraPersons.Sensitive = val;
+		}
+		
+		private void CanMakeEventsReport(bool val) {
+			this.rbEventsList.Sensitive = val;
+			this.fraEvents.Sensitive = val;
+		}
+		
+		private void CanMakeAttendancesReport(bool val) {
+			this.rbAttendancesList.Sensitive = val;
 		}
 		
 		protected virtual void OnCancelClicked(object sender, System.EventArgs e)
@@ -133,35 +184,53 @@ namespace ZaspeSharp.ReportGenerator {
 				return;
 			}
 			
+			// Add "pdf" extension if it's not present
+			string filename = fc.Filename;
+			if (!fc.Filename.ToLower().EndsWith(".pdf"))
+				filename += ".pdf";
+			
+			// Run report according to the type selected
 			try {
 				ReportType rt = null;
 				if (this.rbPersonsList.Active)
 					rt = ReportType.GetInstance<SimplePersonsList>(this.selection,
 					                                               this.PageSizeSelected,
-					                                               fc.Filename);
+					                                               filename);
 				else if (this.rbAttendancesList.Active)
 					rt = ReportType.GetInstance<SimpleAttendanceList>(this.selection,
 					                                                  this.PageSizeSelected,
-					                                                  fc.Filename);
+					                                                  filename);
 				
 				rt.Run();
 			}
 			catch(Exception ex) {
-				MessageDialog md = new MessageDialog(this,
+				MessageDialog errorMessage = new MessageDialog(this,
 				                                     DialogFlags.Modal,
 				                                     MessageType.Error,
 				                                     ButtonsType.Ok,
 				                                     true,
-				                                     "format?");
+				                                     "Hubo un error al generar el reporte:\n'" + ex.Message + "'");
 				
-				md.Title = "Error";
-				//md.Text = "Hubo un error al generar el reporte:\n'" + ex.Message + "'";
+				errorMessage.Title = "Error";
 				
-				md.Run();
-				md.Destroy();
+				errorMessage.Run();
+				errorMessage.Destroy();
 			}
 			
 			fc.Destroy();
+			
+			// Success message
+			MessageDialog successMessage = new MessageDialog(this,
+			                                     DialogFlags.Modal,
+			                                     MessageType.Info,
+			                                     ButtonsType.Ok,
+			                                     true,
+			                                     "Reporte generado correctamente.");
+				
+			successMessage.Title = "Reporte generado";
+			
+			successMessage.Run();
+			successMessage.Destroy();
 		}
 
 		protected virtual void OnResponse (object o, Gtk.ResponseArgs args)
@@ -173,20 +242,20 @@ namespace ZaspeSharp.ReportGenerator {
 
 		protected virtual void OnPersonsListToggled (object sender, System.EventArgs e)
 		{
-			this.tvPersons.Sensitive = true;
-			this.tvEvents.Sensitive = false;
+			this.fraPersons.Sensitive = true;
+			this.fraEvents.Sensitive = false;
 		}
 
 		protected virtual void OnEventsListToggled (object sender, System.EventArgs e)
 		{
-			this.tvPersons.Sensitive = false;
-			this.tvEvents.Sensitive = true;
+			this.fraPersons.Sensitive = false;
+			this.fraEvents.Sensitive = true;
 		}
 
 		protected virtual void OnAttendancesListToggled (object sender, System.EventArgs e)
 		{
-			this.tvPersons.Sensitive = true;
-			this.tvEvents.Sensitive = true;
+			this.fraPersons.Sensitive = true;
+			this.fraEvents.Sensitive = true;
 		}
 		
 		private void RenderPersonName(TreeViewColumn column,
@@ -237,11 +306,6 @@ namespace ZaspeSharp.ReportGenerator {
 				
 				this.selection.AddEvents(e);
 			}
-		}
-
-		protected virtual void OnPageSizeChanged (object sender, System.EventArgs e)
-		{
-			Console.WriteLine(this.cmbPageSize.ActiveText);
 		}
 	}
 }

@@ -963,7 +963,6 @@ namespace ZaspeSharp.GUI
 				
 				// Person's data
 				data.Add(p);
-				Console.WriteLine("Agregado " + p.Name);
 				// Events
 				foreach (Event anEvent in this.lastEventsOnAttendancesList)
 					data.Add(am.Attended(p, anEvent));

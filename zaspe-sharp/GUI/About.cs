@@ -38,6 +38,8 @@ namespace ZaspeSharp.GUI
 			
 			this.adAbout.TransientFor = parent;
 			
+			this.adAbout.Name = "Zaspe#";
+			
 			// Set version
 			Version assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
 			this.adAbout.Version = assemblyVersion.Major + "." +
