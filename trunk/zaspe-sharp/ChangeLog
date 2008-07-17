@@ -1,5 +1,9 @@
 2008-07-17  Milton Pividori <miltondp@gmail.com> 
 
+	* ReportGenerator/ReportGenerator.mdp: Fix to get Makefile working.
+
+2008-07-17  Milton Pividori <miltondp@gmail.com> 
+
 	* ReportGenerator/ReportGUI.cs: ReportGUI is Modal now. When opened,
 	  ReportGUI selects the actual event. ".pdf" extension added if not
 	  present when choosing a file. Reports can be maked only if the needed
