@@ -1,5 +1,5 @@
 <Project name="PersonsManager" fileversion="2.0" language="C#" clr-version="Net_2_0" description="" standardNamespace="ZaspeSharp.Persons" enableviewstate="True" ctype="DotNetProject">
-  <Configurations active="Debug">
+  <Configurations active="Release">
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Release/" assembly="PersonsManager" executeScript="" executeBeforeBuild="" executeAfterBuild="" executeBeforeBuildArguments="" executeAfterBuildArguments="" />
       <Build debugmode="True" target="Library" />

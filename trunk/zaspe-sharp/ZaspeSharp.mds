@@ -1,5 +1,5 @@
 <Combine name="ZaspeSharp" fileversion="2.0">
-  <Configurations active="Debug">
+  <Configurations active="Release">
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="GUI" configuration="Release" />
       <Entry build="True" name="EventTypesManager" configuration="Release" />
@@ -28,6 +28,7 @@
     <Execute type="None" entry="EventsManager" />
     <Execute type="None" entry="ReportGenerator" />
   </StartMode>
+  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UpdateNearestChangeLog" />
   <Entries>
     <Entry filename="GUI/GUI.mdp" />
     <Entry filename="EventTypesManager/EventTypesManager.mdp" />
