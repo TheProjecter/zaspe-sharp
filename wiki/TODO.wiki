@@ -9,7 +9,3 @@
  * Mono.Addins for extension support, and for personalized reports.
  * Page numbers in reports.
  * Sorting by attendance in these types of reports.
-
-= Bugs =
-
- * On Windows Vista, the About Dialog shows GUI instead of ZaspeSharp.
